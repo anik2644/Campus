@@ -15,6 +15,59 @@ class Feeds extends StatefulWidget {
   _FeedsState createState() => _FeedsState();
 }
 
+
+class p{
+
+  late String id;
+  late String postId;
+  late String ownerId;
+  late String location;
+  late String username;
+  late String description;
+  late String mediaUrl;
+  late String timestamp;
+
+  p(String a,String b,String c, String d,String e, String f,String h){
+    this.id =a;
+    this.postId =b;
+    this.ownerId =c;
+    this.location =d;
+    this.username =e;
+    this.description =f;
+    this.timestamp = timestamp;
+    this.mediaUrl ="https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
+  }
+
+ static List <PostModel> Pl =[
+  PostModel("a", "b", "c", "d", "e", "f", "h"),
+   PostModel("a", "b", "c", "d", "e", "f", "h"),
+   PostModel("a", "b", "c", "d", "e", "f", "h"),
+   PostModel("a", "b", "c", "d", "e", "f", "h"),
+   PostModel("a", "b", "c", "d", "e", "f", "h"),
+   PostModel("a", "b", "c", "d", "e", "f", "h"),
+
+
+  // p("a", "b", "c", "d", "e", "f", "h"),
+  //  p("a", "b", "c", "d", "e", "f", "h"),
+  //  p("a", "b", "c", "d", "e", "f", "h"),
+  //  p("a", "b", "c", "d", "e", "f", "h"),
+  ];
+}
+//
+// id = json['id'];
+// postId = json['postId'];
+// ownerId = json['ownerId'];
+// location = json['location'];
+// username= json['username'];
+// description = json['description'];
+// mediaUrl = json['mediaUrl'];
+// timestamp = json['timestamp'];
+//
+//
+//
+
+
+
 class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -35,6 +88,9 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     });
     super.initState();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +138,20 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
               StoryWidget(),
               Container(
                 height: MediaQuery.of(context).size.height,
-                child: FutureBuilder(
+                child:  ListView.builder(
+                  controller: scrollController,
+                  itemCount: p.Pl.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    PostModel posts = p.Pl[index];
+                    //PostModel.fromJson(docs[index].data());
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: UserPost(post: posts),
+                    );
+                  },
+                )
+                /*FutureBuilder(
                   future: postRef
                       .orderBy('timestamp', descending: true)
                       .limit(page)
@@ -118,7 +187,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
                         ),
                       );
                   },
-                ),
+                ),*/
               ),
             ],
           ),

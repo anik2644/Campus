@@ -160,7 +160,8 @@ class UserPost extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            timeago.format(post!.timestamp!.toDate()),
+                            "12:10",
+                           // timeago.format(post!.timestamp!.toDate()),
                             style: TextStyle(fontSize: 10.0),
                           ),
                         ),
@@ -306,8 +307,8 @@ class UserPost extends StatelessWidget {
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           DocumentSnapshot snap = snapshot.data!;
-          UserModel user =
-              UserModel.fromJson(snap.data() as Map<String, dynamic>);
+          UserModel user = UserModel.um[0];
+          // UserModel.fromJson(snap.data() as Map<String, dynamic>);
           return Visibility(
             visible: !isMe,
             child: Align(

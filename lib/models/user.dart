@@ -11,16 +11,39 @@ class UserModel {
   Timestamp? lastSeen;
   bool? isOnline;
 
-  UserModel(
-      {this.username,
-      this.email,
-      this.id,
-      this.photoUrl,
-      this.signedUpAt,
-      this.isOnline,
-      this.lastSeen,
-      this.bio,
-      this.country});
+
+  static List <UserModel> um = [
+    UserModel("a", "b", "c", "d", "e", "f", "h"),
+    UserModel("a", "b", "c", "d", "e", "f", "h"),
+    UserModel("a", "b", "c", "d", "e", "f", "h"),
+    UserModel("a", "b", "c", "d", "e", "f", "h"),
+    UserModel("a", "b", "c", "d", "e", "f", "h"),
+
+
+  ];
+
+  UserModel(String a,String b,String c, String d,String e, String f,String h){
+    this.username= a;
+    this.email=b;
+    this.id=c;
+    this.photoUrl="https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
+    this.signedUpAt= Timestamp.now();
+    this.isOnline= true;
+    this.lastSeen= Timestamp.now();
+    this.bio =" desription";
+    this.country ="Bangfladesh";
+  }
+
+  // UserModel(
+  //     {this.username,
+  //     this.email,
+  //     this.id,
+  //     this.photoUrl,
+  //     this.signedUpAt,
+  //     this.isOnline,
+  //     this.lastSeen,
+  //     this.bio,
+  //     this.country});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     username = json['username'];

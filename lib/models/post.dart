@@ -9,18 +9,29 @@ class PostModel {
   String? description;
   String? mediaUrl;
   Timestamp? timestamp;
-  
 
-  PostModel({
-    this.id,
-    this.postId,
-    this.ownerId,
-    this.location,
-    this.description,
-    this.mediaUrl,
-    this.username,
-    this.timestamp,
-  });
+
+  PostModel(String a,String b,String c, String d,String e, String f,String h){
+    this.id =a;
+    this.postId =b;
+    this.ownerId =c;
+    this.location =d;
+    this.username =e;
+    this.description =f;
+    this.timestamp = timestamp;
+    this.mediaUrl ="https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
+  }
+
+  // PostModel({
+  //   this.id,
+  //   this.postId,
+  //   this.ownerId,
+  //   this.location,
+  //   this.description,
+  //   this.mediaUrl,
+  //   this.username,
+  //   this.timestamp,
+  // });
   PostModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     postId = json['postId'];

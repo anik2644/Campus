@@ -46,6 +46,7 @@ class _CreatePostState extends State<CreatePost> {
             actions: [
               GestureDetector(
                 onTap: () async {
+                  print(">>");
                   await viewModel.uploadPosts(context);
                   Navigator.pop(context);
                   viewModel.resetPost();
@@ -93,7 +94,10 @@ class _CreatePostState extends State<CreatePost> {
                 },
               ),
               InkWell(
-                onTap: () => showImageChoices(context, viewModel),
+                onTap: () {
+                  print("done") ;
+                  showImageChoices(context, viewModel);
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width - 30,

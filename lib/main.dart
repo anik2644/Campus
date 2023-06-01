@@ -54,17 +54,17 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home:
-            StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: ((BuildContext context, snapshot) {
-                return Homepage();
-                // if (snapshot.hasData) {
-                //   return TabScreen();
-                // } else
-                //   return Landing();
-              }),
-            ),
+            home:Homepage(),
+            // StreamBuilder(
+            //   stream: FirebaseAuth.instance.authStateChanges(),
+            //   builder: ((BuildContext context, snapshot) {
+            //     return Homepage();
+            //     // if (snapshot.hasData) {
+            //     //   return TabScreen();
+            //     // } else
+            //     //   return Landing();
+            //   }),
+            // ),
           );
         },
       ),

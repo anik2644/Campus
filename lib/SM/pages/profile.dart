@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:social_media_app/HP/HomePage/HomePage.dart';
 
 import '../auth/register/register.dart';
 import '../components/stream_grid_wrapper.dart';
@@ -70,7 +71,10 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('WOOBLE'),
+        title: Text(
+          "ঢাবিয়ান সমাচার",//"Press me to enter",
+          style: TextStyle(fontSize: 30,color: Colors.amber, fontFamily: 'Alkatra',),
+        ),
         actions: [
           widget.profileId == firebaseAuth.currentUser!.uid
               ? Center(
@@ -81,7 +85,7 @@ class _ProfileState extends State<Profile> {
                         await firebaseAuth.signOut();
                         Navigator.of(context).push(
                           CupertinoPageRoute(
-                            builder: (_) => Register(),
+                            builder: (_) => Homepage(),
                           ),
                         );
                       },
@@ -98,6 +102,23 @@ class _ProfileState extends State<Profile> {
               : SizedBox()
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+
+
+        FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+        User? _currentUser;
+
+        _currentUser = _firebaseAuth.currentUser;
+        if (_currentUser != null) {
+          print('User is logged in');
+        } else {
+          print('User is not logged in');
+        }
+
+        //
+
+
+      },),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(

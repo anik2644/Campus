@@ -6,6 +6,7 @@ import 'package:social_media_app/SM/screens/mainscreen.dart';
 
 //import '../../../../../landing/landing_page.dart';
 import '../../../../../SM/landing/landing_page.dart';
+import '../../../../../SM/utils/firebase.dart';
 import 'StartButtonBody.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import '../../../../../Model/StaticPart/FirabaseStaticVariables.dart';
@@ -52,6 +53,53 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
 
 
 
+    FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+    User? _currentUser;
+
+    _currentUser = _firebaseAuth.currentUser;
+    // if (_currentUser != null) {
+    //   return Text('User is logged in');
+    // } else {
+    //   return Text('User is not logged in');
+    // }
+    //
+    //
+
+
+        if (_currentUser != null)  {
+          print('yes');
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
+              ));
+        } else
+          {
+            print('no');
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) =>Landing()// TabScreen()//  Landing(),//SecondaryHomepage()
+                ));
+          }
+
+    // User? _currentUser;
+    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //   setState(() {
+    //     _currentUser = user;
+    //   });
+    // });
+    //
+    //     if( firebaseAuth.currentUser!.uid == null)  {
+    //       print('yes');
+    //       Navigator.pushReplacement(context,
+    //           MaterialPageRoute(builder: (context) => Landing()//TabScreen()// Landing(),//SecondaryHomepage()
+    //           ));
+    //     } else
+    //       {
+    //         print('no');
+    //         Navigator.pushReplacement(context,
+    //             MaterialPageRoute(builder: (context) => TabScreen()//  Landing(),//SecondaryHomepage()
+    //             ));
+    //       }
+          //return Landing();
+
     // StreamBuilder(
     //   stream: FirebaseAuth.instance.authStateChanges(),
     //   builder: ((BuildContext context, snapshot) {
@@ -62,9 +110,7 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
     //       return Landing();
     //   }),
     // );
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => TabScreen()// Landing(),//SecondaryHomepage()
-        ));
+
   }
 
 

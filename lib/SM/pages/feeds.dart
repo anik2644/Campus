@@ -2,13 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/chats/recent_chats.dart';
-import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/utils/constants.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/widgets/indicators.dart';
-import 'package:social_media_app/widgets/story_widget.dart';
-import 'package:social_media_app/widgets/userpost.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import '../chats/recent_chats.dart';
+import '../models/post.dart';
+import '../utils/constants.dart';
+import '../utils/firebase.dart';
+import '../widgets/story_widget.dart';
+import '../widgets/userpost.dart';
+// import 'package:social_media_app/chats/recent_chats.dart';
+// import 'package:social_media_app/models/post.dart';
+// import 'package:social_media_app/utils/constants.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
+// import 'package:social_media_app/widgets/story_widget.dart';
+// import 'package:social_media_app/widgets/userpost.dart';
 
 class Feeds extends StatefulWidget {
   @override
@@ -40,7 +47,7 @@ class p{
 
  static List <PostModel> Pl =[
    PostModel("a3", "b3", "c", "d", "e", "f", "https://thebangladeshtoday.com/wp-content/uploads/2022/10/%E0%A6%AE%E0%A6%B9%E0%A6%AE.jpg"),
-    PostModel("a", "b", "c", "d", "e", "f", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg"),
+   PostModel("a", "b", "c", "d", "e", "f", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg"),
    PostModel("a2", "b2", "c", "d", "e", "f", "https://static.toiimg.com/thumb/msid-100280596,width-400,resizemode-4/100280596.jpg"),
    PostModel("a4", "b4", "c", "d", "e", "f", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr8VI65VyGySt8B_pF86KcP2z7mGZgkBSa_w&usqp=CAU"),
    PostModel("a5", "b5", "c", "d", "e", "f", "https://images.hindustantimes.com/img/2022/11/10/1600x900/selena_1668082488113_1668082488308_1668082488308.jpg"),
@@ -96,15 +103,25 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   Widget build(BuildContext context) {
     print('>>>');
     return Scaffold(
+      backgroundColor: Colors.black,
       key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
-          Constants.appName,
-          style: TextStyle(
-            fontWeight: FontWeight.w900,
-          ),
-        ),
+        title:  Text(
+          "ঢাবিয়ান সমাচার",//"Press me to enter",
+          style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
+        ).animate(
+
+          //delay: 1000.ms, // this delay only happens once at the very start
+          onPlay: (controller) => controller.repeat(), // loop
+        ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),
+      ,
+        // title: Text(
+        //   Constants.appName,
+        //   style: TextStyle(
+        //     fontWeight: FontWeight.w900,
+        //   ),
+        // ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -135,7 +152,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StoryWidget(),
+              //StoryWidget(),
               Container(
                 height: MediaQuery.of(context).size.height,
                 child:  ListView.builder(

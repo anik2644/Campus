@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/components/custom_card.dart';
+
+import 'custom_card.dart';
+//import 'package:social_media_app/components/custom_card.dart';
 
 class TextFormBuilder extends StatefulWidget {
   final String? initialValue;

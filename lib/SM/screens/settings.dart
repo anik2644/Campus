@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/view_models/theme/theme_view_model.dart';
+
+import '../view_models/theme/theme_view_model.dart';
+//import 'package:social_media_app/view_models/theme/theme_view_model.dart';
 
 class Setting extends StatefulWidget {
   @override

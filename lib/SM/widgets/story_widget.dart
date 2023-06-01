@@ -2,11 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_app/models/status.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/posts/story/status_view.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/widgets/indicators.dart';
+
+import '../models/status.dart';
+import '../models/user.dart';
+import '../posts/story/status_view.dart';
+import '../utils/firebase.dart';
+import 'indicators.dart';
+// import 'package:social_media_app/models/status.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/posts/story/status_view.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
 
 class StoryWidget extends StatelessWidget {
   const StoryWidget({Key? key}) : super(key: key);

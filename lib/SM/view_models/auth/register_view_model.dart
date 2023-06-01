@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_app/auth/register/profile_pic.dart';
-import 'package:social_media_app/services/auth_service.dart';
+// import 'package:social_media_app/auth/register/profile_pic.dart';
+// import 'package:social_media_app/services/auth_service.dart';
+
+import '../../auth/register/profile_pic.dart';
+import '../../services/auth_service.dart';
 
 class RegisterViewModel extends ChangeNotifier {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

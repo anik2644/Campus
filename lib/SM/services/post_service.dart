@@ -1,12 +1,18 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/screens/view_image.dart';
-import 'package:social_media_app/services/services.dart';
-import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/screens/view_image.dart';
+// import 'package:social_media_app/services/services.dart';
+// import 'package:social_media_app/utils/firebase.dart';
 import 'package:uuid/uuid.dart';
+
+import '../models/user.dart';
+import '../services/services.dart';
+import '../screens/view_image.dart';
+import '../utils/firebase.dart';
 
 class PostService extends Service {
   String postId = Uuid().v4();

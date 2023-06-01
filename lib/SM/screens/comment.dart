@@ -4,14 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:like_button/like_button.dart';
-import 'package:social_media_app/components/stream_comments_wrapper.dart';
-import 'package:social_media_app/models/comments.dart';
-import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/services/post_service.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/widgets/cached_image.dart';
+// import 'package:social_media_app/components/stream_comments_wrapper.dart';
+// import 'package:social_media_app/models/comments.dart';
+// import 'package:social_media_app/models/post.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/services/post_service.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/widgets/cached_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../components/stream_comments_wrapper.dart';
+import '../models/comments.dart';
+import '../models/post.dart';
+import '../models/user.dart';
+import '../services/post_service.dart';
+import '../utils/firebase.dart';
+import '../widgets/cached_image.dart';
 
 class Comments extends StatefulWidget {
   final PostModel? post;
@@ -35,6 +43,7 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -49,7 +58,13 @@ class _CommentsState extends State<Comments> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        child: Column(
+        child:Center(
+          child: Container(
+            child: Text("no comment",style: TextStyle(color: Colors.white),),
+          ),
+        )
+            /*
+        Column(
           children: [
             Flexible(
               child: ListView(
@@ -60,11 +75,15 @@ class _CommentsState extends State<Comments> {
                   ),
                   Divider(thickness: 1.5),
                   Flexible(
-                    child: buildComments(),
+                    child: Container(
+                      child: Text("no comment"),
+                    )
+                    //buildComments(),
                   )
                 ],
               ),
             ),
+            /*
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -157,8 +176,12 @@ class _CommentsState extends State<Comments> {
                 ),
               ),
             ),
+
+             */
           ],
         ),
+
+             */
       ),
     );
   }

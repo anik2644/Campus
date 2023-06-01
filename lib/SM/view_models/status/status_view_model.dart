@@ -6,16 +6,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:social_media_app/models/message.dart';
-import 'package:social_media_app/models/status.dart';
-import 'package:social_media_app/models/story_model.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/posts/story/confrim_status.dart';
-import 'package:social_media_app/services/post_service.dart';
-import 'package:social_media_app/services/status_services.dart';
-import 'package:social_media_app/services/user_service.dart';
-import 'package:social_media_app/utils/constants.dart';
-import 'package:social_media_app/utils/firebase.dart';
+
+import '../../models/status.dart';
+import '../../posts/story/confrim_status.dart';
+import '../../services/post_service.dart';
+import '../../services/status_services.dart';
+import '../../services/user_service.dart';
+import '../../utils/constants.dart';
+// import 'package:social_media_app/models/message.dart';
+// import 'package:social_media_app/models/status.dart';
+// import 'package:social_media_app/models/story_model.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/posts/story/confrim_status.dart';
+// import 'package:social_media_app/services/post_service.dart';
+// import 'package:social_media_app/services/status_services.dart';
+// import 'package:social_media_app/services/user_service.dart';
+// import 'package:social_media_app/utils/constants.dart';
+// import 'package:social_media_app/utils/firebase.dart';
 
 class StatusViewModel extends ChangeNotifier {
   //Services

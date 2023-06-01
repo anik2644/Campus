@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/widgets/indicators.dart';
-import 'package:social_media_app/widgets/userpost.dart';
+
+import '../models/post.dart';
+import '../utils/firebase.dart';
+import '../widgets/indicators.dart';
+import '../widgets/userpost.dart';
+// import 'package:social_media_app/models/post.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
+// import 'package:social_media_app/widgets/userpost.dart';
 
 class ListPosts extends StatefulWidget {
   final userId;

@@ -4,11 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:like_button/like_button.dart';
-import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/widgets/indicators.dart';
+// import 'package:social_media_app/models/post.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../models/post.dart';
+import '../models/user.dart';
+import '../utils/firebase.dart';
+import '../widgets/indicators.dart';
 
 class ViewImage extends StatefulWidget {
   final PostModel? post;
@@ -59,7 +64,7 @@ class _ViewImageState extends State<ViewImage> {
                         Icon(Ionicons.alarm_outline, size: 13.0),
                         SizedBox(width: 3.0),
                         Text(
-                         "donne"// Timestamp.now().toString()
+                          Timestamp.now().toDate().toString()
                            //widget.post?.timestamp as String,//timeago.format(widget.post!.timestamp!.toDate()),
                         ),
                       ],

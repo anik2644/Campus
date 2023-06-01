@@ -5,16 +5,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:like_button/like_button.dart';
-import 'package:social_media_app/components/custom_card.dart';
-import 'package:social_media_app/components/custom_image.dart';
-import 'package:social_media_app/models/post.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/pages/profile.dart';
-import 'package:social_media_app/screens/comment.dart';
-import 'package:social_media_app/screens/view_image.dart';
-import 'package:social_media_app/services/post_service.dart';
-import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/components/custom_card.dart';
+// import 'package:social_media_app/components/custom_image.dart';
+// import 'package:social_media_app/models/post.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/pages/profile.dart';
+// import 'package:social_media_app/screens/comment.dart';
+// import 'package:social_media_app/screens/view_image.dart';
+// import 'package:social_media_app/services/post_service.dart';
+// import 'package:social_media_app/utils/firebase.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../components/custom_card.dart';
+import '../components/custom_image.dart';
+import '../models/post.dart';
+import '../models/user.dart';
+import '../pages/profile.dart';
+import '../screens/comment.dart';
+import '../screens/view_image.dart';
+import '../services/post_service.dart';
+import '../utils/firebase.dart';
 
 class UserPost extends StatelessWidget {
   final PostModel? post;
@@ -32,7 +42,9 @@ class UserPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      onTap: () {},
+      onTap: () {
+        print("hekklo");
+      },
       borderRadius: BorderRadius.circular(10.0),
       child: OpenContainer(
         transitionType: ContainerTransitionType.fadeThrough,
@@ -48,6 +60,7 @@ class UserPost extends StatelessWidget {
         onClosed: (v) {},
         closedColor: Theme.of(context).cardColor,
         closedBuilder: (BuildContext context, VoidCallback openContainer) {
+
           return Stack(
             children: [
               Column(
@@ -76,10 +89,11 @@ class UserPost extends StatelessWidget {
                           child: Row(
                             children: [
                               buildLikeButton(),
-                              SizedBox(width: 5.0),
+                              SizedBox(width: 10.0),
                               InkWell(
                                 borderRadius: BorderRadius.circular(10.0),
                                 onTap: () {
+                                 // print("hello");
                                   Navigator.of(context).push(
                                     CupertinoPageRoute(
                                       builder: (_) => Comments(post: post),

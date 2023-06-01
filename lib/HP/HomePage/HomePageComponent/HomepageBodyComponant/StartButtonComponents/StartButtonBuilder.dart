@@ -2,8 +2,10 @@
 // import 'package:campousia/Screen/SecondaryHomePage/SecondaryHomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/SM/screens/mainscreen.dart';
 
-import '../../../../../landing/landing_page.dart';
+//import '../../../../../landing/landing_page.dart';
+import '../../../../../SM/landing/landing_page.dart';
 import 'StartButtonBody.dart';
 
 // import '../../../../../Model/StaticPart/FirabaseStaticVariables.dart';
@@ -48,7 +50,7 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
 
   void StartButtonOnPressed() {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Landing(),//SecondaryHomepage()
+        MaterialPageRoute(builder: (context) => TabScreen()// Landing(),//SecondaryHomepage()
         ));
   }
 

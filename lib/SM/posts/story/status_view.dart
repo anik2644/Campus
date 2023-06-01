@@ -2,13 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/models/status.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/view_models/status/status_view_model.dart';
-import 'package:social_media_app/widgets/indicators.dart';
+// import 'package:social_media_app/models/status.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/view_models/status/status_view_model.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
 import 'package:story/story.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../../models/status.dart';
+import '../../models/user.dart';
+import '../../utils/firebase.dart';
+import '../../view_models/status/status_view_model.dart';
+import '../../widgets/indicators.dart';
 
 class StatusScreen extends StatefulWidget {
   final initPage;

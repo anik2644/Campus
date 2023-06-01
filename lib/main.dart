@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/HP/HomePage/HomePage.dart';
-import 'package:social_media_app/components/life_cycle_event_handler.dart';
-import 'package:social_media_app/landing/landing_page.dart';
-import 'package:social_media_app/screens/mainscreen.dart';
-import 'package:social_media_app/services/user_service.dart';
-import 'package:social_media_app/utils/config.dart';
-import 'package:social_media_app/utils/constants.dart';
-import 'package:social_media_app/utils/providers.dart';
-import 'package:social_media_app/view_models/theme/theme_view_model.dart';
+// import 'package:social_media_app/components/life_cycle_event_handler.dart';
+// import 'package:social_media_app/landing/landing_page.dart';
+// import 'package:social_media_app/screens/mainscreen.dart';
+// import 'package:social_media_app/services/user_service.dart';
+// import 'package:social_media_app/utils/config.dart';
+// import 'package:social_media_app/utils/constants.dart';
+// import 'package:social_media_app/utils/providers.dart';
+// import 'package:social_media_app/view_models/theme/theme_view_model.dart';
+
+import 'SM/components/life_cycle_event_handler.dart';
+import 'SM/services/user_service.dart';
+import 'SM/utils/config.dart';
+import 'SM/utils/constants.dart';
+import 'SM/utils/providers.dart';
+import 'SM/view_models/theme/theme_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,11 +5,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/models/enum/message_type.dart';
-import 'package:social_media_app/models/status.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/view_models/status/status_view_model.dart';
-import 'package:social_media_app/widgets/indicators.dart';
+
+import '../../models/enum/message_type.dart';
+import '../../models/status.dart';
+import '../../utils/firebase.dart';
+import '../../view_models/status/status_view_model.dart';
+import '../../widgets/indicators.dart';
+// import 'package:social_media_app/models/enum/message_type.dart';
+// import 'package:social_media_app/models/status.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/view_models/status/status_view_model.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
 
 class ConfirmStatus extends StatefulWidget {
   @override

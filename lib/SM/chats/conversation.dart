@@ -4,16 +4,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/components/chat_bubble.dart';
-import 'package:social_media_app/models/enum/message_type.dart';
-import 'package:social_media_app/models/message.dart';
-import 'package:social_media_app/models/user.dart';
-import 'package:social_media_app/pages/profile.dart';
-import 'package:social_media_app/utils/firebase.dart';
-import 'package:social_media_app/view_models/conversation/conversation_view_model.dart';
-import 'package:social_media_app/view_models/user/user_view_model.dart';
-import 'package:social_media_app/widgets/indicators.dart';
+// import 'package:social_media_app/components/chat_bubble.dart';
+// import 'package:social_media_app/models/enum/message_type.dart';
+// import 'package:social_media_app/models/message.dart';
+// import 'package:social_media_app/models/user.dart';
+// import 'package:social_media_app/pages/profile.dart';
+// import 'package:social_media_app/utils/firebase.dart';
+// import 'package:social_media_app/view_models/conversation/conversation_view_model.dart';
+// import 'package:social_media_app/view_models/user/user_view_model.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../components/chat_bubble.dart';
+import '../models/enum/message_type.dart';
+import '../models/message.dart';
+import '../models/user.dart';
+import '../pages/profile.dart';
+import '../utils/firebase.dart';
+import '../view_models/conversation/conversation_view_model.dart';
+import '../view_models/user/user_view_model.dart';
+import '../widgets/indicators.dart';
 
 class Conversation extends StatefulWidget {
   final String userId;

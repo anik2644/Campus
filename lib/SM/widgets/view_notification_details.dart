@@ -2,10 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/models/notification.dart';
-import 'package:social_media_app/pages/profile.dart';
-import 'package:social_media_app/widgets/indicators.dart';
+// import 'package:social_media_app/models/notification.dart';
+// import 'package:social_media_app/pages/profile.dart';
+// import 'package:social_media_app/widgets/indicators.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../models/notification.dart';
+import '../pages/profile.dart';
+import 'indicators.dart';
 
 class ViewActivityDetails extends StatefulWidget {
   final ActivityModel? activity;

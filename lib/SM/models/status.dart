@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/models/enum/message_type.dart';
+
+import 'enum/message_type.dart';
+//import 'package:social_media_app/models/enum/message_type.dart';
 
 class StatusModel {
   String? caption;

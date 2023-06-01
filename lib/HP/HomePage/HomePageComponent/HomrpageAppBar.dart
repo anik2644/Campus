@@ -14,6 +14,11 @@ class _HomepageAppBarState extends State<HomepageAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
+      leading: IconButton(onPressed: () {
+        Scaffold.of(context).openDrawer();
+      }, icon:Icon(Icons.menu,
+      color: Colors.white,),),
+      //automaticallyImplyLeading: true,
       backgroundColor: Colors.black,
       actions: [
         HomePageFloatingButtion()

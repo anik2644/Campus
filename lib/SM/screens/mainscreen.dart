@@ -112,7 +112,7 @@ class _TabScreenState extends State<TabScreen> {
       width: 45.0,
       // ignore: missing_required_param
       child: FabContainer(
-        icon: Ionicons.add_outline,
+        icon: Ionicons.add,
         mini: true,
       ),
     );

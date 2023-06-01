@@ -1,9 +1,14 @@
+import 'dart:io';
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:social_media_app/components/custom_image.dart';
 // import 'package:social_media_app/models/user.dart';
 // import 'package:social_media_app/utils/firebase.dart';
@@ -22,6 +27,8 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  String imgurl= " ";
+  int flag =0;
   @override
   Widget build(BuildContext context) {
     currentUserId() {
@@ -47,7 +54,7 @@ class _CreatePostState extends State<CreatePost> {
                 Navigator.pop(context);
               },
             ),
-            title: Text('WOOBLE'.toUpperCase()),
+            title: Text('Create Post'.toUpperCase()),
             centerTitle: true,
             actions: [
               GestureDetector(
@@ -71,6 +78,7 @@ class _CreatePostState extends State<CreatePost> {
               )
             ],
           ),
+
           body: ListView(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             children: [
@@ -101,7 +109,7 @@ class _CreatePostState extends State<CreatePost> {
               ),
               InkWell(
                 onTap: () {
-                  print("done") ;
+                  print("Choose image") ;
                   showImageChoices(context, viewModel);
                 },
                 child: Container(
@@ -116,13 +124,16 @@ class _CreatePostState extends State<CreatePost> {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  child: viewModel.imgLink != null
-                      ? CustomImage(
-                          imageUrl: viewModel.imgLink,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width - 30,
-                          fit: BoxFit.cover,
-                        )
+                  child: //viewModel.imgLink != null
+                  flag==1
+                      ? 
+                      Image.network(imgurl)
+                  // CustomImage(
+                  //         imageUrl: viewModel.imgLink,
+                  //         width: MediaQuery.of(context).size.width,
+                  //         height: MediaQuery.of(context).size.width - 30,
+                  //         fit: BoxFit.cover,
+                  //       )
                       : viewModel.mediaUrl == null
                           ? Center(
                               child: Text(
@@ -234,8 +245,11 @@ class _CreatePostState extends State<CreatePost> {
                 leading: Icon(Ionicons.image),
                 title: Text('Gallery'),
                 onTap: () {
-                  Navigator.pop(context);
-                  viewModel.pickImage();
+                //  Navigator.pop(context);
+
+                  pickImagee();
+
+                 // viewModel.pickImage();
                 },
               ),
             ],
@@ -243,5 +257,47 @@ class _CreatePostState extends State<CreatePost> {
         );
       },
     );
+  }
+
+  Future<void> pickImagee() async {
+
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    print('${file?.path}');
+
+    if (file == null) return;
+    //Import dart:core
+    String uniqueFileName =
+    DateTime.now().millisecondsSinceEpoch.toString();
+
+    /*Step 2: Upload to Firebase storage*/
+    //Install firebase_storage
+    //Import the library
+
+    //Get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child('images');
+
+    //Create a reference for the image to be stored
+    Reference referenceImageToUpload =
+    referenceDirImages.child('name');
+
+    //Handle errors/success
+    try {
+      //Store the file
+      await referenceImageToUpload.putFile(File(file!.path));
+      //Success: get the download URL
+      imgurl = await referenceImageToUpload.getDownloadURL();
+
+      print("Img URL:" +imgurl);
+    } catch (error) {
+      //Some error occurred
+    }
+
+    setState(() {
+     flag =1;
+    });
   }
 }

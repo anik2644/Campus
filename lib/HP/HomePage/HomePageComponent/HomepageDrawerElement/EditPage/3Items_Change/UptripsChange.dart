@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../Model/StaticPart/BusStaticVariables.dart';
+//import '../../../../../../Model/StaticPart/BusStaticVariables.dart';
 
 class UptripChange extends StatefulWidget {
   const UptripChange({Key? key}) : super(key: key);
@@ -17,6 +17,7 @@ class _UptripChangeState extends State<UptripChange> {
       appBar: AppBar(title: Text("UpTrips Field"),),
       floatingActionButton: FloatingActionButton(onPressed: () {},child: Icon(Icons.done_outline_sharp),),
       body: Container(
+        /*
         child:ListView.builder(
           //shrinkWrap: true,
             scrollDirection: Axis.vertical,
@@ -29,6 +30,8 @@ class _UptripChangeState extends State<UptripChange> {
                  ),
                )
       )
+
+         */
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/login/login.dart';
+import '../auth/register/register.dart';
 //import 'package:social_media_app/auth/login/login.dart';
 
 class Landing extends StatefulWidget {
@@ -13,6 +14,7 @@ class _LandingState extends State<Landing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -24,7 +26,7 @@ class _LandingState extends State<Landing> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Image.asset(
-                  'assets/images/new1.png',
+                  'assets/images/Curzon.jpg',
                   height: 200.0,
                   width: 200.0,
                   fit: BoxFit.cover,
@@ -32,20 +34,17 @@ class _LandingState extends State<Landing> {
               ),
             ),
             Text(
-              'WOOBLE',
-              style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Ubuntu-Regular',
-              ),
+              "ঢাবিয়ান সমাচার",//"Press me to enter",
+              style: TextStyle(fontSize: 30,color: Colors.amber, fontFamily: 'Alkatra',),
             )
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
         elevation: 0.0,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0,top: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -87,7 +86,7 @@ class _LandingState extends State<Landing> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     CupertinoPageRoute(
-                      builder: (_) => Login(),
+                      builder: (_) => Register(),
                     ),
                   );
                 },

@@ -9,6 +9,7 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/SM/models/post.dart';
 // import 'package:social_media_app/components/custom_image.dart';
 // import 'package:social_media_app/models/user.dart';
 // import 'package:social_media_app/utils/firebase.dart';
@@ -17,6 +18,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../components/custom_image.dart';
 import '../models/user.dart';
+import '../pages/feeds.dart';
 import '../utils/firebase.dart';
 import '../view_models/auth/posts_view_model.dart';
 import '../widgets/indicators.dart';
@@ -27,6 +29,9 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+
+  PostModel pp =  PostModel("a3", "b3", "c", "d", "e", "f", "https://thebangladeshtoday.com/wp-content/uploads/2022/10/%E0%A6%AE%E0%A6%B9%E0%A6%AE.jpg");
+
   String imgurl= " ";
   int flag =0;
   @override
@@ -59,10 +64,20 @@ class _CreatePostState extends State<CreatePost> {
             actions: [
               GestureDetector(
                 onTap: () async {
+
+                  // DateTime now = DateTime.now();
+                  // String formattedTime = DateFormat.Hm().format(now); // Format the time as hour:minute
+                  // String formattedDay = DateFormat.EEEE().format(now); // Format the day of the week
+                  // String _currentTime = '$formattedTime\n$formattedDay';
+                  pp.username= firebaseAuth.currentUser!.uid;
+                  pp.timestamp= Timestamp.now();
+
+                  p.Pl.add(pp);
+                  //_currentTime;
                   print(">>");
-                  await viewModel.uploadPosts(context);
+                //  await viewModel.uploadPosts(context);
                   Navigator.pop(context);
-                  viewModel.resetPost();
+                 // viewModel.resetPost();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -167,7 +182,10 @@ class _CreatePostState extends State<CreatePost> {
                   focusedBorder: UnderlineInputBorder(),
                 ),
                 maxLines: null,
-                onChanged: (val) => viewModel.setDescription(val),
+                onChanged: (val) {
+                  pp.description =val;
+                  viewModel.setDescription(val);
+                },
               ),
               SizedBox(height: 20.0),
               Text(
@@ -189,7 +207,10 @@ class _CreatePostState extends State<CreatePost> {
                       focusedBorder: UnderlineInputBorder(),
                     ),
                     maxLines: null,
-                    onChanged: (val) => viewModel.setLocation(val),
+                    onChanged: (val) {
+                      pp.location =val;
+                      viewModel.setLocation(val);
+                    },
                   ),
                 ),
                 trailing: IconButton(
@@ -297,6 +318,7 @@ class _CreatePostState extends State<CreatePost> {
     }
 
     setState(() {
+      pp.mediaUrl = imgurl;
      flag =1;
     });
   }

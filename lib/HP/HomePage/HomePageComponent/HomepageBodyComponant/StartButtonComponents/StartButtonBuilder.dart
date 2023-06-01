@@ -7,7 +7,7 @@ import 'package:social_media_app/SM/screens/mainscreen.dart';
 //import '../../../../../landing/landing_page.dart';
 import '../../../../../SM/landing/landing_page.dart';
 import 'StartButtonBody.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 // import '../../../../../Model/StaticPart/FirabaseStaticVariables.dart';
 // import '../../../../../Model/StaticPart/ModelStatic.dart';
 // import '../../../../Model/LoadIndicator.dart';
@@ -49,6 +49,19 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
 
 
   void StartButtonOnPressed() {
+
+
+
+    // StreamBuilder(
+    //   stream: FirebaseAuth.instance.authStateChanges(),
+    //   builder: ((BuildContext context, snapshot) {
+    //    // return Homepage();
+    //     if (snapshot.hasData) {
+    //       return TabScreen();
+    //     } else
+    //       return Landing();
+    //   }),
+    // );
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => TabScreen()// Landing(),//SecondaryHomepage()
         ));

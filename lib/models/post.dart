@@ -19,7 +19,7 @@ class PostModel {
     this.username =e;
     this.description =f;
     this.timestamp = timestamp;
-    this.mediaUrl ="https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
+    this.mediaUrl = h;// "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
   }
 
   // PostModel({

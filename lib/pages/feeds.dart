@@ -35,16 +35,16 @@ class p{
     this.username =e;
     this.description =f;
     this.timestamp = timestamp;
-    this.mediaUrl ="https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
+    this.mediaUrl =h;
   }
 
  static List <PostModel> Pl =[
-  PostModel("a", "b", "c", "d", "e", "f", "h"),
-   PostModel("a", "b", "c", "d", "e", "f", "h"),
-   PostModel("a", "b", "c", "d", "e", "f", "h"),
-   PostModel("a", "b", "c", "d", "e", "f", "h"),
-   PostModel("a", "b", "c", "d", "e", "f", "h"),
-   PostModel("a", "b", "c", "d", "e", "f", "h"),
+   PostModel("a3", "b3", "c", "d", "e", "f", "https://thebangladeshtoday.com/wp-content/uploads/2022/10/%E0%A6%AE%E0%A6%B9%E0%A6%AE.jpg"),
+    PostModel("a", "b", "c", "d", "e", "f", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg"),
+   PostModel("a2", "b2", "c", "d", "e", "f", "https://static.toiimg.com/thumb/msid-100280596,width-400,resizemode-4/100280596.jpg"),
+   PostModel("a4", "b4", "c", "d", "e", "f", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr8VI65VyGySt8B_pF86KcP2z7mGZgkBSa_w&usqp=CAU"),
+   PostModel("a5", "b5", "c", "d", "e", "f", "https://images.hindustantimes.com/img/2022/11/10/1600x900/selena_1668082488113_1668082488308_1668082488308.jpg"),
+   PostModel("a6", "b6", "c", "d", "e", "f", "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/bltf7695f98c1f01bd9/62cbfb91c9db8842cf76cb5b/GHP_MESSI-BOOTS_16-9.jpg"),
 
 
   // p("a", "b", "c", "d", "e", "f", "h"),

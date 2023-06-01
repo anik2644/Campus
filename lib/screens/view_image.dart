@@ -59,7 +59,8 @@ class _ViewImageState extends State<ViewImage> {
                         Icon(Ionicons.alarm_outline, size: 13.0),
                         SizedBox(width: 3.0),
                         Text(
-                          widget.post?.timestamp as String,//timeago.format(widget.post!.timestamp!.toDate()),
+                         "donne"// Timestamp.now().toString()
+                           //widget.post?.timestamp as String,//timeago.format(widget.post!.timestamp!.toDate()),
                         ),
                       ],
                     ),

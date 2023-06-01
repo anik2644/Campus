@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/post.dart';
+import 'package:social_media_app/pages/feeds.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
 import 'package:social_media_app/services/post_service.dart';
 import 'package:social_media_app/services/user_service.dart';
@@ -157,7 +158,9 @@ class PostsViewModel extends ChangeNotifier {
     try {
       loading = true;
       notifyListeners();
-      await postService.uploadPost(mediaUrl!, location!, description!);
+      int l = p.Pl.length;
+      p.Pl.add(PostModel("a + $l", "b +$l", "c", "d", "e", "f", "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRii-t1MXdpFuWrIBnub79UYyYwwhyRI4nEc2B6tQjw41ADLqZv-yL2mDh0wT33pY43tZMmeYphK0qTfiY"));
+     // await postService.uploadPost(mediaUrl!, location!, description!);
       loading = false;
       resetPost();
       notifyListeners();

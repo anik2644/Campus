@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media_app/HP/HomePage/HomePage.dart';
 import 'package:social_media_app/components/life_cycle_event_handler.dart';
 import 'package:social_media_app/landing/landing_page.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
@@ -50,10 +51,11 @@ class _MyAppState extends State<MyApp> {
             StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: ((BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  return TabScreen();
-                } else
-                  return Landing();
+                return Homepage();
+                // if (snapshot.hasData) {
+                //   return TabScreen();
+                // } else
+                //   return Landing();
               }),
             ),
           );

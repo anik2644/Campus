@@ -63,7 +63,7 @@ class _AboutUsState extends State<AboutUs> {
                         CircleAvatar(
                           radius: 50,
                           //1UMwWOeTaQMxxxYt5hr6c7sHnSzG-MZW4/view
-                          backgroundImage: NetworkImage("https://drive.google.com/uc?export=view&id=1UMwWOeTaQMxxxYt5hr6c7sHnSzG-MZW4"),
+                          backgroundImage: NetworkImage("https://avatars.githubusercontent.com/u/663575?v=4"),
                         ),
                         SizedBox(width: 20,),
                         Column(
@@ -71,7 +71,7 @@ class _AboutUsState extends State<AboutUs> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
 
-                            Text(" Nafisa Anzum \n 26 Batch \n CSE Department\n University Of Dhaka", style: TextStyle(fontSize: 15,),),
+                            Text("  Vendata \n 26 Batch \n CSE Department\n University Of Dhaka", style: TextStyle(fontSize: 15,),),
                           ],
                         ),
                       ],

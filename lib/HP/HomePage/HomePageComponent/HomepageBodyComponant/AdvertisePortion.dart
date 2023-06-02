@@ -53,7 +53,7 @@ class _AdvertisePortionState extends State<AdvertisePortion> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        Navigator.pushReplacement(context,
+        Navigator.push(context,
             MaterialPageRoute(builder: (context) => EcommerceApp()// Landing(),//SecondaryHomepage()
             ));
 

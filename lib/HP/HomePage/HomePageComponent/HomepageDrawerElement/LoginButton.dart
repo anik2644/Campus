@@ -145,7 +145,7 @@ class _LoginButtonState extends State<LoginButton> {
 
 
           },
-          child:  Text("Share"),
+          child:  Text("Login"),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,46 +8,47 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Firebase Auth Example',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Firebase Auth'),
-        ),
-        body: Center(
-          child: AuthStatus(),
-        ),
-      ),
+      title: 'Refresh Example',
+      home: refPrac(),
     );
   }
 }
 
-class AuthStatus extends StatefulWidget {
+class refPrac extends StatefulWidget {
   @override
-  _AuthStatusState createState() => _AuthStatusState();
+  _refPracState createState() => _refPracState();
 }
 
-class _AuthStatusState extends State<AuthStatus> {
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  User _currentUser;
+class _refPracState extends State<refPrac> {
+  List<String> items = ['Item 1', 'Item 2', 'Item 3'];
 
-  _currentUser = _firebaseAuth.currentUser;
-  if (_currentUser != null) {
-  return Text('User is logged in');
-  } else {
-  return Text('User is not logged in');
-  }
-  @override
-  void initState() {
-    super.initState();
-    _currentUser = _firebaseAuth.currentUser;
+  Future<void> refreshData() async {
+    // Simulate a delay before refreshing the data
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      // Update the data here
+      items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_currentUser != null) {
-      return Text('User is logged in');
-    } else {
-      return Text('User is not logged in');
-    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Refresh Example'),
+      ),
+      body: RefreshIndicator(
+        onRefresh: refreshData,
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(items[index]),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

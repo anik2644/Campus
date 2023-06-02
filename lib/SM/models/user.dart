@@ -11,14 +11,47 @@ class UserModel {
   Timestamp? lastSeen;
   bool? isOnline;
 
+ static String? getPhotourl(String email)
+ {
+
+   int matchedIndex = um.indexWhere((item) => item.email == email);
+
+   if (matchedIndex != -1) {
+     return um[matchedIndex].photoUrl;
+
+   } else {
+     return "https://pbs.twimg.com/profile_images/1263848725736157184/o7_sJkKY_400x400.jpg";
+   }
+   // for(int i=0;i<um.length;i++)
+   //   {
+   //
+   //   }
+ }
+
+
+  static int getUserIndex(String email)
+  {
+
+    int matchedIndex = um.indexWhere((item) => item.email == email);
+
+    if (matchedIndex != -1) {
+      return matchedIndex;
+
+    } else {
+      return 0;
+    }
+    // for(int i=0;i<um.length;i++)
+    //   {
+    //
+    //   }
+  }
+
+
 
   static List <UserModel> um = [
-    UserModel("a", "b", "c", "d", "e", "f", "h"),
-    UserModel("a", "b", "c", "d", "e", "f", "h"),
-    UserModel("a", "b", "c", "d", "e", "f", "h"),
-    UserModel("a", "b", "c", "d", "e", "f", "h"),
-    UserModel("a", "b", "c", "d", "e", "f", "h"),
-
+    UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h"),
+    UserModel("masud", "masudrana@gmail.com", "userID", "https://i.guim.co.uk/img/media/b10f15a0955d23826586810847cc3431e36616f1/0_508_2065_1238/master/2065.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b6b0e2df577f6dc993d68b672483ef58", "e", "f", "h"),
+    UserModel("mhd", "mhdank15865@gmail.com", "userID", "https://pbs.twimg.com/media/CktAAjwWsAEQawS.jpg", "e", "f", "h"),
 
   ];
 
@@ -26,7 +59,7 @@ class UserModel {
     this.username= a;
     this.email=b;
     this.id=c;
-    this.photoUrl="https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg";
+    this.photoUrl= d;
     this.signedUpAt= Timestamp.now();
     this.isOnline= true;
     this.lastSeen= Timestamp.now();

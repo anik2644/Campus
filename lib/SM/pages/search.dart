@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/SM/pages/profile.dart';
-
+import 'package:flutter_animate/flutter_animate.dart';
 import '../chats/conversation.dart';
 import '../models/user.dart';
 import '../utils/constants.dart';
@@ -80,11 +80,11 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          Constants.appName,
-          style: TextStyle(
-            fontWeight: FontWeight.w900,
-          ),
-        ),
+          "ঢাবিয়ান সমাচার",//"Press me to enter",
+          style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
+        ).animate(
+          onPlay: (controller) => controller.repeat(), // loop
+        ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) ,
         centerTitle: true,
       ),
       body: RefreshIndicator(

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/HP/HomePage/HomePage.dart';
+import 'package:social_media_app/m.dart';
+import 'package:social_media_app/t.dart';
+import 'package:social_media_app/tt.dart';
 // import 'package:social_media_app/components/life_cycle_event_handler.dart';
 // import 'package:social_media_app/landing/landing_page.dart';
 // import 'package:social_media_app/screens/mainscreen.dart';
@@ -54,7 +57,7 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home:Homepage(),
+            home: Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
             // StreamBuilder(
             //   stream: FirebaseAuth.instance.authStateChanges(),
             //   builder: ((BuildContext context, snapshot) {

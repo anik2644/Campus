@@ -1,6 +1,6 @@
 import 'dart:io';
 
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
 
-  PostModel pp =  PostModel("a3", "b3", "c", "d", "e", "f", "https://thebangladeshtoday.com/wp-content/uploads/2022/10/%E0%A6%AE%E0%A6%B9%E0%A6%AE.jpg");
+  PostModel pp =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
 
   String imgurl= " ";
   int flag =0;
@@ -65,18 +65,70 @@ class _CreatePostState extends State<CreatePost> {
               GestureDetector(
                 onTap: () async {
 
-                  // DateTime now = DateTime.now();
-                  // String formattedTime = DateFormat.Hm().format(now); // Format the time as hour:minute
-                  // String formattedDay = DateFormat.EEEE().format(now); // Format the day of the week
-                  // String _currentTime = '$formattedTime\n$formattedDay';
-                  pp.username= firebaseAuth.currentUser!.uid;
-                  pp.timestamp= Timestamp.now();
+                  pp.ownerId= firebaseAuth.currentUser!.email;
 
+                  int ind = UserModel.getUserIndex(pp.ownerId ?? "");
+                  pp.username = UserModel.um[ind].username;
+                  pp.postId= (p.Pl.length +1).toString();
+
+                  DateTime now = DateTime.now();
+                  String formattedDateTime = DateFormat('EEEE, MMMM d, \nHH:mm, yyyy' ).format(now);
+                  pp.timestamp= formattedDateTime;
                   p.Pl.add(pp);
-                  //_currentTime;
+
+                  print(pp.postId);
+                  print(pp.username);
+                  print(pp.ownerId);
+                  print(pp.location);
+                  print(pp.description);
+                  print(pp.id);
+                  print(pp.timestamp);
+                  print(pp.mediaUrl);
+
+
+
+
+
+                    // Replace 'your_collection' with the actual name of your Firestore collection
+                    CollectionReference collection = FirebaseFirestore.instance.collection('all_Posts');
+
+                    collection
+                        .add({
+
+                    'postId' : pp.postId,
+
+
+                    'userName': pp.username,
+
+
+                    'ownerId' :pp.ownerId,
+
+
+                    'location' :pp.location,
+
+
+                    'description' :pp.description,
+                    'id' :pp.id,
+
+
+                    'timestamp' :pp.timestamp,
+                    'mediaUrl' :pp.mediaUrl,
+
+
+
+                    // 'postId' :
+                      // 'name': name,
+                      // 'age': age,
+                    })
+                        .then((value) => print('Data added to Firestore'))
+                        .catchError((error) => print('Failed to add data: $error'));
+
+
+
                   print(">>");
-                //  await viewModel.uploadPosts(context);
                   Navigator.pop(context);
+                  //_currentTime;
+                //  await viewModel.uploadPosts(context);
                  // viewModel.resetPost();
                 },
                 child: Padding(
@@ -303,7 +355,7 @@ class _CreatePostState extends State<CreatePost> {
 
     //Create a reference for the image to be stored
     Reference referenceImageToUpload =
-    referenceDirImages.child('name');
+    referenceDirImages.child(uniqueFileName);
 
     //Handle errors/success
     try {

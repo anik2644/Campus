@@ -215,7 +215,13 @@ class _CommentsState extends State<Comments> {
                   Row(
                     children: [
                       Text(
-                        timeago.format(widget.post!.timestamp!.toDate()),
+
+                        widget.post?.timestamp ?? ""
+                        //nullableString ?? ""
+                        // widget.post?.timestamp== null?
+                        //     "8:10" :  widget.post?.timestamp ?? ""
+                        ,
+                       // timeago.format(widget.post!.timestamp!.toDate()),
                         style: TextStyle(),
                       ),
                       SizedBox(width: 3.0),

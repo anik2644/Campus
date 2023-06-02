@@ -62,21 +62,25 @@ class UserPost extends StatelessWidget {
         closedBuilder: (BuildContext context, VoidCallback openContainer) {
 
           return Stack(
+
             children: [
               Column(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0),
                     ),
+
                     child: CustomImage(
                       imageUrl: post?.mediaUrl ?? '',
                       height: 350.0,
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),
+
+
                   ),
+
+
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 3.0, vertical: 5.0),
@@ -174,7 +178,7 @@ class UserPost extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            "12:10",
+                          '${post?.timestamp ?? ""}',
                            // timeago.format(post!.timestamp!.toDate()),
                             style: TextStyle(fontSize: 10.0),
                           ),
@@ -183,10 +187,14 @@ class UserPost extends StatelessWidget {
                       ],
                     ),
                   )
+
+
                 ],
               ),
-              buildUser(context),
+              buildUser(context,post),
             ],
+
+
           );
         },
       ),
@@ -314,14 +322,15 @@ class UserPost extends StatelessWidget {
     );
   }
 
-  buildUser(BuildContext context) {
+  buildUser(BuildContext context, PostModel? post) {
     bool isMe = currentUserId() == post!.ownerId;
     return StreamBuilder(
       stream: usersRef.doc(post!.ownerId).snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           DocumentSnapshot snap = snapshot.data!;
-          UserModel user = UserModel.um[0];
+          int ind = UserModel.getUserIndex(post.ownerId ?? "");
+          UserModel user = UserModel.um[ind];
           // UserModel.fromJson(snap.data() as Map<String, dynamic>);
           return Visibility(
             visible: !isMe,
@@ -350,7 +359,7 @@ class UserPost extends StatelessWidget {
                                     Theme.of(context).colorScheme.secondary,
                                 child: Center(
                                   child: Text(
-                                    '${user.username![0].toUpperCase()}',
+                                    '${post.ownerId.toString().toUpperCase()}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.0,
@@ -379,7 +388,7 @@ class UserPost extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
-                              '${post?.location ?? 'Wooble'}',
+                              '${post?.ownerId ?? ""}',
                               style: TextStyle(
                                 fontSize: 10.0,
                                 color: Color(0xff4D4D4D),

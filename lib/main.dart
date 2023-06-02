@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/HP/HomePage/HomePage.dart';
-import 'package:social_media_app/m.dart';
-import 'package:social_media_app/t.dart';
-import 'package:social_media_app/tt.dart';
+import 'package:social_media_app/test/dr.dart';
+import 'package:social_media_app/test/m.dart';
+import 'package:social_media_app/test/t.dart';
+import 'package:social_media_app/test/tt.dart';
 // import 'package:social_media_app/components/life_cycle_event_handler.dart';
 // import 'package:social_media_app/landing/landing_page.dart';
 // import 'package:social_media_app/screens/mainscreen.dart';
@@ -21,7 +22,7 @@ import 'SM/utils/config.dart';
 import 'SM/utils/constants.dart';
 import 'SM/utils/providers.dart';
 import 'SM/view_models/theme/theme_view_model.dart';
-import 'loading.dart';
+import 'test/loading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home: Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
+            home: Homepage()//Drawerexample()//Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
             // StreamBuilder(
             //   stream: FirebaseAuth.instance.authStateChanges(),
             //   builder: ((BuildContext context, snapshot) {

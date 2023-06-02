@@ -45,6 +45,7 @@ class _AdvertisePortionState extends State<AdvertisePortion> {
       throw "Can not launch url";
     }
   }
+  //_launchURL("www.rokomari.com");
 
   @override
   Widget build(BuildContext context) {

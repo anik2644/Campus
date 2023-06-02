@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:social_media_app/SM/screens/view_image.dart';
 import '../chats/recent_chats.dart';
 import '../models/post.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/user.dart';
 import '../utils/constants.dart';
 import '../utils/firebase.dart';
@@ -255,6 +256,15 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
  */
 
 
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri(scheme: "https", host: url);
+    if(!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw "Can not launch url";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +282,16 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
         title:  Text(
           "ঢাবিয়ান সমাচার",//"Press me to enter",
           style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
@@ -306,6 +326,173 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
           SizedBox(width: 20.0),
         ],
       ),
+      drawer:  Drawer(
+        backgroundColor: Colors.black,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+
+              ),
+
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 90,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            'https://cdn3.iconfinder.com/data/icons/eziconic-v1-0/256/02.png',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Portals Here !!!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                 /* Expanded(
+                    child: Text(
+                      'Follow here to be updated..',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),*/
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2), // Adjust the position of the shadow
+                  ),
+                ],
+              ),
+              child: ListTile(
+                leading:CircleAvatar(
+                  radius: 25,
+                  backgroundImage: NetworkImage(
+                    'https://images.prothomalo.com/prothomalo-bangla/2021-01/1d75151c-eff9-4e9f-ac28-aebc4618d00f/palo_bangla_og.png',
+                  ),
+                ),
+                title: Text('Prothom Alo',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),),
+
+                onTap: () {
+
+                  _launchURL("www.prothomalo.com");
+                  // Handle drawer item tap
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2), // Adjust the position of the shadow
+                  ),
+                ],
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: 25,
+                  backgroundImage: NetworkImage(
+                    'https://media.licdn.com/dms/image/C560BAQHXD8X7v34Ygg/company-logo_400_400/0/1593498509122?e=2147483647&v=beta&t=JrCVIAMRRVpGfckybkhxFjIHS_20KeqWBYTn3_qchvA',
+                  ),
+                ),
+                title: Text('Daily Campus',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),),
+                onTap: () {
+                  // Handle drawer item tap
+
+                  _launchURL("www.thedailycampus.com");
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2), // Adjust the position of the shadow
+                  ),
+                ],
+              ),
+              child: ListTile(
+                leading:  CircleAvatar(
+                  radius: 25,
+                  backgroundImage: NetworkImage(
+                    'https://i1.sndcdn.com/avatars-RGgXraz1SPFZKU7x-9uYAAQ-t500x500.jpg',
+                  ),
+                ),
+                title: Text('Reuters',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),),
+                onTap: () {
+
+                  _launchURL("www.reuters.com");
+                  // Handle drawer item tap
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2), // Adjust the position of the shadow
+                  ),
+                ],
+              ),
+              child: ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Back',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),),
+                onTap: () {
+                  // Handle drawer item tap
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+
       body:
       Stack(
         children: [

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../Ecommerce/EcommerceApp.dart';
 //https://i.ytimg.com/vi/cWLCbjyYPdc/hqdefault.jpg?sqp=-oaymwEmCOADEOgC8quKqQMa8AEB-AHOBYAC4AOKAgwIABABGGUgZShlMA8=&rs=AOn4CLCU7fqWXdl_D6N_JmtFwuZeKmHeqw
 class AdvertisePortion extends StatefulWidget {
 
@@ -51,38 +53,13 @@ class _AdvertisePortionState extends State<AdvertisePortion> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => EcommerceApp()// Landing(),//SecondaryHomepage()
+            ));
 
-        _launchURL("www.rokomari.com");
-
-//        _launchInBrowser('https://www.google.com/');
-
-/*
-        Future<void> _launchInBrowser(String url) async {
-          url='https://www.google.com/';
-          if (await canLaunch(url)) {
-            await launch(
-              url,
-              forceSafariVC: false,
-              forceWebView: false,
-              headers: <String, String>{'header_key': 'header_value'},
-            );
-          } else {
-            throw 'Could not launch $url';
-          }
-        }
-
- */
-        // //Uri googleUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
-        // Uri googleUrl = Uri.parse('https://www.google.com/');
-        //
-        // if (await canLaunchUrl(googleUrl)) {
-        // await launchUrl(googleUrl);
-        // } else {
-        // throw 'Could not launch $googleUrl';
-        // }
+       // _launchURL("www.rokomari.com");
 
 
-     //  _launchUrl("https://www.du.ac.bd/");
       },
       child: Padding(
         padding:  EdgeInsets.only(
@@ -90,11 +67,12 @@ class _AdvertisePortionState extends State<AdvertisePortion> {
           right: 50
         ),
         child: ClipOval(
+
           child: Container(
             height: 250,
             child: //Center(child: Text("Reserved"))
 
-            Image.network("https://i.ytimg.com/vi/cWLCbjyYPdc/hqdefault.jpg?sqp=-oaymwEmCOADEOgC8quKqQMa8AEB-AHOBYAC4AOKAgwIABABGGUgZShlMA8=&rs=AOn4CLCU7fqWXdl_D6N_JmtFwuZeKmHeqw"),
+            Image.network("https://www.bhf.org.uk/-/media/images/information-support/heart-matters/2022/july-2022/nutrition/saturatefat-foods-ss-no-exp-620x400.png?rev=bdd842b81ab24204beb5100dcf0b0939"),
             //Image.network("https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Logo_of_Bangladesh_Chhatra_League.svg/800px-Logo_of_Bangladesh_Chhatra_League.svg.png"),
           ),
         ),

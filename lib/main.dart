@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/HP/HomePage/HomePage.dart';
+import 'package:social_media_app/ecm.dart';
 import 'package:social_media_app/test/dr.dart';
 import 'package:social_media_app/test/m.dart';
 import 'package:social_media_app/test/t.dart';
@@ -22,6 +23,8 @@ import 'SM/utils/config.dart';
 import 'SM/utils/constants.dart';
 import 'SM/utils/providers.dart';
 import 'SM/view_models/theme/theme_view_model.dart';
+import 'Ecommerce/EcommerceApp.dart';
+
 import 'test/loading.dart';
 
 void main() async {
@@ -36,6 +39,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   void initState() {
     super.initState();
@@ -59,7 +63,10 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home: Homepage()//Drawerexample()//Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
+            home:Homepage(),
+            //ProductDetailsPage(),
+            //PM(image: 'assets/images/Curzon.jpg', name: 'Honey', price: '19.98',)
+            //ProductItem(image: 'assets/images/Curzon.jpg', name: 'Honey', price: '19.98',),//EcommerceApp(),// Homepage()//Drawerexample()//Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
             // StreamBuilder(
             //   stream: FirebaseAuth.instance.authStateChanges(),
             //   builder: ((BuildContext context, snapshot) {

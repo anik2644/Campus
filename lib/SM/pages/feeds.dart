@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:social_media_app/SM/screens/view_image.dart';
 import '../chats/recent_chats.dart';
 import '../models/post.dart';
+import '../models/user.dart';
 import '../utils/constants.dart';
 import '../utils/firebase.dart';
 import '../widgets/story_widget.dart';
@@ -62,6 +63,66 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     super.initState();
   }
 
+  Future<void> fetchUser() async {
+
+    CollectionReference collection = FirebaseFirestore.instance.collection('users');
+    QuerySnapshot querySnapshot = await collection.get();
+
+    print(querySnapshot.docs.length);
+
+    querySnapshot.docs.forEach((doc) {
+
+      //   print(doc.get('id'));
+
+
+      String bio = doc.get('bio');
+      String country = doc.get('country');
+      String email = doc.get('email');
+      String gender = doc.get('gender');
+      String id = doc.get('id');
+      String photourl = doc.get('photoUrl');
+      String userName = doc.get('userName');
+     // String mediaUrl = doc.get('mediaUrl');
+
+
+      UserModel data =  UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h");
+      data.username =userName;
+      data.email = email;
+      data.id = id;
+      data.photoUrl =photourl;
+      data.bio =bio;
+      data.country = country;
+
+      // data.timestamp =timestamp;
+      // data.mediaUrl = mediaUrl;
+      // data.description= description;
+      // data.location = loc;
+      // data.ownerId =ownerId;
+      // data.username = userName;
+      // data.postId = postID;
+
+      print(data.email);
+
+      bool exists = UserModel.um.any((entity) => entity.email == data.email);
+      if(exists)
+      {
+        print("already in the list");
+      }
+      else
+      {
+        UserModel.um.add(data);
+      }
+
+
+
+    });
+
+    setState(() {
+
+    });
+  }
+
+
   Future<void> fetchData() async {
 
       CollectionReference collection = FirebaseFirestore.instance.collection('all_Posts');
@@ -106,7 +167,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
             p.Pl.add(data);
           }
 
-
+        fetchUser();
 
       });
 

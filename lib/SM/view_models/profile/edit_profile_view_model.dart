@@ -12,6 +12,8 @@ import '../../models/user.dart';
 import '../../services/user_service.dart';
 import '../../utils/constants.dart';
 
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 class EditProfileViewModel extends ChangeNotifier {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -87,6 +89,49 @@ class EditProfileViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> pickImagee() async {
+
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file =
+    await imagePicker.pickImage(source: ImageSource.gallery);
+    print('${file?.path}');
+
+    if (file == null) return;
+    //Import dart:core
+    String uniqueFileName =
+    DateTime.now().millisecondsSinceEpoch.toString();
+
+    /*Step 2: Upload to Firebase storage*/
+    //Install firebase_storage
+    //Import the library
+
+    //Get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child('images');
+
+    //Create a reference for the image to be stored
+    Reference referenceImageToUpload =
+    referenceDirImages.child(uniqueFileName);
+
+    //Handle errors/success
+    try {
+      //Store the file
+      await referenceImageToUpload.putFile(File(file!.path));
+      //Success: get the download URL
+
+      String imgurl= " ";
+      imgurl = await referenceImageToUpload.getDownloadURL();
+
+      print("Img URL:" +imgurl);
+    } catch (error) {
+      //Some error occurred
+    }
+
+  }
+
+  // predefined pickimage
+  /*
   pickImage({bool camera = false, BuildContext? context}) async {
     loading = true;
     notifyListeners();
@@ -125,7 +170,7 @@ class EditProfileViewModel extends ChangeNotifier {
       showInSnackBar('Cancelled', context);
     }
   }
-
+*/
   clear() {
     image = null;
     notifyListeners();

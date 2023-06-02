@@ -2,6 +2,7 @@
 // import 'package:campousia/Screen/SecondaryHomePage/SecondaryHomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/SM/models/user.dart';
 import 'package:social_media_app/SM/screens/mainscreen.dart';
 
 //import '../../../../../landing/landing_page.dart';
@@ -68,9 +69,15 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
 
         if (_currentUser != null)  {
           print('yes');
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
-              ));
+
+          UserModel.UserRefresh();
+
+          setState(() {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
+                ));
+          });
+     
         } else
           {
             print('no');

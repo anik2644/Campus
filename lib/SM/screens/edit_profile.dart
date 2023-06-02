@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../components/text_form_builder.dart';
 import '../models/user.dart';
@@ -28,6 +34,10 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   UserModel? user;
+  String imgurl= " ";
+  String country =" ";
+  String Username = " ";
+  String bio = " ";
 
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -49,7 +59,42 @@ class _EditProfileState extends State<EditProfile> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 25.0),
                 child: GestureDetector(
-                  onTap: () => viewModel.editProfile(context),
+                  onTap: () async {
+
+
+
+                    print(country);
+                    print(imgurl);
+                    print(bio);
+                    print(firebaseAuth.currentUser!.uid);
+                    print(firebaseAuth.currentUser!.photoURL);
+
+
+
+                    //CollectionReference collection = FirebaseFirestore.instance.collection('users');
+
+                    CollectionReference collection =
+                    FirebaseFirestore.instance.collection('users');
+                    DocumentReference document = collection.doc(firebaseAuth.currentUser!.uid);
+
+                    try {
+                      await document.update({
+
+                       // 'field_name': 'new_value',
+                        'bio': bio,
+                        'country' : country,
+                        'username' : Username,
+                        'photoUrl' : imgurl,
+
+
+                      });
+                      print('Field updated successfully.');
+                    } catch (e) {
+                      print('Error updating field: $e');
+                    }
+
+                    // viewModel.editProfile(context);
+                  },
                   child: Text(
                     'SAVE',
                     style: TextStyle(
@@ -67,7 +112,10 @@ class _EditProfileState extends State<EditProfile> {
           children: [
             Center(
               child: GestureDetector(
-                onTap: () => viewModel.pickImage(),
+                onTap: () {
+                  pickImagee();
+                  //viewModel.pickImage();
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -119,6 +167,47 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  Future<void> pickImagee() async {
+
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file =
+    await imagePicker.pickImage(source: ImageSource.gallery);
+    print('${file?.path}');
+
+    if (file == null) return;
+    //Import dart:core
+    String uniqueFileName =
+    DateTime.now().millisecondsSinceEpoch.toString();
+
+    /*Step 2: Upload to Firebase storage*/
+    //Install firebase_storage
+    //Import the library
+
+    //Get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child('images');
+
+    //Create a reference for the image to be stored
+    Reference referenceImageToUpload =
+    referenceDirImages.child(uniqueFileName);
+
+    //Handle errors/success
+    try {
+      //Store the file
+      await referenceImageToUpload.putFile(File(file!.path));
+      //Success: get the download URL
+
+      //String imgurl= " ";
+      imgurl = await referenceImageToUpload.getDownloadURL();
+
+      print("Img URL:" +imgurl);
+    } catch (error) {
+      //Some error occurred
+    }
+
+  }
+
   buildForm(EditProfileViewModel viewModel, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -137,7 +226,8 @@ class _EditProfileState extends State<EditProfile> {
               textInputAction: TextInputAction.next,
               validateFunction: Validations.validateName,
               onSaved: (String val) {
-                viewModel.setUsername(val);
+                Username = val;
+               // viewModel.setUsername(val);
               },
             ),
             SizedBox(height: 10.0),
@@ -149,6 +239,7 @@ class _EditProfileState extends State<EditProfile> {
               textInputAction: TextInputAction.next,
               validateFunction: Validations.validateName,
               onSaved: (String val) {
+                country =val;
                 viewModel.setCountry(val);
               },
             ),
@@ -168,9 +259,11 @@ class _EditProfileState extends State<EditProfile> {
                 return null;
               },
               onSaved: (String? val) {
-                viewModel.setBio(val!);
+                bio= val!;
+                //viewModel.setBio(val!);
               },
               onChanged: (String val) {
+                bio= val;
                 viewModel.setBio(val);
               },
             ),

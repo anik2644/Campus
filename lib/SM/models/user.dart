@@ -47,6 +47,63 @@ class UserModel {
   }
 
 
+  static Future<void> UserRefresh() async {
+
+    UserModel.um.clear();
+    CollectionReference collection = FirebaseFirestore.instance.collection('users');
+    QuerySnapshot querySnapshot = await collection.get();
+
+    print(querySnapshot.docs.length);
+
+    querySnapshot.docs.forEach((doc) {
+
+      //   print(doc.get('id'));
+
+
+      String bio = doc.get('bio');
+      String country = doc.get('country');
+      String email = doc.get('email');
+      String gender = doc.get('gender');
+      String id = doc.get('id');
+      String photourl = doc.get('photoUrl');
+      String userName = doc.get('userName');
+      // String mediaUrl = doc.get('mediaUrl');
+
+
+      UserModel data =  UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h");
+      data.username =userName;
+      data.email = email;
+      data.id = id;
+      data.photoUrl =photourl;
+      data.bio =bio;
+      data.country = country;
+
+      // data.timestamp =timestamp;
+      // data.mediaUrl = mediaUrl;
+      // data.description= description;
+      // data.location = loc;
+      // data.ownerId =ownerId;
+      // data.username = userName;
+      // data.postId = postID;
+
+      print(data.email);
+
+      bool exists = UserModel.um.any((entity) => entity.email == data.email);
+      if(exists)
+      {
+        print("already in the list");
+      }
+      else
+      {
+        UserModel.um.add(data);
+      }
+
+
+
+    });
+  }
+
+
 
   static List <UserModel> um = [
     UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h"),

@@ -43,6 +43,8 @@ class _EditProfileState extends State<EditProfile> {
     return firebaseAuth.currentUser!.uid;
   }
 
+  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
+
   @override
   Widget build(BuildContext context) {
     EditProfileViewModel viewModel = Provider.of<EditProfileViewModel>(context);
@@ -132,12 +134,13 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  child: viewModel.imgLink != null
+                  child: UserModel.um[ind].photoUrl != null
+                    //viewModel.imgLink != null
                       ? Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: CircleAvatar(
                             radius: 65.0,
-                            backgroundImage: NetworkImage(viewModel.imgLink!),
+                            backgroundImage: NetworkImage( UserModel.um[ind].photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
                           ),
                         )
                       : viewModel.image == null
@@ -153,7 +156,8 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsets.all(1.0),
                               child: CircleAvatar(
                                 radius: 65.0,
-                                backgroundImage: FileImage(viewModel.image!),
+                                backgroundImage: NetworkImage(imgurl),
+                                //FileImage(viewModel.image!),
                               ),
                             ),
                 ),

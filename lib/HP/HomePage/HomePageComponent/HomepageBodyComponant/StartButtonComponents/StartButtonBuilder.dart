@@ -68,16 +68,18 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
 
 
         if (_currentUser != null)  {
+
+
           print('yes');
 
-          UserModel.UserRefresh();
+          //UserModel.UserRefresh();
 
           setState(() {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
                 ));
           });
-     
+
         } else
           {
             print('no');

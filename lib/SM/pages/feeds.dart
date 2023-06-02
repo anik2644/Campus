@@ -117,9 +117,6 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
     });
 
-    setState(() {
-
-    });
   }
 
 
@@ -167,7 +164,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
             p.Pl.add(data);
           }
 
-        fetchUser();
+       // fetchUser();
 
       });
 
@@ -177,7 +174,68 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   }
 
 
-  List<String> items = ['Item 1', 'Item 2', 'Item 3'];
+  //List<String> items = ['Item 1', 'Item 2', 'Item 3'];
+
+  /*
+  Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+      future: UserModel.UserRefresh(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Scaffold(
+            body: PageTransitionSwitcher(
+              transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  ) {
+                return FadeThroughTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+              child: pages[_page]['page'],
+            ),
+            bottomNavigationBar: BottomAppBar(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 5),
+                  for (Map item in pages)
+                    item['index'] == 2
+                        ? buildFab()
+                        : Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: IconButton(
+                        icon: Icon(
+                          item['icon'],
+                          color: item['index'] != _page
+                              ? Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black
+                              : Theme.of(context).colorScheme.secondary,
+                          size: 25.0,
+                        ),
+                        onPressed: () => navigationTapped(item['index']),
+                      ),
+                    ),
+                  SizedBox(width: 5),
+                ],
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+ */
 
   @override
   Widget build(BuildContext context) {
@@ -248,14 +306,16 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
               children: [
                 //StoryWidget(),
                 Container(
-                    height: MediaQuery.of(context).size.height,
+                    //height: MediaQuery.of(context).size.height,
                     child:  ListView.builder(
                       controller: scrollController,
                       itemCount: p.Pl.length,
                       shrinkWrap: true,
+                     //  physics: ScrollPhysics(),
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         PostModel posts = p.Pl[index];
+                        print(index);
                         //PostModel.fromJson(docs[index].data());
                         return Padding(
                           padding: const EdgeInsets.all(10.0),

@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:social_media_app/SM/models/user.dart';
 // import 'package:social_media_app/components/fab_container.dart';
 // import 'package:social_media_app/pages/notification.dart';
 // import 'package:social_media_app/pages/profile.dart';
@@ -56,6 +57,69 @@ class _TabScreenState extends State<TabScreen> {
       'index': 4,
     },
   ];
+
+  /*
+  Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+      future: UserModel.UserRefresh(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Scaffold(
+            body: PageTransitionSwitcher(
+              transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  ) {
+                return FadeThroughTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+              child: pages[_page]['page'],
+            ),
+            bottomNavigationBar: BottomAppBar(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 5),
+                  for (Map item in pages)
+                    item['index'] == 2
+                        ? buildFab()
+                        : Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: IconButton(
+                        icon: Icon(
+                          item['icon'],
+                          color: item['index'] != _page
+                              ? Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black
+                              : Theme.of(context).colorScheme.secondary,
+                          size: 25.0,
+                        ),
+                        onPressed: () => navigationTapped(item['index']),
+                      ),
+                    ),
+                  SizedBox(width: 5),
+                ],
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+ */
+
+
 
   @override
   Widget build(BuildContext context) {

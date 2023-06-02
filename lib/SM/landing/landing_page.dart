@@ -33,6 +33,8 @@ class _LandingState extends State<Landing> {
                 ),
               ),
             ),
+
+            SizedBox(height: 20,),
             Text(
               "ঢাবিয়ান সমাচার",//"Press me to enter",
               style: TextStyle(fontSize: 30,color: Colors.amber, fontFamily: 'Alkatra',),

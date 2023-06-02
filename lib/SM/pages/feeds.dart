@@ -45,12 +45,15 @@ class Feeds extends StatefulWidget {
 class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  bool isLoading = true;
   int page = 5;
   bool loadingMore = false;
   ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
+
+    fetchData();
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -65,14 +68,20 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
   Future<void> fetchUser() async {
 
+    //print("hey in userfeth upper");
+      UserModel.um.clear();
     CollectionReference collection = FirebaseFirestore.instance.collection('users');
     QuerySnapshot querySnapshot = await collection.get();
 
-    print(querySnapshot.docs.length);
+    // print("hey in userfeth");
+    // print(querySnapshot.docs.length );
+    // print("hey in fetchh");
+    //
+    // int i=0;
 
     querySnapshot.docs.forEach((doc) {
 
-      //   print(doc.get('id'));
+      print(doc.get('id'));
 
 
       String bio = doc.get('bio');
@@ -81,7 +90,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
       String gender = doc.get('gender');
       String id = doc.get('id');
       String photourl = doc.get('photoUrl');
-      String userName = doc.get('userName');
+      String userName = doc.get('username');
      // String mediaUrl = doc.get('mediaUrl');
 
 
@@ -110,11 +119,17 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
       }
       else
       {
+        print("not exist in the list");
         UserModel.um.add(data);
       }
 
 
 
+    });
+
+    print(UserModel.um.length);
+    setState(() {
+      isLoading = false;
     });
 
   }
@@ -167,10 +182,12 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
        // fetchUser();
 
       });
+      print("data fetch done");
+      fetchUser();
 
-      setState(() {
-
-      });
+      // setState(() {
+      //   isLoading = false;
+      // });
   }
 
 
@@ -237,18 +254,22 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   }
  */
 
+
+
   @override
   Widget build(BuildContext context) {
     print('>>>');
     return Scaffold(
       backgroundColor: Colors.black,
       //key: scaffoldKey,
-      /*
-      floatingActionButton: FloatingActionButton(onPressed: () {
 
-        fetchData();
-      },),
-      */
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //
+      //   print("Current USer");
+      //   print(firebaseAuth.currentUser!.email);//firebaseAuth.currentUser
+      //   //fetchData();
+      // },),
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title:  Text(
@@ -286,6 +307,158 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
         ],
       ),
       body:
+      Stack(
+        children: [
+          Visibility(
+            visible: !isLoading,
+            child: RefreshIndicator(
+                  onRefresh: fetchData,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  // controller: scrollController,
+                  //physics: NeverScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //StoryWidget(),
+                      Container(
+                          //height: MediaQuery.of(context).size.height,
+                          child:  ListView.builder(
+                            controller: scrollController,
+                            itemCount: p.Pl.length,
+                            shrinkWrap: true,
+                           //  physics: ScrollPhysics(),
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              PostModel posts = p.Pl[index];
+                              //print(index);
+                              //PostModel.fromJson(docs[index].data());
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: UserPost(post: posts),
+                              );
+                            },
+                          )
+                        /*FutureBuilder(
+                          future: postRef
+                              .orderBy('timestamp', descending: true)
+                              .limit(page)
+                              .get(),
+                          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              var snap = snapshot.data;
+                              List docs = snap!.docs;
+                              return ListView.builder(
+                                controller: scrollController,
+                                itemCount: docs.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  PostModel posts =
+                                      PostModel.fromJson(docs[index].data());
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: UserPost(post: posts),
+                                  );
+                                },
+                              );
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return circularProgress(context);
+                            } else
+                              return Center(
+                                child: Text(
+                                  'No Feeds',
+                                  style: TextStyle(
+                                    fontSize: 26.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              );
+                          },
+                        ),*/
+                      ),
+                    ],
+                  ),
+                ),
+
+                /*
+                SingleChildScrollView(
+                  // controller: scrollController,
+                  //physics: NeverScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //StoryWidget(),
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        child:  ListView.builder(
+                          controller: scrollController,
+                          itemCount: p.Pl.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            PostModel posts = p.Pl[index];
+                            //PostModel.fromJson(docs[index].data());
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: UserPost(post: posts),
+                            );
+                          },
+                        )
+                        /*FutureBuilder(
+                          future: postRef
+                              .orderBy('timestamp', descending: true)
+                              .limit(page)
+                              .get(),
+                          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              var snap = snapshot.data;
+                              List docs = snap!.docs;
+                              return ListView.builder(
+                                controller: scrollController,
+                                itemCount: docs.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  PostModel posts =
+                                      PostModel.fromJson(docs[index].data());
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: UserPost(post: posts),
+                                  );
+                                },
+                              );
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return circularProgress(context);
+                            } else
+                              return Center(
+                                child: Text(
+                                  'No Feeds',
+                                  style: TextStyle(
+                                    fontSize: 26.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              );
+                          },
+                        ),*/
+                      ),
+                    ],
+                  ),
+                ),
+                 */
+              ),
+          ),
+          Visibility(
+            visible: isLoading,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ],
+      ),
+
       /*
       RefreshIndicator(
         color: Theme.of(context).colorScheme.secondary,
@@ -294,144 +467,6 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
             postRef.orderBy('timestamp', descending: true).limit(page).get(),
 
         child: */
-        RefreshIndicator(
-            onRefresh: fetchData,
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            // controller: scrollController,
-            //physics: NeverScrollableScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //StoryWidget(),
-                Container(
-                    //height: MediaQuery.of(context).size.height,
-                    child:  ListView.builder(
-                      controller: scrollController,
-                      itemCount: p.Pl.length,
-                      shrinkWrap: true,
-                     //  physics: ScrollPhysics(),
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        PostModel posts = p.Pl[index];
-                        print(index);
-                        //PostModel.fromJson(docs[index].data());
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: UserPost(post: posts),
-                        );
-                      },
-                    )
-                  /*FutureBuilder(
-                    future: postRef
-                        .orderBy('timestamp', descending: true)
-                        .limit(page)
-                        .get(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasData) {
-                        var snap = snapshot.data;
-                        List docs = snap!.docs;
-                        return ListView.builder(
-                          controller: scrollController,
-                          itemCount: docs.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            PostModel posts =
-                                PostModel.fromJson(docs[index].data());
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: UserPost(post: posts),
-                            );
-                          },
-                        );
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return circularProgress(context);
-                      } else
-                        return Center(
-                          child: Text(
-                            'No Feeds',
-                            style: TextStyle(
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                    },
-                  ),*/
-                ),
-              ],
-            ),
-          ),
-
-          /*
-          SingleChildScrollView(
-            // controller: scrollController,
-            //physics: NeverScrollableScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //StoryWidget(),
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  child:  ListView.builder(
-                    controller: scrollController,
-                    itemCount: p.Pl.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      PostModel posts = p.Pl[index];
-                      //PostModel.fromJson(docs[index].data());
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: UserPost(post: posts),
-                      );
-                    },
-                  )
-                  /*FutureBuilder(
-                    future: postRef
-                        .orderBy('timestamp', descending: true)
-                        .limit(page)
-                        .get(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasData) {
-                        var snap = snapshot.data;
-                        List docs = snap!.docs;
-                        return ListView.builder(
-                          controller: scrollController,
-                          itemCount: docs.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            PostModel posts =
-                                PostModel.fromJson(docs[index].data());
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: UserPost(post: posts),
-                            );
-                          },
-                        );
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return circularProgress(context);
-                      } else
-                        return Center(
-                          child: Text(
-                            'No Feeds',
-                            style: TextStyle(
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                    },
-                  ),*/
-                ),
-              ],
-            ),
-          ),
-           */
-        ),
       );
   }
 

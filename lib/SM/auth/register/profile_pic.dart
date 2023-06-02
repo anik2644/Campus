@@ -3,7 +3,16 @@ import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/SM/screens/mainscreen.dart';
+
 import '../../components/custom_image.dart';
+import '../../utils/firebase.dart';
 import '../../view_models/auth/posts_view_model.dart';
 import '../../widgets/indicators.dart';
 // import 'package:social_media_app/components/custom_image.dart';
@@ -138,8 +147,9 @@ class _ProfilePictureState extends State<ProfilePicture> {
                 leading: Icon(Ionicons.image),
                 title: Text('Gallery'),
                 onTap: () {
-                  Navigator.pop(context);
-                  viewModel.pickImage();
+                 // Navigator.pop(context);
+                  pickImagee();
+                  //viewModel.pickImage();
                   // viewModel.pickProfilePicture();
                 },
               ),
@@ -149,4 +159,72 @@ class _ProfilePictureState extends State<ProfilePicture> {
       },
     );
   }
+
+  String imgurl ="";
+
+  Future<void> pickImagee() async {
+
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file =
+    await imagePicker.pickImage(source: ImageSource.gallery);
+    print('${file?.path}');
+
+    if (file == null) return;
+    //Import dart:core
+    String uniqueFileName =
+    DateTime.now().millisecondsSinceEpoch.toString();
+
+    /*Step 2: Upload to Firebase storage*/
+    //Install firebase_storage
+    //Import the library
+
+    //Get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child('images');
+
+    //Create a reference for the image to be stored
+    Reference referenceImageToUpload =
+    referenceDirImages.child(uniqueFileName);
+
+    //Handle errors/success
+    try {
+      //Store the file
+      await referenceImageToUpload.putFile(File(file!.path));
+      //Success: get the download URL
+
+      //String imgurl= " ";
+      imgurl = await referenceImageToUpload.getDownloadURL();
+
+      print("Img URL:" +imgurl);
+    } catch (error) {
+      //Some error occurred
+    }
+
+
+
+    // update profile pic
+    CollectionReference collection =
+    FirebaseFirestore.instance.collection('users');
+    DocumentReference document = collection.doc(firebaseAuth.currentUser!.uid);
+
+    try {
+      await document.update({
+
+        // 'field_name': 'new_value',
+        'photoUrl' : imgurl,
+
+
+      });
+      print('Field updated successfully.');
+    } catch (e) {
+      print('Error updating field: $e');
+    }
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
+        ));
+   // Navigator.of(context).pushReplacement((builder: context) => TabScreen())
+
+  }
+
 }

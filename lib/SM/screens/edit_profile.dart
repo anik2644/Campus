@@ -34,8 +34,12 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   UserModel? user;
+
+
+  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
   String imgurl= " ";
-  String country =" ";
+  String? country ="";// UserModel.um[ind].photoUrl;
+  //user.photoUrl!.isEmpty;
   String Username = " ";
   String bio = " ";
 
@@ -43,7 +47,7 @@ class _EditProfileState extends State<EditProfile> {
     return firebaseAuth.currentUser!.uid;
   }
 
-  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
+//  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +99,7 @@ class _EditProfileState extends State<EditProfile> {
                       print('Error updating field: $e');
                     }
 
+                    Navigator.of(context).pop();
                     // viewModel.editProfile(context);
                   },
                   child: Text(

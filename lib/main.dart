@@ -21,6 +21,7 @@ import 'SM/utils/config.dart';
 import 'SM/utils/constants.dart';
 import 'SM/utils/providers.dart';
 import 'SM/view_models/theme/theme_view_model.dart';
+import 'loading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home: Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
+            home: Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
             // StreamBuilder(
             //   stream: FirebaseAuth.instance.authStateChanges(),
             //   builder: ((BuildContext context, snapshot) {

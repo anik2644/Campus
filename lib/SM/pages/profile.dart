@@ -65,6 +65,7 @@ class _ProfileState extends State<Profile> {
       isFollowing = doc.exists;
     });
   }
+  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +103,7 @@ class _ProfileState extends State<Profile> {
               : SizedBox()
         ],
       ),
+      /*
       floatingActionButton: FloatingActionButton(onPressed: () {
 
 
@@ -119,6 +121,8 @@ class _ProfileState extends State<Profile> {
 
 
       },),
+
+       */
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -144,7 +148,8 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 20.0),
-                              child: user.photoUrl!.isEmpty
+                              child:UserModel.um[ind].photoUrl == null
+                              //user.photoUrl!.isEmpty
                                   ? CircleAvatar(
                                       radius: 40.0,
                                       backgroundColor: Theme.of(context)
@@ -165,7 +170,8 @@ class _ProfileState extends State<Profile> {
                                       radius: 40.0,
                                       backgroundImage:
                                           CachedNetworkImageProvider(
-                                        '${user.photoUrl}',
+                                        '${UserModel.um[ind].photoUrl}'
+                                            //user.photoUrl!.isEmpty}',
                                       ),
                                     ),
                             ),

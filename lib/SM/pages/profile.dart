@@ -27,8 +27,9 @@ import '../widgets/post_tiles.dart';
 
 class Profile extends StatefulWidget {
   final profileId;
+  final email;
 
-  Profile({this.profileId});
+  Profile({this.profileId, this.email});
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -134,6 +135,11 @@ class _ProfileState extends State<Profile> {
             expandedHeight: 225.0,
             flexibleSpace: FlexibleSpaceBar(
               background: StreamBuilder(
+                  // QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+                  // .collection(collection)
+                  // .where(FieldPath.documentId, isEqualTo: documentId)
+                  // .get(),
+
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
@@ -255,8 +261,8 @@ class _ProfileState extends State<Profile> {
                                               ],
                                             ),
                                           )
-                                        : const Text('')
-                                    // : buildLikeButton()
+                                        //: const Text('')
+                                     : buildLikeButton()
                                   ],
                                 ),
                               ],
@@ -291,7 +297,7 @@ class _ProfileState extends State<Profile> {
                                 StreamBuilder(
                                   stream: postRef
                                       .where('ownerId',
-                                          isEqualTo: widget.profileId)
+                                          isEqualTo: widget.email)
                                       .snapshots(),
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -389,7 +395,11 @@ class _ProfileState extends State<Profile> {
                           IconButton(
                             onPressed: () async {
                               DocumentSnapshot doc =
+                              // widget profile id should be declared by firebase usere id;
                                   await usersRef.doc(widget.profileId).get();
+                              // usersRef.where('ownerId', isEqualTo: widget.email)
+                              // // .orderBy('timestamp', descending: true)
+                              //     .snapshots() as DocumentSnapshot<Object?>;
                               var currentUser = UserModel.fromJson(
                                 doc.data() as Map<String, dynamic>,
                               );
@@ -397,8 +407,8 @@ class _ProfileState extends State<Profile> {
                                 context,
                                 CupertinoPageRoute(
                                   builder: (_) => ListPosts(
-                                    userId: widget.profileId,
-                                    username: currentUser.username,
+                                    userId: currentUser.id,
+                                    email: currentUser.email,
                                   ),
                                 ),
                               );
@@ -581,17 +591,18 @@ class _ProfileState extends State<Profile> {
   }
 
   buildGridPost() {
+    print(widget.email);
+
     return StreamGridWrapper(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       stream: postRef
-          .where('ownerId', isEqualTo: widget.profileId)
-          .orderBy('timestamp', descending: true)
+          .where('ownerId', isEqualTo: widget.email)
+         // .orderBy('timestamp', descending: true)
           .snapshots(),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (_, DocumentSnapshot snapshot) {
-        PostModel posts =
-            PostModel.fromJson(snapshot.data() as Map<String, dynamic>);
+        PostModel posts = PostModel.fromJson(snapshot.data() as Map<String, dynamic>);
         return PostTile(
           post: posts,
         );

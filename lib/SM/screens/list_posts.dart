@@ -14,9 +14,9 @@ import '../widgets/userpost.dart';
 class ListPosts extends StatefulWidget {
   final userId;
 
-  final username;
+  final email;
 
-  const ListPosts({Key? key, required this.userId, required this.username})
+  const ListPosts({Key? key, required this.userId, required this.email})
       : super(key: key);
 
   @override
@@ -35,7 +35,7 @@ class _ListPostsState extends State<ListPosts> {
         title: Column(
           children: [
             Text(
-              widget.username.toUpperCase(),
+              widget.email.toUpperCase(),
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w600,
@@ -57,8 +57,8 @@ class _ListPostsState extends State<ListPosts> {
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder(
           future: postRef
-              .where('ownerId', isEqualTo: widget.userId)
-              .orderBy('timestamp', descending: true)
+              .where('ownerId', isEqualTo: widget.email)
+             // .orderBy('timestamp', descending: true)
               .get(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {

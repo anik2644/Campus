@@ -53,7 +53,7 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'Profile',
       'icon': CupertinoIcons.person_fill,
-      'page': Profile(profileId: firebaseAuth.currentUser!.uid),
+      'page': Profile(profileId: firebaseAuth.currentUser!.uid,email: firebaseAuth.currentUser!.email),
       'index': 4,
     },
   ];

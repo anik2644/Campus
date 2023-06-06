@@ -22,6 +22,9 @@ class _PostTileState extends State<PostTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+
+        print("trying\n\n\n");
+        print(widget.post?.username);
         Navigator.of(context).push(CupertinoPageRoute(
           builder: (_) => ViewImage(post: widget.post),
         ));

@@ -332,7 +332,7 @@ class UserPost extends StatelessWidget {
           DocumentSnapshot snap = snapshot.data!;
           int ind = UserModel.getUserIndex(post.ownerId ?? "");
           UserModel user = UserModel.um[ind];
-          // UserModel.fromJson(snap.data() as Map<String, dynamic>);
+           //UserModel.fromJson(snap.data() as Map<String, dynamic>);
           return Visibility(
             visible: !isMe,
             child: Align(
@@ -347,7 +347,7 @@ class UserPost extends StatelessWidget {
                   ),
                 ),
                 child: GestureDetector(
-                  onTap: () => showProfile(context, profileId: user.id!),
+                  onTap: () => showProfile(context, profileId: user.email!),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Row(
@@ -411,11 +411,21 @@ class UserPost extends StatelessWidget {
     );
   }
 
-  showProfile(BuildContext context, {String? profileId}) {
+  showProfile(BuildContext context, {String? profileId}) async {
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: profileId).get();
+
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    print(documentSnapshot.id);
+    print(profileId);
+    print("done\n\n\n\n\n");
+
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (_) => Profile(profileId: profileId),
+        builder: (_) => Profile(profileId: documentSnapshot.id,email: profileId,),
       ),
     );
   }

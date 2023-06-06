@@ -170,7 +170,7 @@ class _ProfileState extends State<Profile> {
                                       radius: 40.0,
                                       backgroundImage:
                                           CachedNetworkImageProvider(
-                                        '${UserModel.um[ind].photoUrl}'
+                                        '${user.photoUrl}'
                                             //user.photoUrl!.isEmpty}',
                                       ),
                                     ),

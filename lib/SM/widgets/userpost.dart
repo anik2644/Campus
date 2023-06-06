@@ -66,6 +66,7 @@ class UserPost extends StatelessWidget {
             children: [
               Column(
                 children: [
+
                   ClipRRect(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0),
                     ),

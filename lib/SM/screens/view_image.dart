@@ -10,11 +10,14 @@ import 'package:like_button/like_button.dart';
 // import 'package:social_media_app/widgets/indicators.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../chats/recent_chats.dart';
 import '../models/post.dart';
 import '../models/user.dart';
 import '../utils/firebase.dart';
 import '../widgets/indicators.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
+import 'comment.dart';
 class ViewImage extends StatefulWidget {
   final PostModel? post;
 
@@ -36,9 +39,80 @@ class _ViewImageState extends State<ViewImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: buildImage(context),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: BackButton(),
+        // leading: Builder(
+        //   builder: (BuildContext context) {
+        //     return IconButton(
+        //       icon: Icon(Icons.menu),
+        //       onPressed: () {
+        //         Scaffold.of(context).openDrawer();
+        //       },
+        //     );
+        //   },
+        // ),
+        title:  Text(
+          "ঢাবিয়ান সমাচার",//"Press me to enter",
+          style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
+        ).animate(
+
+          //delay: 1000.ms, // this delay only happens once at the very start
+          onPlay: (controller) => controller.repeat(), // loop
+        ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),
+        ,
+        // title: Text(
+        //   Constants.appName,
+        //   style: TextStyle(
+        //     fontWeight: FontWeight.w900,
+        //   ),
+        // ),
+        centerTitle: true,
+        actions:
+        [
+          IconButton(
+            icon: Icon(
+              Ionicons.chatbubble,
+              size: 30.0,
+            ),
+            onPressed: () {
+              // print("hello");
+              Navigator.of(context).push(
+                  CupertinoPageRoute(
+                    builder: (_) => Comments(post: widget.post),
+                  ),);
+              //
+              // Navigator.push(
+              //   context,
+              //   CupertinoPageRoute(
+              //     builder: (_) => Chats(),
+              //   ),
+              // );
+            },
+          ),
+          SizedBox(width: 20.0),
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+
+          //padding: const EdgeInsets.only(left: 2.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Text(widget.post?.description as String,style: TextStyle(fontSize: 20,),textAlign: TextAlign.left,),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 25,),
+              Center(
+                child: buildImage(context),
+              ),
+            ],
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0.0,
@@ -62,10 +136,13 @@ class _ViewImageState extends State<ViewImage> {
                     Row(
                       children: [
                         Icon(Ionicons.alarm_outline, size: 13.0),
-                        SizedBox(width: 3.0),
+                        SizedBox(width: 6.0),
                         Text(
-                          Timestamp.now().toDate().toString()
-                           //widget.post?.timestamp as String,//timeago.format(widget.post!.timestamp!.toDate()),
+                            trimToDateString( widget.post?.timestamp as String),
+
+                         // Timestamp.now().toDate().toString()
+                           //widget.post?.timestamp as String,//
+                         // timeago.format(widget.post!.timestamp!.toDate() ) as String,
                         ),
                       ],
                     ),
@@ -79,6 +156,25 @@ class _ViewImageState extends State<ViewImage> {
         ),
       ),
     );
+  }
+  bool isNumeric(String character) {
+    return int.tryParse(character) != null;
+  }
+  String trimToDateString(String dateTimeString) {
+
+    String trimmedString = '';
+
+    for (int i = 0; i < dateTimeString.length; i++) {
+      if (!isNumeric(dateTimeString[i])) {
+        trimmedString += dateTimeString[i];
+      } else {
+        trimmedString += dateTimeString[i];
+        break;
+      }
+    }
+
+    print(trimmedString);
+    return trimmedString;
   }
 
   buildImage(BuildContext context) {

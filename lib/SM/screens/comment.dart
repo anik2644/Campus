@@ -230,27 +230,34 @@ class _CommentsState extends State<Comments> {
                         style: TextStyle(),
                       ),
                       SizedBox(width: 3.0),
-                      StreamBuilder(
-                        stream: likesRef
-                            .where('postId', isEqualTo: widget.post!.postId)
-                            .snapshots(),
-                        builder:
-                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasData) {
-                            QuerySnapshot snap = snapshot.data!;
-                            List<DocumentSnapshot> docs = snap.docs;
-                            return buildLikesCount(context, docs.length ?? 0);
-                          } else {
-                            return buildLikesCount(context, 0);
-                          }
-                        },
-                      ),
+
                     ],
                   ),
                 ],
               ),
               Spacer(),
-              buildLikeButton(),
+              Column(
+                children: [
+                  buildLikeButton(),
+                  SizedBox(width: 10,),
+                  StreamBuilder(
+                    stream: likesRef
+                        .where('postId', isEqualTo: widget.post!.postId)
+                        .snapshots(),
+                    builder:
+                        (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        QuerySnapshot snap = snapshot.data!;
+                        List<DocumentSnapshot> docs = snap.docs;
+                        return buildLikesCount(context, docs.length ?? 0);
+                      } else {
+                        return buildLikesCount(context, 0);
+                      }
+                    },
+                  ),
+                ],
+              ),
+
             ],
           ),
         ),

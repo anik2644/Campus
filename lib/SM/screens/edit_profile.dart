@@ -37,11 +37,11 @@ class _EditProfileState extends State<EditProfile> {
 
 
   int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
-  String imgurl= " ";
-  String? country ="";// UserModel.um[ind].photoUrl;
+  String imgurl= "a"; //widget.user.photoUrl  ?? "";
+  String? country ="a";// UserModel.um[ind].photoUrl;
   //user.photoUrl!.isEmpty;
-  String Username = " ";
-  String bio = " ";
+  String Username = "a";
+  String bio = "a";
 
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -77,6 +77,22 @@ class _EditProfileState extends State<EditProfile> {
 
 
 
+                    if(bio == "a")
+                      {
+                        bio =widget.user?.bio ?? "";
+                      }
+                    if(imgurl == "a")
+                    {
+                      imgurl =widget.user?.photoUrl ?? "";
+                    }
+                    if(country == "a")
+                    {
+                      country =widget.user?.country ?? "";
+                    }
+                    if(Username == "a")
+                    {
+                      Username =widget.user?.username ?? "";
+                    }
                     //CollectionReference collection = FirebaseFirestore.instance.collection('users');
 
                     CollectionReference collection =
@@ -139,13 +155,13 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  child: UserModel.um[ind].photoUrl != null
+                  child: widget.user!.photoUrl !=null //UserModel.um[ind].photoUrl != null
                     //viewModel.imgLink != null
                       ? Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: CircleAvatar(
                             radius: 65.0,
-                            backgroundImage: NetworkImage( UserModel.um[ind].photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
+                            backgroundImage: NetworkImage( widget.user!.photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
                           ),
                         )
                       : viewModel.image == null
@@ -175,6 +191,7 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+
 
   Future<void> pickImagee() async {
 

@@ -604,7 +604,7 @@ class _ProfileState extends State<Profile> {
       itemBuilder: (_, DocumentSnapshot snapshot) {
         PostModel posts = PostModel.fromJson(snapshot.data() as Map<String, dynamic>);
         return PostTile(
-          post: posts,
+          post: posts ,ii: 1,
         );
       },
     );

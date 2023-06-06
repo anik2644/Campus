@@ -10,8 +10,9 @@ import 'cached_image.dart';
 
 class PostTile extends StatefulWidget {
   final PostModel? post;
+  final int? ii;
 
-  PostTile({this.post});
+  PostTile({this.post, this.ii});
 
   @override
   _PostTileState createState() => _PostTileState();
@@ -23,12 +24,22 @@ class _PostTileState extends State<PostTile> {
     return GestureDetector(
       onTap: () {
 
-        print("trying\n\n\n");
+        print("Nottrying\n\n\n");
+        print(widget.post?.id);
+        print(widget.post?.description);
+        print(widget.post?.ownerId);
+        print(widget.post?.postId);
         print(widget.post?.username);
+        print(widget.post?.timestamp);
+        print(widget.post?.mediaUrl);
+
+       // widget.post?.username = "Hasam";
+        print(widget.ii);
         Navigator.of(context).push(CupertinoPageRoute(
           builder: (_) => ViewImage(post: widget.post),
         ));
       },
+
       child: Container(
         height: 100,
         width: 150,

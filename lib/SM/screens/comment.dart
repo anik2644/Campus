@@ -66,11 +66,13 @@ class _CommentsState extends State<Comments> {
         // )
         //
 
-        Column(
+        Flex(
+          direction: Axis.vertical,
           children: [
 
             Flexible(
-              child: ListView(
+              child: Flex(
+                direction: Axis.vertical,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -80,8 +82,7 @@ class _CommentsState extends State<Comments> {
 
 
                   Flexible(
-                    child:
-                    buildComments(),
+                    child: buildComments(),
                   )
 
 

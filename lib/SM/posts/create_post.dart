@@ -191,7 +191,13 @@ class _CreatePostState extends State<CreatePost> {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  child: //viewModel.imgLink != null
+                   child: //viewModel.imgLink != null
+                  // filee != null?
+                  // Image.file(
+                  //   filee!.path as File ,
+                  //   fit: BoxFit.contain,
+                  // ):
+
                   flag==1
                       ? 
                       Image.network(imgurl)
@@ -331,15 +337,15 @@ class _CreatePostState extends State<CreatePost> {
       },
     );
   }
-
+  XFile? filee ;
   Future<void> pickImagee() async {
 
     ImagePicker imagePicker = ImagePicker();
-    XFile? file =
+     filee =
         await imagePicker.pickImage(source: ImageSource.gallery);
-    print('${file?.path}');
+    print('${filee?.path}');
 
-    if (file == null) return;
+    if (filee == null) return;
     //Import dart:core
     String uniqueFileName =
     DateTime.now().millisecondsSinceEpoch.toString();
@@ -360,7 +366,7 @@ class _CreatePostState extends State<CreatePost> {
     //Handle errors/success
     try {
       //Store the file
-      await referenceImageToUpload.putFile(File(file!.path));
+      await referenceImageToUpload.putFile(File(filee!.path));
       //Success: get the download URL
       imgurl = await referenceImageToUpload.getDownloadURL();
 

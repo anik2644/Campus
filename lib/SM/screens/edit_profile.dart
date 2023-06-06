@@ -155,7 +155,26 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  child: widget.user!.photoUrl !=null //UserModel.um[ind].photoUrl != null
+                  child:
+                      imgurl != "a"?
+                      Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: CircleAvatar(
+                          radius: 65.0,
+                          backgroundImage: NetworkImage( imgurl ?? ""), //NetworkImage(viewModel.imgLink!),
+                        ),
+                      )
+                          :
+
+
+                      // file != null?
+                  // Image.file(
+                  //    file!.path as File,
+                  //   fit: BoxFit.contain,
+                  // ):
+                  //
+
+                  widget.user!.photoUrl !=null //UserModel.um[ind].photoUrl != null
                     //viewModel.imgLink != null
                       ? Padding(
                           padding: const EdgeInsets.all(1.0),
@@ -191,12 +210,12 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-
+  XFile? file;
 
   Future<void> pickImagee() async {
 
     ImagePicker imagePicker = ImagePicker();
-    XFile? file =
+     file =
     await imagePicker.pickImage(source: ImageSource.gallery);
     print('${file?.path}');
 
@@ -228,6 +247,9 @@ class _EditProfileState extends State<EditProfile> {
       imgurl = await referenceImageToUpload.getDownloadURL();
 
       print("Img URL:" +imgurl);
+      setState(() {
+        
+      });
     } catch (error) {
       //Some error occurred
     }

@@ -43,7 +43,7 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+     // backgroundColor: Colors.black,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -58,14 +58,17 @@ class _CommentsState extends State<Comments> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        child:Center(
-          child: Container(
-            child: Text("no comment",style: TextStyle(color: Colors.white),),
-          ),
-        )
-            /*
+        child:
+        // Center(
+        //   child: Container(
+        //     child: Text("no comment",style: TextStyle(color: Colors.white),),
+        //   ),
+        // )
+        //
+
         Column(
           children: [
+
             Flexible(
               child: ListView(
                 children: [
@@ -74,16 +77,18 @@ class _CommentsState extends State<Comments> {
                     child: buildFullPost(),
                   ),
                   Divider(thickness: 1.5),
+
+
                   Flexible(
-                    child: Container(
-                      child: Text("no comment"),
-                    )
-                    //buildComments(),
+                    child:
+                    buildComments(),
                   )
+
+
                 ],
               ),
             ),
-            /*
+
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -177,11 +182,11 @@ class _CommentsState extends State<Comments> {
               ),
             ),
 
-             */
+
           ],
         ),
 
-             */
+
       ),
     );
   }

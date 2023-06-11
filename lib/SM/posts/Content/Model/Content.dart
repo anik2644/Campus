@@ -1,13 +1,14 @@
 class Content
 {
-  final List<String> InputImagesSequence;// = [];
+  final List<String> AllImagesList;// = [];
   final List<String> ContentImageSequence;// = [];
   final List<String> ContentSegments;
-  final String location;
-  final String title;
+  final String Location;
+  final String Title;
 
-  const Content({required this.InputImagesSequence, required this.ContentImageSequence, required this.ContentSegments, required this.location, required this.title});// = [];
+  const Content({required this.AllImagesList, required this.ContentImageSequence, required this.ContentSegments, required this.Location, required this.Title});// = [];
 
 
+  static List<Content> ContentList =[];
 
 }

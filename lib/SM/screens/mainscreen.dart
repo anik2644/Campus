@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_app/SM/models/user.dart';
+import 'package:social_media_app/SM/posts/Content/Model/Content.dart';
 // import 'package:social_media_app/components/fab_container.dart';
 // import 'package:social_media_app/pages/notification.dart';
 // import 'package:social_media_app/pages/profile.dart';
@@ -11,6 +12,7 @@ import 'package:social_media_app/SM/models/user.dart';
 // import 'package:social_media_app/utils/firebase.dart';
 
 import '../components/fab_container.dart';
+import '../pages/contentFeeds.dart';
 import '../pages/feeds.dart';
 import '../pages/notification.dart';
 import '../pages/profile.dart';
@@ -33,28 +35,34 @@ class _TabScreenState extends State<TabScreen> {
       'index': 0,
     },
     {
+      'title': 'Content',
+      'icon': Icons.newspaper,
+      'page': ContentFeeds(),
+      'index': 1,
+    },
+    {
       'title': 'Search',
       'icon': Ionicons.search,
       'page': Search(),
-      'index': 1,
+      'index': 2,
     },
     {
       'title': 'unsee',
       'icon': Ionicons.add_circle,
       'page': Text('nes'),
-      'index': 2,
+      'index': 3,
     },
     {
       'title': 'Notification',
       'icon': CupertinoIcons.bell_solid,
       'page': Activities(),
-      'index': 3,
+      'index': 4,
     },
     {
       'title': 'Profile',
       'icon': CupertinoIcons.person_fill,
       'page': Profile(profileId: firebaseAuth.currentUser!.uid,email: firebaseAuth.currentUser!.email),
-      'index': 4,
+      'index': 5,
     },
   ];
 
@@ -146,7 +154,7 @@ class _TabScreenState extends State<TabScreen> {
           children: [
             SizedBox(width: 5),
             for (Map item in pages)
-              item['index'] == 2
+              item['index'] == 3
                   ? buildFab()
                   : Padding(
                       padding: const EdgeInsets.only(top: 5.0),

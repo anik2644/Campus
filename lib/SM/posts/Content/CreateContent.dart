@@ -32,7 +32,9 @@ class _CreateContentState extends State<CreateContent> {
   List<String> ContentSegments = [];
   String title="";
   String location="";
-  TextEditingController CaptionController = TextEditingController();
+  TextEditingController CaptionController = TextEditingController(
+
+  );
 
   //splitString(longString, ContentImageSequence, ContentSegments);
 
@@ -87,21 +89,16 @@ class _CreateContentState extends State<CreateContent> {
               GestureDetector(
                 onTap: () {
 
+                  ContentImageSequence.clear();
+                  ContentSegments.clear();
                   splitString(CaptionController.text, ContentImageSequence, ContentSegments);
                   setState(() {
 
-                    // print('Dropped items: $ContentImageSequence');
-                    // print("Content portions :");
-                    // for(int i=0;i<ContentSegments.length;i++)
-                    // {
-                    //   print(ContentSegments[i]);
-                    //   print("i = $i ");
-                    // }
-                    //
+
 
                     Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
                         ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: location,)));
-                    flag=0;
+                   // flag=0;
                   });
                   },
                 /*
@@ -358,6 +355,7 @@ class _CreateContentState extends State<CreateContent> {
                         width: 1.0,
                       )),
                     child: TextField(
+                     // controller: CaptionController,
 
                       //initialValue: viewModel.description,
                       decoration: InputDecoration(
@@ -486,7 +484,7 @@ class _CreateContentState extends State<CreateContent> {
   }
 
   void splitString(String input, List<String> droppedItems, List<String> otherPortions) {
-    RegExp regExp = RegExp(r'/(.*?)/');
+    RegExp regExp = RegExp(r'<(.*?)>');
     Iterable<Match> matches = regExp.allMatches(input);
     int currentIndex = 0;
 

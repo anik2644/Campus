@@ -3,12 +3,19 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 
-class MultipleImage extends StatefulWidget {
+class ContentPreview extends StatefulWidget {
+
+  final List<String> InputImagesSequence;// = [];
+  final List<String> ContentImageSequence;// = [];
+  final List<String> ContentSegments;
+
+  const ContentPreview({required this.InputImagesSequence, required this.ContentImageSequence, required this.ContentSegments});// = [];
+
   @override
-  _MultipleImageState createState() => _MultipleImageState();
+  _ContentPreviewState createState() => _ContentPreviewState();
 }
 
-class _MultipleImageState extends State<MultipleImage> {
+class _ContentPreviewState extends State<ContentPreview> {
   List<String> selectedImages = [];
 
   List<String> bengaliPoemList = [
@@ -63,6 +70,22 @@ class _MultipleImageState extends State<MultipleImage> {
         'বৃষ্টির আসা হলো আর বাতাসের কল\n',
   ];
 
+  Future<void> test()async {
+
+    print('Dropped items:');
+    print( widget.ContentImageSequence);
+    print('Images Numbers:');
+    print( widget.InputImagesSequence);
+    print("Content portions :");
+    for(int i=0;i<widget.ContentSegments.length;i++)
+    {
+      print(widget.ContentSegments[i]);
+      print("i = $i ");
+    }
+
+
+  }
+
   Future<void> pickImages() async {
 
     print(bengaliPoemList.length);
@@ -79,13 +102,15 @@ class _MultipleImageState extends State<MultipleImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(),
         actions: [
           ElevatedButton(
-            onPressed: pickImages,
+            onPressed:test,
+            //pickImages,
             child: Text('Select Images'),
           ),
         ],
-        title: Text('Multiple Image Picker'),
+        title: Text('Content Preview'),
       ),
       body: Center(
         child: Column(
@@ -102,21 +127,22 @@ class _MultipleImageState extends State<MultipleImage> {
               child: Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: ListView.builder(
-                  itemCount: selectedImages.length*3,
+                  itemCount: widget.ContentImageSequence.length*3,
                   itemBuilder: (context, index)  {
                     return index%3==0? SizedBox(height: 20,):
                     index%3==1? Container(
                       width: 400,
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
-                        child: Text(bengaliPoemList[index ~/3 ], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
+                        child: Text(widget.ContentSegments[index ~/3 ], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
                       )
                     )
 
                         :Container(
                       width: 400,
                       child: Image.file(
-                        File(selectedImages[index ~/3]),
+                        File(widget.InputImagesSequence[int.parse(widget.ContentImageSequence[index ~/3])]),
+                          //int.parse(widget.InputImagesSequence[index ~/3])
                        // width: 50,
                        // height: 50,
                       //  fit: BoxFit.cover,

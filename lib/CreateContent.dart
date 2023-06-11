@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/ContentPreview.dart';
 import 'SM/models/user.dart';
 import 'dart:io';
 
@@ -88,15 +89,17 @@ class _CreateContentState extends State<CreateContent> {
                   splitString(CaptionController.text, ContentImageSequence, ContentSegments);
                   setState(() {
 
-                    print('Dropped items: $ContentImageSequence');
-                    print("Content portions :");
-                    for(int i=0;i<ContentSegments.length;i++)
-                    {
-                      print(ContentSegments[i]);
-                      print("i = $i ");
-                    }
+                    // print('Dropped items: $ContentImageSequence');
+                    // print("Content portions :");
+                    // for(int i=0;i<ContentSegments.length;i++)
+                    // {
+                    //   print(ContentSegments[i]);
+                    //   print("i = $i ");
+                    // }
+                    //
 
-                    //flag=0;
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence, ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments)));
+                    flag=0;
                   });
                   },
                 /*

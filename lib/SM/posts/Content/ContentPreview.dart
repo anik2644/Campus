@@ -9,7 +9,10 @@ class ContentPreview extends StatefulWidget {
   final List<String> ContentImageSequence;// = [];
   final List<String> ContentSegments;
 
-  const ContentPreview({required this.InputImagesSequence, required this.ContentImageSequence, required this.ContentSegments});// = [];
+  final String location;
+  final String title;
+
+  const ContentPreview({required this.InputImagesSequence, required this.ContentImageSequence, required this.ContentSegments, required this.location, required this.title});// = [];
 
   @override
   _ContentPreviewState createState() => _ContentPreviewState();
@@ -155,14 +158,21 @@ class _ContentPreviewState extends State<ContentPreview> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
-            SizedBox(height: 20),
-            // Text(
-            //   'Selected Images:',
-            //   style: TextStyle(fontSize: 18),
-            // ),
-            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.title, style: TextStyle(fontSize: 20),),
+                  SizedBox(height: 5),
+                  Text(widget.location, style: TextStyle(fontSize: 15),),
+                ],
+              ),
+            ),
+            SizedBox(height: 5),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(14.0),

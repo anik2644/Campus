@@ -17,8 +17,8 @@ import 'package:social_media_app/test/tt.dart';
 // import 'package:social_media_app/utils/providers.dart';
 // import 'package:social_media_app/view_models/theme/theme_view_model.dart';
 
-import 'CreateContent.dart';
-import 'ContentPreview.dart';
+import 'SM/posts/Content/CreateContent.dart';
+import 'SM/posts/Content/ContentPreview.dart';
 import 'SM/components/life_cycle_event_handler.dart';
 import 'SM/screens/edit_profile.dart';
 import 'SM/services/user_service.dart';

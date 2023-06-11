@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/CreateContent.dart';
+import 'package:social_media_app/SM/posts/Content/CreateContent.dart';
 // import 'package:social_media_app/posts/story/confrim_status.dart';
 // import 'package:social_media_app/view_models/status/status_view_model.dart';
 import '../posts/create_post.dart';

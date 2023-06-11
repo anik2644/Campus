@@ -6,14 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_media_app/ContentPreview.dart';
-import 'SM/models/user.dart';
+import 'package:social_media_app/SM/posts/Content/ContentPreview.dart';
+import '../../models/user.dart';
 import 'dart:io';
 
-import 'SM/screens/view_image.dart';
-import 'SM/utils/firebase.dart';
-import 'SM/view_models/auth/posts_view_model.dart';
-import 'SM/widgets/indicators.dart';
+import '../../screens/view_image.dart';
+import '../../utils/firebase.dart';
+import '../../view_models/auth/posts_view_model.dart';
+import '../../widgets/indicators.dart';
 import 'package:image_picker/image_picker.dart';
 //import 'view_models/auth/posts_view_model.dart';
 
@@ -30,7 +30,8 @@ class _CreateContentState extends State<CreateContent> {
   List<String> InputImagesSequence = [];
   List<String> ContentImageSequence = [];
   List<String> ContentSegments = [];
-
+  String title="";
+  String location="";
   TextEditingController CaptionController = TextEditingController();
 
   //splitString(longString, ContentImageSequence, ContentSegments);
@@ -98,7 +99,8 @@ class _CreateContentState extends State<CreateContent> {
                     // }
                     //
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence, ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
+                        ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: location,)));
                     flag=0;
                   });
                   },
@@ -193,6 +195,33 @@ class _CreateContentState extends State<CreateContent> {
               child: Column(
                 //padding: EdgeInsets.symmetric(horizontal: 15.0),
                 children: [
+                  Text(
+                    'Post Title'.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.all(0.0),
+                    title: Container(
+                      width: 250.0,
+                      child: TextFormField(
+                       // controller: viewModel.locationTEC,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(0.0),
+                          hintText: 'Set Title',
+                          focusedBorder: UnderlineInputBorder(),
+                        ),
+                        maxLines: null,
+                        onChanged: (val) {
+                          //pp.location =val;
+                          title =val;
+                         // viewModel.setLocation(val);
+                        },
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 15.0),
 /*
                   StreamBuilder(
@@ -382,6 +411,7 @@ class _CreateContentState extends State<CreateContent> {
                         maxLines: null,
                         onChanged: (val) {
                           //pp.location =val;
+                          location=val;
                           viewModel.setLocation(val);
                         },
                       ),

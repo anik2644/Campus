@@ -60,7 +60,6 @@ class _ImageGalleryState extends State<ImageGallery> {
 
 
         ],
-
         //Slider Container properties
         options: CarouselOptions(
           height: 230.0,

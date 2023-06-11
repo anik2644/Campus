@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContentPreview extends StatefulWidget {
 
@@ -73,6 +76,60 @@ class _ContentPreviewState extends State<ContentPreview> {
   //       'বৃষ্টির আসা হলো আর বাতাসের কল\n',
   // ];
 
+  List<String> AllImagesList=[];
+  String imgurl="";
+
+  Future<void> AddThisContentToFireStore()
+  async {
+  CollectionReference collection =
+  FirebaseFirestore.instance.collection('Contents');
+
+  try {
+  await collection.doc(widget.title).set({
+    'Title': widget.title,
+    'AllImagesList': AllImagesList,
+    'ContentImageSequence': widget.ContentImageSequence,
+    'ContentSegments': widget.ContentSegments,
+    'Location': widget.location,
+
+  });
+  print('String array added to Firestore collection with document ID successfully.');
+  } catch (e) {
+  print('Error adding string array to Firestore collection: $e');
+  }
+  }
+
+  Future<void> SentAllImageTOFireStorage() async {
+
+    AllImagesList.clear();
+    for(int i=0;i<widget.InputImagesSequence.length;i++)
+      {
+        String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+        String temp= widget.title;
+        String imgName= '$temp$i';
+
+        Reference referenceRoot = FirebaseStorage.instance.ref();
+        Reference referenceDirImages =
+        referenceRoot.child('contents');
+        Reference referenceImageToUpload =
+        referenceDirImages.child(imgName);
+
+        try {
+          //Store the file
+          await referenceImageToUpload.putFile(File(widget.InputImagesSequence[i]));
+          //Success: get the download URL
+          imgurl = await referenceImageToUpload.getDownloadURL();
+
+          print("Img URL:" +imgurl);
+          AllImagesList.add(imgurl);
+        } catch (error) {
+        }
+      }
+
+    print("loop done");
+    print(AllImagesList.toString());
+    AddThisContentToFireStore();
+  }
 
   List <Widget> ImaList =[];
 
@@ -147,6 +204,8 @@ class _ContentPreviewState extends State<ContentPreview> {
       backgroundColor: Colors.black, // Set the desired background color
       ),
             onPressed:(){
+
+              SentAllImageTOFireStorage();
               Navigator.pop(context);
             },//test,
             //pickImages,

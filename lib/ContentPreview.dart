@@ -16,59 +16,63 @@ class ContentPreview extends StatefulWidget {
 }
 
 class _ContentPreviewState extends State<ContentPreview> {
-  List<String> selectedImages = [];
+  // List<String> selectedImages = [];
+  //
+  // List<String> bengaliPoemList = [
+  //   'কবিতা প্রাথমিক\n'
+  //       'চিত্রের মাধবে পাখির গান\n'
+  //       'সময় হলো শূন্যের মাঝে বন্ধন\n'
+  //       'সৃষ্টির রঙে হৃদয় সজান\n',
+  //
+  //   'কবিতা দ্বিতীয়\n'
+  //       'বাতাসের বন্যা মেঘের মেলা\n'
+  //       'হাওয়া ছুয়ে যায় মেঘমালা\n'
+  //       'বন্ধুর মেলা করে হাসা\n',
+  //
+  //   'কবিতা তৃতীয়\n'
+  //       'জীবনের নাটকে চিত্র প্রদর্শন\n'
+  //       'সুখের নৃত্য হলো জনম নিত্যজন\n'
+  //       'প্রেমের কাহিনী লিখে নাটক সৃষ্টি\n'
+  //
+  //   'কবিতা ১\n'
+  //       'সুরের আবেশে গান\n'
+  //       'চিত্রের মাধবে চিত্র\n'
+  //       'প্রেমের বাণী বহন\n'
+  //       'মনের রঙে হৃদয় ব্যান্ধ\n',
+  //
+  //   'কবিতা ২\n'
+  //       'প্রকৃতির সুন্দর ব্যাপার\n'
+  //       'পাখির গানে ভুবন সজল\n'
+  //       'পথিকের পায়ে ধূল ছুঁয়ে\n'
+  //       'মেঘের মেলা ছায়া লঞ্চল\n',
+  //
+  //   'কবিতা ৩\n'
+  //       'অধ্যাত্মের আলোকে তারা\n'
+  //       'চাঁদের আলোয় রাতের মালা\n'
+  //       'সুখের ফুলে চিরন্তন হলে\n'
+  //       'প্রেমের আলোয় নিত্য বস্ত্র ধারা\n'
+  //   'প্রথম কবিতা\n'
+  //       'সবুজ ঘাসের মেলা\n'
+  //       'চাঁদের আলোয় জ্বালা\n'
+  //       'পাখির কান্না শোনা\n'
+  //       'বন্ধুদের মিলনে হাসা\n',
+  //
+  //   'দ্বিতীয় কবিতা\n'
+  //       'প্রকৃতির সুন্দর দৃশ্য\n'
+  //       'মেঘের ছায়ায় ঘুমের স্বপ্ন\n'
+  //       'অম্বরের পুরণ রুপকথা\n'
+  //       'বৃষ্টির ঝর্ণা মাঠের দূরে\n',
+  //
+  //   'তৃতীয় কবিতা\n'
+  //       'হিমের মেলা হাতের নাগরা\n'
+  //       'বিদায় এলো আসছে সকাল\n'
+  //       'শীতের পুরণ আকাশের আল\n'
+  //       'বৃষ্টির আসা হলো আর বাতাসের কল\n',
+  // ];
 
-  List<String> bengaliPoemList = [
-    'কবিতা প্রাথমিক\n'
-        'চিত্রের মাধবে পাখির গান\n'
-        'সময় হলো শূন্যের মাঝে বন্ধন\n'
-        'সৃষ্টির রঙে হৃদয় সজান\n',
 
-    'কবিতা দ্বিতীয়\n'
-        'বাতাসের বন্যা মেঘের মেলা\n'
-        'হাওয়া ছুয়ে যায় মেঘমালা\n'
-        'বন্ধুর মেলা করে হাসা\n',
+  List <Widget> ImaList =[];
 
-    'কবিতা তৃতীয়\n'
-        'জীবনের নাটকে চিত্র প্রদর্শন\n'
-        'সুখের নৃত্য হলো জনম নিত্যজন\n'
-        'প্রেমের কাহিনী লিখে নাটক সৃষ্টি\n'
-
-    'কবিতা ১\n'
-        'সুরের আবেশে গান\n'
-        'চিত্রের মাধবে চিত্র\n'
-        'প্রেমের বাণী বহন\n'
-        'মনের রঙে হৃদয় ব্যান্ধ\n',
-
-    'কবিতা ২\n'
-        'প্রকৃতির সুন্দর ব্যাপার\n'
-        'পাখির গানে ভুবন সজল\n'
-        'পথিকের পায়ে ধূল ছুঁয়ে\n'
-        'মেঘের মেলা ছায়া লঞ্চল\n',
-
-    'কবিতা ৩\n'
-        'অধ্যাত্মের আলোকে তারা\n'
-        'চাঁদের আলোয় রাতের মালা\n'
-        'সুখের ফুলে চিরন্তন হলে\n'
-        'প্রেমের আলোয় নিত্য বস্ত্র ধারা\n'
-    'প্রথম কবিতা\n'
-        'সবুজ ঘাসের মেলা\n'
-        'চাঁদের আলোয় জ্বালা\n'
-        'পাখির কান্না শোনা\n'
-        'বন্ধুদের মিলনে হাসা\n',
-
-    'দ্বিতীয় কবিতা\n'
-        'প্রকৃতির সুন্দর দৃশ্য\n'
-        'মেঘের ছায়ায় ঘুমের স্বপ্ন\n'
-        'অম্বরের পুরণ রুপকথা\n'
-        'বৃষ্টির ঝর্ণা মাঠের দূরে\n',
-
-    'তৃতীয় কবিতা\n'
-        'হিমের মেলা হাতের নাগরা\n'
-        'বিদায় এলো আসছে সকাল\n'
-        'শীতের পুরণ আকাশের আল\n'
-        'বৃষ্টির আসা হলো আর বাতাসের কল\n',
-  ];
 
   Future<void> test()async {
 
@@ -86,32 +90,48 @@ class _ContentPreviewState extends State<ContentPreview> {
 
   }
 
-  Widget ImageContainer(String url)
+  Widget ImageContainer(int i)
   {
     return  Container(
       margin: EdgeInsets.all(6.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        image: DecorationImage(
-          image: NetworkImage(url),
-          fit: BoxFit.cover,
-        ),
+      child: Image.file(
+        File(widget.InputImagesSequence[i]),
+        //int.parse(widget.InputImagesSequence[index ~/3])
+        // width: 50,
+        // height: 50,
+        //  fit: BoxFit.cover,
       ),
     );
   }
 
 
-  Future<void> pickImages() async {
-
-    print(bengaliPoemList.length);
-    print("list size");
-    List<XFile>? images = await ImagePicker().pickMultiImage();
-    if (images != null) {
-      setState(() {
-        selectedImages = images.map((image) => image.path).toList();
-      });
-    }
+  void ImgListCreator()
+  {
+    for(int i=0;i<widget.InputImagesSequence.length;i++)
+      {
+        ImaList.add(ImageContainer(i));
+      }
   }
+
+  @override
+  void initState() {
+
+    ImgListCreator();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  // Future<void> pickImages() async {
+  //
+  //   print(bengaliPoemList.length);
+  //   print("list size");
+  //   List<XFile>? images = await ImagePicker().pickMultiImage();
+  //   if (images != null) {
+  //     setState(() {
+  //       selectedImages = images.map((image) => image.path).toList();
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +139,15 @@ class _ContentPreviewState extends State<ContentPreview> {
       appBar: AppBar(
         leading: BackButton(),
         actions: [
-          ElevatedButton(
-            onPressed:test,
+          TextButton(
+            style:  TextButton.styleFrom(
+      backgroundColor: Colors.black, // Set the desired background color
+      ),
+            onPressed:(){
+              Navigator.pop(context);
+            },//test,
             //pickImages,
-            child: Text('Select Images'),
+            child: Text('Post',style: TextStyle(color: Colors.white,fontSize: 17),),
           ),
         ],
         title: Text('Content Preview'),
@@ -147,37 +172,38 @@ class _ContentPreviewState extends State<ContentPreview> {
                     return
                       index== widget.ContentImageSequence.length*3? SizedBox(height: 30,):
                       index== widget.ContentImageSequence.length*3+1? CarouselSlider(
-                        items: [
+                        items: ImaList,
+                        //[
 
-                          ImageContainer("https://prod-media-eng.dhakatribune.com/uploads/2018/07/web-dhaka-university-campus-edited-10-07-2018-1531241428773.jpg"),
-                          ImageContainer("http://photos1.blogger.com/x/blogger/7702/1941/1600/479828/1172.jpg"),
-                          ImageContainer("https://media.istockphoto.com/id/1341969105/photo/one-of-buildings-at-the-campus-of-university-of-dhaka-banglade.jpg?s=612x612&w=0&k=20&c=Yzjgh1p0nwISJSQ5mZQFup9UFTB_7Pufv2s2_gD0HQ0="),
-                          ImageContainer("https://www.tbsnews.net/sites/default/files/styles/amp_metadata_content_image_min_696px_wide/public/images/2020/07/18/_oor7838.jpg"),
-                          ImageContainer("https://www.daily-sun.com/assets/news_images/2017/05/15/1491406465_0.jpg"),
-                          ImageContainer("https://www.tbsnews.net/sites/default/files/styles/big_2/public/images/2020/07/25/01.jpg"),
-                          ImageContainer("https://tariqul09tmgmail.files.wordpress.com/2017/04/khonica-bus-photo.jpg"),
-                          ImageContainer("https://live.staticflickr.com/8844/18048563995_97020489fd_b.jpg"),
-                          ImageContainer("https://gumlet.assettype.com/bdnews24-english%2Fimport%2Fmedia%2F2022%2F02%2F04%2Frain-winter-dhaka-university-040222-17.jpg?auto=format%2Ccompress&fmt=webp&format=webp&w=732"),
-                          ImageContainer("https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2021/12/14/800px-rokeya_hall_dhaka_university.jpg"),
-                          ImageContainer("https://images.adsttc.com/media/images/606d/a7ce/f91c/8155/b900/03f9/newsletter/18.jpg?1617799072"),
-                          ImageContainer("https://www.du.ac.bd/fontView/assets/img/others/du_library.jpg"),
-                          ImageContainer("http://10minuteschool.com/blog/wp-content/uploads/2016/08/Picture1.jpg"),
-                          ImageContainer("https://lh5.googleusercontent.com/p/AF1QipN2JwWXPQGCgtzfphL0MGsGk7r4A8AIqF9qq7Av=w500-h500-k-no"),
-                          ImageContainer("https://www.bproperty.com/blog/wp-content/uploads/feature-14.jpg"),
-                          ImageContainer("https://i.pinimg.com/736x/be/d7/7d/bed77d31b46bd9389ae9e095ba393de5.jpg"),
-                          ImageContainer("https://i.pinimg.com/originals/34/33/51/34335183d054aa47027dbd018379464b.jpg"),
-                          ImageContainer("https://bangladeshpost.net/images-customizer/image/PhotoGallery/2021-11-618a0f077839b.jpg"),
-                          ImageContainer("https://c8.alamy.com/comp/KWA562/dancers-perform-in-the-spring-fest-on-the-faculty-of-fine-arts-campus-KWA562.jpg"),
-                          ImageContainer("https://mapio.net/images-p/106746588.jpg"),
+                          // ImageContainer("https://prod-media-eng.dhakatribune.com/uploads/2018/07/web-dhaka-university-campus-edited-10-07-2018-1531241428773.jpg"),
+                          // ImageContainer("http://photos1.blogger.com/x/blogger/7702/1941/1600/479828/1172.jpg"),
+                          // ImageContainer("https://media.istockphoto.com/id/1341969105/photo/one-of-buildings-at-the-campus-of-university-of-dhaka-banglade.jpg?s=612x612&w=0&k=20&c=Yzjgh1p0nwISJSQ5mZQFup9UFTB_7Pufv2s2_gD0HQ0="),
+                          // ImageContainer("https://www.tbsnews.net/sites/default/files/styles/amp_metadata_content_image_min_696px_wide/public/images/2020/07/18/_oor7838.jpg"),
+                          // ImageContainer("https://www.daily-sun.com/assets/news_images/2017/05/15/1491406465_0.jpg"),
+                          // ImageContainer("https://www.tbsnews.net/sites/default/files/styles/big_2/public/images/2020/07/25/01.jpg"),
+                          // ImageContainer("https://tariqul09tmgmail.files.wordpress.com/2017/04/khonica-bus-photo.jpg"),
+                          // ImageContainer("https://live.staticflickr.com/8844/18048563995_97020489fd_b.jpg"),
+                          // ImageContainer("https://gumlet.assettype.com/bdnews24-english%2Fimport%2Fmedia%2F2022%2F02%2F04%2Frain-winter-dhaka-university-040222-17.jpg?auto=format%2Ccompress&fmt=webp&format=webp&w=732"),
+                          // ImageContainer("https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2021/12/14/800px-rokeya_hall_dhaka_university.jpg"),
+                          // ImageContainer("https://images.adsttc.com/media/images/606d/a7ce/f91c/8155/b900/03f9/newsletter/18.jpg?1617799072"),
+                          // ImageContainer("https://www.du.ac.bd/fontView/assets/img/others/du_library.jpg"),
+                          // ImageContainer("http://10minuteschool.com/blog/wp-content/uploads/2016/08/Picture1.jpg"),
+                          // ImageContainer("https://lh5.googleusercontent.com/p/AF1QipN2JwWXPQGCgtzfphL0MGsGk7r4A8AIqF9qq7Av=w500-h500-k-no"),
+                          // ImageContainer("https://www.bproperty.com/blog/wp-content/uploads/feature-14.jpg"),
+                          // ImageContainer("https://i.pinimg.com/736x/be/d7/7d/bed77d31b46bd9389ae9e095ba393de5.jpg"),
+                          // ImageContainer("https://i.pinimg.com/originals/34/33/51/34335183d054aa47027dbd018379464b.jpg"),
+                          // ImageContainer("https://bangladeshpost.net/images-customizer/image/PhotoGallery/2021-11-618a0f077839b.jpg"),
+                          // ImageContainer("https://c8.alamy.com/comp/KWA562/dancers-perform-in-the-spring-fest-on-the-faculty-of-fine-arts-campus-KWA562.jpg"),
+                          // ImageContainer("https://mapio.net/images-p/106746588.jpg"),
+                          //
+                          //
 
 
 
-
-
-                        ],
+                       // ],
                         //Slider Container properties
                         options: CarouselOptions(
-                          height: 200.0,
+                          height: 300.0,
                           enlargeCenterPage: true,
                           autoPlay: true,
                           aspectRatio: 16 / 9,

@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media_app/CreateContent.dart';
 // import 'package:social_media_app/posts/story/confrim_status.dart';
 // import 'package:social_media_app/view_models/status/status_view_model.dart';
 import '../posts/create_post.dart';
@@ -53,7 +54,7 @@ class FabContainer extends StatelessWidget {
       ),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .4,
+          heightFactor: .6,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -72,6 +73,21 @@ class FabContainer extends StatelessWidget {
                 ),
               ),
               Divider(),
+              ListTile(
+                leading: Icon(
+                  CupertinoIcons.news,
+                  size: 25.0,
+                ),
+                title: Text('Create Content'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(
+                      builder: (_) => CreateContent(),
+                    ),
+                  );
+                },
+              ),
               ListTile(
                 leading: Icon(
                   CupertinoIcons.camera_on_rectangle,

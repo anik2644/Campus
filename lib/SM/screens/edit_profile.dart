@@ -248,7 +248,7 @@ class _EditProfileState extends State<EditProfile> {
 
       print("Img URL:" +imgurl);
       setState(() {
-        
+
       });
     } catch (error) {
       //Some error occurred

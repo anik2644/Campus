@@ -179,7 +179,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                   });
                 }
                 return ListTile(
-                  onTap: () => showProfile(context, profileId: user.id!),
+                  onTap: () => showProfile(context, profileId: user.id!,profileEmail: user.email ),
                   leading: user.photoUrl!.isEmpty
                       ? CircleAvatar(
                           radius: 20.0,
@@ -285,11 +285,11 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     }
   }
 
-  showProfile(BuildContext context, {String? profileId}) {
+  showProfile(BuildContext context, {String? profileId,String? profileEmail}) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (_) => Profile(profileId: profileId),
+        builder: (_) => Profile(profileId: profileId,email: profileEmail ,),
       ),
     );
   }

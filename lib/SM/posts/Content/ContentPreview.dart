@@ -236,45 +236,86 @@ class _ContentPreviewState extends State<ContentPreview> {
               child: Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: ListView.builder(
-                  itemCount: widget.ContentImageSequence.length*3+2,
+
+                  itemCount: widget.ContentSegments.length+2,
                   itemBuilder: (context, index)  {
                     return
-                      index== widget.ContentImageSequence.length*3? SizedBox(height: 30,):
-                      index== widget.ContentImageSequence.length*3+1? CarouselSlider(
-                        items: ImaList,
+                        index== widget.ContentSegments.length? SizedBox(height: 30,):
+                        index== widget.ContentSegments.length+1? CarouselSlider(
+                          items: ImaList,
 
-                        options: CarouselOptions(
-                          height: 300.0,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration: Duration(milliseconds: 600),
-                          viewportFraction: 0.8,
-                        ),
-                      ):
+                          options: CarouselOptions(
+                            height: 300.0,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            aspectRatio: 16 / 9,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enableInfiniteScroll: true,
+                            autoPlayAnimationDuration: Duration(milliseconds: 600),
+                            viewportFraction: 0.8,
+                          ),
+                        ):
 
-                    index%3==0? SizedBox(height: 20,):
-                    index%3==1? Container(
-                      width: 400,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Text(widget.ContentSegments[index ~/3 ], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
-                      )
-                    )
+                        Column(
+                          children: [
+                            SizedBox(height: 30,),
+                            Container(
+                              width: 400,
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Text(widget.ContentSegments[index], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
+                              )
+                            ),
+                            SizedBox(height: 25,),
+                           index<widget.ContentImageSequence.length ? Container(
+                              width: 400,
+                              child: Image.file(
+                                File(widget.InputImagesSequence[int.parse(widget.ContentImageSequence[index])])
 
-                        :Container(
-                      width: 400,
-                      child: Image.file(
-                        File(widget.InputImagesSequence[int.parse(widget.ContentImageSequence[index ~/3])]),
-                          //int.parse(widget.InputImagesSequence[index ~/3])
-                       // width: 50,
-                       // height: 50,
-                      //  fit: BoxFit.cover,
-                      ),
-                    )
-                    ;
+                                  //int.parse(widget.InputImagesSequence[index ~/3])
+                               // width: 50,
+                               // height: 50,
+                              //  fit: BoxFit.cover,
+                              )):SizedBox(height: 20,),
+
+                          ],
+                        );
+                    //   index== widget.ContentImageSequence.length*3? SizedBox(height: 30,):
+                    //   index== widget.ContentImageSequence.length*3+1? CarouselSlider(
+                    //     items: ImaList,
+                    //
+                    //     options: CarouselOptions(
+                    //       height: 300.0,
+                    //       enlargeCenterPage: true,
+                    //       autoPlay: true,
+                    //       aspectRatio: 16 / 9,
+                    //       autoPlayCurve: Curves.fastOutSlowIn,
+                    //       enableInfiniteScroll: true,
+                    //       autoPlayAnimationDuration: Duration(milliseconds: 600),
+                    //       viewportFraction: 0.8,
+                    //     ),
+                    //   ):
+                    //
+                    // index%3==0? SizedBox(height: 20,):
+                    // index%3==1? Container(
+                    //   width: 400,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(6.0),
+                    //     child: Text(widget.ContentSegments[index ~/3 ], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
+                    //   )
+                    // )
+                    //
+                    //     :Container(
+                    //   width: 400,
+                    //   child: Image.file(
+                    //     File(widget.InputImagesSequence[int.parse(widget.ContentImageSequence[index ~/3])]),
+                    //       //int.parse(widget.InputImagesSequence[index ~/3])
+                    //    // width: 50,
+                    //    // height: 50,
+                    //   //  fit: BoxFit.cover,
+                    //   ),
+                    // )
+                    // ;
                   },
                 ),
               ),

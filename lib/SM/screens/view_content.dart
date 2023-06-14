@@ -22,59 +22,6 @@ class VIewSelectedContent extends StatefulWidget {
 }
 
 class _VIewSelectedContentState extends State<VIewSelectedContent> {
-  // List<String> selectedImages = [];
-  //
-  // List<String> bengaliPoemList = [
-  //   'কবিতা প্রাথমিক\n'
-  //       'চিত্রের মাধবে পাখির গান\n'
-  //       'সময় হলো শূন্যের মাঝে বন্ধন\n'
-  //       'সৃষ্টির রঙে হৃদয় সজান\n',
-  //
-  //   'কবিতা দ্বিতীয়\n'
-  //       'বাতাসের বন্যা মেঘের মেলা\n'
-  //       'হাওয়া ছুয়ে যায় মেঘমালা\n'
-  //       'বন্ধুর মেলা করে হাসা\n',
-  //
-  //   'কবিতা তৃতীয়\n'
-  //       'জীবনের নাটকে চিত্র প্রদর্শন\n'
-  //       'সুখের নৃত্য হলো জনম নিত্যজন\n'
-  //       'প্রেমের কাহিনী লিখে নাটক সৃষ্টি\n'
-  //
-  //   'কবিতা ১\n'
-  //       'সুরের আবেশে গান\n'
-  //       'চিত্রের মাধবে চিত্র\n'
-  //       'প্রেমের বাণী বহন\n'
-  //       'মনের রঙে হৃদয় ব্যান্ধ\n',
-  //
-  //   'কবিতা ২\n'
-  //       'প্রকৃতির সুন্দর ব্যাপার\n'
-  //       'পাখির গানে ভুবন সজল\n'
-  //       'পথিকের পায়ে ধূল ছুঁয়ে\n'
-  //       'মেঘের মেলা ছায়া লঞ্চল\n',
-  //
-  //   'কবিতা ৩\n'
-  //       'অধ্যাত্মের আলোকে তারা\n'
-  //       'চাঁদের আলোয় রাতের মালা\n'
-  //       'সুখের ফুলে চিরন্তন হলে\n'
-  //       'প্রেমের আলোয় নিত্য বস্ত্র ধারা\n'
-  //   'প্রথম কবিতা\n'
-  //       'সবুজ ঘাসের মেলা\n'
-  //       'চাঁদের আলোয় জ্বালা\n'
-  //       'পাখির কান্না শোনা\n'
-  //       'বন্ধুদের মিলনে হাসা\n',
-  //
-  //   'দ্বিতীয় কবিতা\n'
-  //       'প্রকৃতির সুন্দর দৃশ্য\n'
-  //       'মেঘের ছায়ায় ঘুমের স্বপ্ন\n'
-  //       'অম্বরের পুরণ রুপকথা\n'
-  //       'বৃষ্টির ঝর্ণা মাঠের দূরে\n',
-  //
-  //   'তৃতীয় কবিতা\n'
-  //       'হিমের মেলা হাতের নাগরা\n'
-  //       'বিদায় এলো আসছে সকাল\n'
-  //       'শীতের পুরণ আকাশের আল\n'
-  //       'বৃষ্টির আসা হলো আর বাতাসের কল\n',
-  // ];
 
   List<String> AllImagesList=[];
   String imgurl="";
@@ -230,8 +177,93 @@ class _VIewSelectedContentState extends State<VIewSelectedContent> {
               child: Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: ListView.builder(
-                  itemCount: widget.ContentImageSequence.length*3+2,
+
+                  itemCount: widget.ContentSegments.length+2,
                   itemBuilder: (context, index)  {
+                    return
+                      index== widget.ContentSegments.length? SizedBox(height: 30,):
+                      index== widget.ContentSegments.length+1? CarouselSlider(
+                        items: ImaList,
+
+                        options: CarouselOptions(
+                          height: 300.0,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          aspectRatio: 16 / 9,
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enableInfiniteScroll: true,
+                          autoPlayAnimationDuration: Duration(milliseconds: 600),
+                          viewportFraction: 0.8,
+                        ),
+                      ):
+
+                      Column(
+                        children: [
+                          SizedBox(height: 30,),
+                          Container(
+                              width: 400,
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Text(widget.ContentSegments[index], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
+                              )
+                          ),
+                          SizedBox(height: 25,),
+                          index<widget.ContentImageSequence.length ? Container(
+                              width: 400,
+                              child: Image.network(
+                                  widget.InputImagesSequence[int.parse(widget.ContentImageSequence[index])]
+
+                                //int.parse(widget.InputImagesSequence[index ~/3])
+                                // width: 50,
+                                // height: 50,
+                                //  fit: BoxFit.cover,
+                              )):SizedBox(height: 20,),
+
+                        ],
+                      );
+                    //   index== widget.ContentImageSequence.length*3? SizedBox(height: 30,):
+                    //   index== widget.ContentImageSequence.length*3+1? CarouselSlider(
+                    //     items: ImaList,
+                    //
+                    //     options: CarouselOptions(
+                    //       height: 300.0,
+                    //       enlargeCenterPage: true,
+                    //       autoPlay: true,
+                    //       aspectRatio: 16 / 9,
+                    //       autoPlayCurve: Curves.fastOutSlowIn,
+                    //       enableInfiniteScroll: true,
+                    //       autoPlayAnimationDuration: Duration(milliseconds: 600),
+                    //       viewportFraction: 0.8,
+                    //     ),
+                    //   ):
+                    //
+                    // index%3==0? SizedBox(height: 20,):
+                    // index%3==1? Container(
+                    //   width: 400,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(6.0),
+                    //     child: Text(widget.ContentSegments[index ~/3 ], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
+                    //   )
+                    // )
+                    //
+                    //     :Container(
+                    //   width: 400,
+                    //   child: Image.file(
+                    //     File(widget.InputImagesSequence[int.parse(widget.ContentImageSequence[index ~/3])]),
+                    //       //int.parse(widget.InputImagesSequence[index ~/3])
+                    //    // width: 50,
+                    //    // height: 50,
+                    //   //  fit: BoxFit.cover,
+                    //   ),
+                    // )
+                    // ;
+                  },
+
+                  /*
+                  itemCount: widget.ContentImageSequence.length*3+2,
+                  itemBuilder: (context, index)
+
+                  {
                     return
                       index== widget.ContentImageSequence.length*3? SizedBox(height: 30,):
                       index== widget.ContentImageSequence.length*3+1? 
@@ -265,6 +297,8 @@ class _VIewSelectedContentState extends State<VIewSelectedContent> {
                       )
                     ;
                   },
+
+                  */
                 ),
               ),
             ),

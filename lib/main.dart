@@ -17,6 +17,7 @@ import 'package:social_media_app/test/tt.dart';
 // import 'package:social_media_app/utils/providers.dart';
 // import 'package:social_media_app/view_models/theme/theme_view_model.dart';
 
+import 'SM/auth/register/profile_pic.dart';
 import 'SM/posts/Content/CreateContent.dart';
 import 'SM/posts/Content/ContentPreview.dart';
 import 'SM/components/life_cycle_event_handler.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
             home:
+            //ProfilePicture(),
             //CreateContent(),
             //MultipleImage(),
 

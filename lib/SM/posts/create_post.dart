@@ -33,7 +33,7 @@ class _CreatePostState extends State<CreatePost> {
   PostModel pp =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
 
   String imgurl= " ";
-  int flag =0;
+
   @override
   Widget build(BuildContext context) {
     currentUserId() {
@@ -64,6 +64,41 @@ class _CreatePostState extends State<CreatePost> {
             actions: [
               GestureDetector(
                 onTap: () async {
+
+
+                  //Import dart:core
+                  String uniqueFileName =
+                  DateTime.now().millisecondsSinceEpoch.toString();
+
+                  /*Step 2: Upload to Firebase storage*/
+                  //Install firebase_storage
+                  //Import the library
+
+                  //Get a reference to storage root
+                  Reference referenceRoot = FirebaseStorage.instance.ref();
+                  Reference referenceDirImages =
+                  referenceRoot.child('images');
+
+                  //Create a reference for the image to be stored
+                  Reference referenceImageToUpload =
+                  referenceDirImages.child(uniqueFileName);
+
+                  //Handle errors/success
+                  try {
+                    //Store the file
+                    await referenceImageToUpload.putFile(File(filee!.path));
+                    //Success: get the download URL
+                    imgurl = await referenceImageToUpload.getDownloadURL();
+
+                    print("Img URL:" +imgurl);
+                  } catch (error) {
+                    //Some error occurred
+                  }
+
+
+
+
+
 
                   pp.ownerId= firebaseAuth.currentUser!.email;
 
@@ -174,7 +209,7 @@ class _CreatePostState extends State<CreatePost> {
                   return Container();
                 },
               ),
-              InkWell(
+              flag ==0? InkWell(
                 onTap: () {
                   print("Choose image") ;
                   showImageChoices(context, viewModel);
@@ -223,6 +258,31 @@ class _CreatePostState extends State<CreatePost> {
                               height: MediaQuery.of(context).size.width - 30,
                               fit: BoxFit.cover,
                             ),
+                ),
+              ) :
+              InkWell(
+                onTap: () {
+                  print("Choose image") ;
+                  showImageChoices(context, viewModel);
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width - 30,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
+                    ),
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  child:Image.file(
+                    File(pathh),
+                width: 400,
+                height: 400,
+                fit: BoxFit.cover,
+              ),
                 ),
               ),
               SizedBox(height: 20.0),
@@ -324,8 +384,7 @@ class _CreatePostState extends State<CreatePost> {
                 leading: Icon(Ionicons.image),
                 title: Text('Gallery'),
                 onTap: () {
-                //  Navigator.pop(context);
-
+                  Navigator.pop(context);
                   pickImagee();
 
                  // viewModel.pickImage();
@@ -338,6 +397,9 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
   XFile? filee ;
+  String pathh="";
+  int flag =0;
+
   Future<void> pickImagee() async {
 
     ImagePicker imagePicker = ImagePicker();
@@ -346,37 +408,9 @@ class _CreatePostState extends State<CreatePost> {
     print('${filee?.path}');
 
     if (filee == null) return;
-    //Import dart:core
-    String uniqueFileName =
-    DateTime.now().millisecondsSinceEpoch.toString();
-
-    /*Step 2: Upload to Firebase storage*/
-    //Install firebase_storage
-    //Import the library
-
-    //Get a reference to storage root
-    Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages =
-    referenceRoot.child('images');
-
-    //Create a reference for the image to be stored
-    Reference referenceImageToUpload =
-    referenceDirImages.child(uniqueFileName);
-
-    //Handle errors/success
-    try {
-      //Store the file
-      await referenceImageToUpload.putFile(File(filee!.path));
-      //Success: get the download URL
-      imgurl = await referenceImageToUpload.getDownloadURL();
-
-      print("Img URL:" +imgurl);
-    } catch (error) {
-      //Some error occurred
-    }
 
     setState(() {
-      pp.mediaUrl = imgurl;
+      pathh =filee!.path;
      flag =1;
     });
   }

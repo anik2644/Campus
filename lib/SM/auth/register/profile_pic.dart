@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -46,8 +47,11 @@ class _ProfilePictureState extends State<ProfilePicture> {
           body: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             children: [
-              InkWell(
-                onTap: () => showImageChoices(context, viewModel),
+              flag == 0? InkWell(
+                onTap: () {
+
+                  showImageChoices(context, viewModel);
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width - 30,
@@ -83,7 +87,45 @@ class _ProfilePictureState extends State<ProfilePicture> {
                               fit: BoxFit.cover,
                             ),
                 ),
+              ):
+              InkWell(
+                onTap: () {
+
+                  showImageChoices(context, viewModel);
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width - 30,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(3.0),
+                    ),
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  child:Image.file(
+                    File(pathh),
+                    width: 400,
+                    height: 400,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
+
+              //
+              // Container(
+              //   height: 400,
+              //   width: 400,
+              //
+              //   child: Image.file(
+              //     File(pathh),
+              //     width: 400,
+              //     height: 400,
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
               SizedBox(height: 10.0),
               Center(
                 child: ElevatedButton(
@@ -102,7 +144,89 @@ class _ProfilePictureState extends State<ProfilePicture> {
                       child: Text('done'.toUpperCase()),
                     ),
                   ),
-                  onPressed: () => viewModel.uploadProfilePicture(context),
+                  onPressed: () async {
+
+
+                      if (flag == 0) {
+                        showInSnackBar('Please select an image', context);
+                      } else {
+                        try {
+                          loading = true;
+
+
+    //Import dart:core
+    String uniqueFileName =
+    DateTime.now().millisecondsSinceEpoch.toString();
+
+    /*Step 2: Upload to Firebase storage*/
+    //Install firebase_storage
+    //Import the library
+
+    //Get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child('images');
+
+    //Create a reference for the image to be stored
+    Reference referenceImageToUpload =
+    referenceDirImages.child(uniqueFileName);
+
+    //Handle errors/success
+    try {
+      //Store the file
+      await referenceImageToUpload.putFile(File(pathh));
+      //Success: get the download URL
+
+      //String imgurl= " ";
+      imgurl = await referenceImageToUpload.getDownloadURL();
+
+      print("Img URL:" +imgurl);
+    } catch (error) {
+      //Some error occurred
+    }
+
+
+
+    // update profile pic
+    CollectionReference collection =
+    FirebaseFirestore.instance.collection('users');
+    DocumentReference document = collection.doc(firebaseAuth.currentUser!.uid);
+
+    try {
+      await document.update({
+
+        // 'field_name': 'new_value',
+        'photoUrl' : imgurl,
+
+
+      });
+      print('Field updated successfully.');
+    } catch (e) {
+      print('Error updating field: $e');
+    }
+
+
+
+
+
+                          //
+                          // await postService.uploadProfilePicture(
+                          //     mediaUrl!, firebaseAuth.currentUser!);
+                          loading = false;
+                          Navigator.of(context)
+                              .pushReplacement(CupertinoPageRoute(builder: (_) => TabScreen()));
+                        } catch (e) {
+                          print(e);
+                          loading = false;
+                          showInSnackBar('Uploaded successfully!', context);
+                         // notifyListeners();
+                        }
+                      }
+
+
+
+                    //viewModel.uploadProfilePicture(context);
+                  },
                 ),
               ),
             ],
@@ -111,6 +235,12 @@ class _ProfilePictureState extends State<ProfilePicture> {
       ),
     );
   }
+
+  void showInSnackBar(String value, context) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
+  }
+
 
   showImageChoices(BuildContext context, PostsViewModel viewModel) {
     showModalBottomSheet(
@@ -147,7 +277,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                 leading: Icon(Ionicons.image),
                 title: Text('Gallery'),
                 onTap: () {
-                 // Navigator.pop(context);
+                  Navigator.pop(context);
                   pickImagee();
                   //viewModel.pickImage();
                   // viewModel.pickProfilePicture();
@@ -160,7 +290,10 @@ class _ProfilePictureState extends State<ProfilePicture> {
     );
   }
 
+  bool loading = true;
   String imgurl ="";
+  String pathh = "";
+  int flag =0;
 
   Future<void> pickImagee() async {
 
@@ -170,6 +303,15 @@ class _ProfilePictureState extends State<ProfilePicture> {
     print('${file?.path}');
 
     if (file == null) return;
+
+    setState(() {
+      pathh = file.path ;
+      if(file!=null)
+        {
+           flag =1;
+        }
+    });
+    /*
     //Import dart:core
     String uniqueFileName =
     DateTime.now().millisecondsSinceEpoch.toString();
@@ -220,9 +362,15 @@ class _ProfilePictureState extends State<ProfilePicture> {
     } catch (e) {
       print('Error updating field: $e');
     }
+
+     */
+
+    /*
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
         ));
+
+    */
    // Navigator.of(context).pushReplacement((builder: context) => TabScreen())
 
   }

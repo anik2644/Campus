@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -161,7 +161,7 @@ class _EditProfileState extends State<EditProfile> {
                         padding: const EdgeInsets.all(1.0),
                         child: CircleAvatar(
                           radius: 65.0,
-                          backgroundImage: NetworkImage( imgurl ?? ""), //NetworkImage(viewModel.imgLink!),
+                          backgroundImage: CachedNetworkImageProvider( imgurl ?? ""), //NetworkImage(viewModel.imgLink!),
                         ),
                       )
                           :
@@ -180,7 +180,7 @@ class _EditProfileState extends State<EditProfile> {
                           padding: const EdgeInsets.all(1.0),
                           child: CircleAvatar(
                             radius: 65.0,
-                            backgroundImage: NetworkImage( widget.user!.photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
+                            backgroundImage: CachedNetworkImageProvider( widget.user!.photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
                           ),
                         )
                       : viewModel.image == null

@@ -91,7 +91,7 @@ dev_dependencies:
   story_view: ^0.14.0
 
   image_picker: ^0.8.7+5
-
+  #language_detector: ^0.2.0
 
 # ecommerce
 
@@ -137,6 +137,17 @@ flutter:
         - asset: assets/fonts/Alkatra/Alkatra-Medium.ttf
         - asset: assets/fonts/Alkatra/Alkatra-SemiBold.ttf
         - asset: assets/fonts/Alkatra/Alkatra-Regular.ttf
+    - family: SimpleBangla
+      fonts:
+        - asset: assets/fonts/SimpleBangla/V1.ttf
+        - asset: assets/fonts/SimpleBangla/V2.ttf
+        - asset: assets/fonts/SimpleBangla/Unicode.ttf
+        - asset: assets/fonts/SimpleBangla/UnicodeItalic.ttf
+        - asset: assets/fonts/SimpleBangla/ANSIV1Italic.ttf
+        - asset: assets/fonts/SimpleBangla/ANSIV2Italic.ttf
+
+
+
 
 
   # The following line ensures that the Material Icons font is

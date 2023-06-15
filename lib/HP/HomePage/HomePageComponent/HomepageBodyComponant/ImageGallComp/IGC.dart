@@ -33,7 +33,7 @@ class _ImageGalleryImageViewState extends State<ImageGalleryImageView> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(widget.title, style: TextStyle(color: Colors.white),),
+            Text(widget.title, style: TextStyle(color: Colors.white, fontFamily: 'Alkatra'),),
           ],
         ),
       ),
@@ -43,7 +43,7 @@ class _ImageGalleryImageViewState extends State<ImageGalleryImageView> {
             children: [
               Image.network(widget.src),
               SizedBox(height: 20),
-              Text(Description,style: TextStyle(fontSize: 18),)
+              Text(Description,style: TextStyle(fontSize: 18, fontFamily: 'SimpleBangla'),)
             ],
 
           ),

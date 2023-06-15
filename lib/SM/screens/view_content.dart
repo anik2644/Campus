@@ -204,7 +204,7 @@ class _VIewSelectedContentState extends State<VIewSelectedContent> {
                               width: 400,
                               child: Padding(
                                 padding: const EdgeInsets.all(6.0),
-                                child: Text(widget.ContentSegments[index], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily: 'Alkatra'),),
+                                child: Text(widget.ContentSegments[index], style: TextStyle(fontWeight: FontWeight.normal,fontSize: 22, fontFamily:'SimpleBangla',),),
                               )
                           ),
                           SizedBox(height: 25,),

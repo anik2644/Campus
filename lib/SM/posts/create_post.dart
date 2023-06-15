@@ -86,7 +86,7 @@ class _CreatePostState extends State<CreatePost> {
                   //Handle errors/success
                   try {
                     //Store the file
-                    await referenceImageToUpload.putFile(File(filee!.path));
+                    await referenceImageToUpload.putFile(File(pathh));
                     //Success: get the download URL
                     imgurl = await referenceImageToUpload.getDownloadURL();
 

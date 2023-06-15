@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/HP/HomePage/HomePage.dart';
+import 'package:social_media_app/test/DetectLanguage.dart';
 import 'package:social_media_app/test/Multiple_Image_Taken.dart';
 import 'package:social_media_app/test/dr.dart';
 import 'package:social_media_app/test/m.dart';
@@ -67,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home:
+            home://LW(),
             //ProfilePicture(),
             //CreateContent(),
             //MultipleImage(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:social_media_app/SM/posts/Post.dart';
 import 'package:social_media_app/SM/screens/view_image.dart';
 import '../chats/recent_chats.dart';
 import '../models/post.dart';
@@ -136,58 +137,58 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
 
   Future<void> fetchData() async {
+    CollectionReference collection = FirebaseFirestore.instance.collection('all_Posts');
+    QuerySnapshot querySnapshot = await collection.get();
 
-      CollectionReference collection = FirebaseFirestore.instance.collection('all_Posts');
-      QuerySnapshot querySnapshot = await collection.get();
+    print(querySnapshot.docs.length);
 
-      print(querySnapshot.docs.length);
+    querySnapshot.docs.forEach((doc) {
 
-      querySnapshot.docs.forEach((doc) {
-
-     //   print(doc.get('id'));
-
-
-        String postID = doc.get('postId');
-        String description = doc.get('description');
-        String id = doc.get('id');
-        String loc = doc.get('location');
-        String ownerId = doc.get('ownerId');
-        String timestamp = doc.get('timestamp');
-        String userName = doc.get('userName');
-        String mediaUrl = doc.get('mediaUrl');
+      //   print(doc.get('id'));
 
 
-        PostModel data =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
-        data.id=id;
-        data.timestamp =timestamp;
-        data.mediaUrl = mediaUrl;
-        data.description= description;
-        data.location = loc;
-        data.ownerId =ownerId;
-        data.username = userName;
-        data.postId = postID;
+      String postID = doc.get('postId');
+      String description = doc.get('description');
+      String id = doc.get('id');
+      String loc = doc.get('location');
+      String ownerId = doc.get('ownerId');
+      String timestamp = doc.get('timestamp');
+      String userName = doc.get('userName');
+      String mediaUrl = doc.get('mediaUrl');
 
-        print(data.description);
 
-        bool exists = p.Pl.any((post) => post.postId == data.postId);
-        if(exists)
-          {
-            print("already in the list");
-          }
-        else
-          {
-            p.Pl.add(data);
-          }
+      PostModel data =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
+      data.id=id;
+      data.timestamp =timestamp;
+      data.mediaUrl = mediaUrl;
+      data.description= description;
+      data.location = loc;
+      data.ownerId =ownerId;
+      data.username = userName;
+      data.postId = postID;
 
-       // fetchUser();
+      print(data.postId);
+      print(data.description);
 
-      });
-      print("data fetch done");
-      fetchUser();
+      bool exists = p.Pl.any((post) => post.postId == data.postId);
+      if(exists)
+      {
+        print("already in the list");
+      }
+      else
+      {
+        p.Pl.add(data);
+      }
 
-      // setState(() {
-      //   isLoading = false;
-      // });
+      // fetchUser();
+
+    });
+    print("data fetch done");
+    fetchUser();
+
+    // setState(() {
+    //   isLoading = false;
+    // });
   }
 
 

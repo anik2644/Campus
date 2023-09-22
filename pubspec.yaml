@@ -1,0 +1,111 @@
+name: dhabiansomachar
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  #  flutter_lints: ^2.0.0
+
+
+  # cupertino_icons: ^1.0.2
+  location: ^4.4.0
+
+
+  flutter_map: ^3.1.0
+  latlong2: ^0.8.0
+
+
+  flutter_offline: ^2.1.0
+  internet_connection_checker: ^0.0.1+4
+  # permission_handler: ^10.2.0
+  app_settings: ^4.2.0
+
+
+  # firebase_core: ^2.1.0
+  # cloud_firestore: ^4.0.2
+  firebase_database: ^10.0.2
+  # firebase_auth: ^4.0.2
+
+  carousel_slider: ^4.2.1
+  favorite_button: ^0.0.4
+  url_launcher: ^6.1.9
+
+
+  flutter_animate: ^4.1.1+1
+
+
+
+
+
+  path_provider: ^2.0.11
+  cupertino_icons: ^1.0.0
+  google_sign_in: ^5.0.4
+  percent_indicator: ^4.2.2
+  cached_network_image: ^3.0.0
+  flutter_spinkit: ^5.0.0
+  fluttertoast: ^8.0.7
+  animations: ^2.0.0
+  image: ^3.0.2
+  uuid: ^3.0.4
+  cloud_firestore: ^4.7.1
+  # firebase_storage: ^11.2.2
+  firebase_auth: ^4.6.1
+  firebase_core: ^2.13.0
+  firebase_storage: ^11.2.1
+
+  geolocator: ^9.0.1
+  geocoding: ^2.0.0
+  timeago: ^3.1.0
+  google_fonts: ^3.0.1
+  provider: ^6.0.3
+  image_cropper: ^3.0.0
+  shared_preferences: ^2.0.6
+  ionicons: ^0.2.1
+  loading_overlay: ^0.3.0
+  like_button: ^2.0.4
+  flutter_chat_bubble: ^2.0.0
+  permission_handler: ^10.1.0
+  story: ^0.8.0
+  story_view: ^0.14.0
+
+  image_picker: ^0.8.7+5
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  fonts:
+    - family: Lacquer
+      fonts:
+        - asset: assets/fonts/Rajdhani/Rajdhani-Bold.ttf
+        - asset: assets/fonts/Rajdhani/Rajdhani-Medium.ttf
+        - asset: assets/fonts/Rajdhani/Rajdhani-SemiBold.ttf
+
+    - family: Alkatra
+      fonts:
+        - asset: assets/fonts/Alkatra/Alkatra-Bold.ttf
+        - asset: assets/fonts/Alkatra/Alkatra-Medium.ttf
+        - asset: assets/fonts/Alkatra/Alkatra-SemiBold.ttf
+        - asset: assets/fonts/Alkatra/Alkatra-Regular.ttf
+
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  assets:
+    - assets/images/
+

@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "292251960535",
+    "project_id": "socialmdeiaapp",
+    "storage_bucket": "socialmdeiaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292251960535:android:b0e0c7580e8781a8111c92",
+        "android_client_info": {
+          "package_name": "com.example.dhabiansomachar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292251960535-41e97hfa3bkur9dfq6l0m61c9efqbhmj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ_U4TrVqyWrSgMO0oy6s4M8RyC8wpErs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292251960535-41e97hfa3bkur9dfq6l0m61c9efqbhmj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292251960535:android:440fed972e0fc053111c92",
+        "android_client_info": {
+          "package_name": "com.example.socialmedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292251960535-1a59cnp5e3ld6mb0eeh0ciqirmde5bfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialmedia",
+            "certificate_hash": "0e21fb19fc06a6585c6c3accf685f095ca8ce572"
+          }
+        },
+        {
+          "client_id": "292251960535-41e97hfa3bkur9dfq6l0m61c9efqbhmj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ_U4TrVqyWrSgMO0oy6s4M8RyC8wpErs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292251960535-41e97hfa3bkur9dfq6l0m61c9efqbhmj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

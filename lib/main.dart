@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/SM/pages/feeds.dart';
+import 'HP/HomePage/HomePage.dart';
 import 'SM/components/life_cycle_event_handler.dart';
 import 'SM/pages/FeedsStrategy.dart';
 import 'SM/services/user_service.dart';
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home: FeedsStrategy(),//Feeds(),// Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
+            home: Homepage()  //FeedsStrategy(),//Homepage()//Feeds(),// Homepage()//loading()// Homepage(),// tmdte(),//Homepage(),// tmdte(),//Homepage(),// add_fire(),//Hello()//Homepage(),
             // StreamBuilder(
             //   stream: FirebaseAuth.instance.authStateChanges(),
             //   builder: ((BuildContext context, snapshot) {

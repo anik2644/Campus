@@ -1,6 +1,3 @@
-import 'package:social_media_app/SM/models/post.dart';
-
-import '../../SM/posts/Post.dart';
 
 class JsonPostModel {
   Post post;

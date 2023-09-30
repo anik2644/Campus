@@ -1,14 +1,10 @@
-import 'dart:ffi';
-
-import 'package:dhabiansomachar/SM/JSON_MNG/jsonFunction.dart';
-import 'package:dhabiansomachar/SM/JSON_MNG/model/testJson.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+
+import 'SM/JSON_Management/JSONMethods.dart';
 
 
 Future<void> main() async {
@@ -121,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print(User.users.length);
 
 
-    JsonMethods wj = JsonMethods();
+    JSONMethods wj = JSONMethods();
     wj.writeToJSON(User.users);
 
 
@@ -139,9 +135,9 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [IconButton(onPressed: () async {
 
 
-          JsonMethods wj = JsonMethods();
+          JSONMethods wj = JSONMethods();
           List<User> rJ= await wj.readFromJSON();
-          
+
           print("run From MAin");
 
           rJ.forEach((element) {

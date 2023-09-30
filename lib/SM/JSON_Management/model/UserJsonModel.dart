@@ -4,8 +4,8 @@ class UserJsonModel {
   final String email;
 
 
-  final  String? country;
-  final  String? bio;
+  final String? country;
+  final String? bio;
   final String? gender;
   final String? photoUrl;
 

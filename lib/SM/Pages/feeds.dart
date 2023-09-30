@@ -146,7 +146,7 @@ class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveCl
 
     print("data fetch done");
     JsonMethods jm = new JsonMethods();
-    jm.writeCounter(Post.AllPosts);
+    jm.writeToJSON(Post.AllPosts);
 
     fetchUser();
   }

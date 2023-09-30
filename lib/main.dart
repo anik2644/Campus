@@ -1,10 +1,19 @@
+import 'dart:ffi';
+
+import 'package:dhabiansomachar/SM/JSON_MNG/jsonFunction.dart';
+import 'package:dhabiansomachar/SM/JSON_MNG/model/testJson.dart';
+import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -33,12 +42,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> fetchUser() async {
 
+    print("hello world");
     CollectionReference collection = FirebaseFirestore.instance.collection('users');
     QuerySnapshot querySnapshot = await collection.get();
 
+
     querySnapshot.docs.forEach((doc) {
 
-      print(doc.get('id'));
+     // print(doc.get('id'));
 
 
       String bio = doc.get('bio');
@@ -46,8 +57,29 @@ class _MyHomePageState extends State<MyHomePage> {
       String email = doc.get('email');
       String gender = doc.get('gender');
       String id = doc.get('id');
-      String photourl = doc.get('photoUrl');
+      bool isOnline = doc.get('isOnline');
+      Timestamp lastSeen = doc.get('lastSeen');
+      String photoUrl = doc.get('photoUrl');
       String userName = doc.get('username');
+      Timestamp time =  doc.get('time');
+
+
+      User curUser = new  User.Complete(userName,email,country,bio,gender,photoUrl,id,lastSeen,isOnline,time);
+      bool exists = User.users.any((entity) => entity.email == curUser.email);
+
+      // print(curUser.userName);
+      // //print(DateFormat("MMMM d, y 'at' h:mm:ss a 'UTC'z").format(curUser.lastSeen.toDate()).toString());
+      // print(curUser.time.toDate());
+      if(exists)
+      {
+        print("already in the list");
+      }
+      else
+      {
+        print("not exist in the list");
+        User.users.add(curUser);
+      }
+
       // String mediaUrl = doc.get('mediaUrl');
 
 
@@ -85,6 +117,17 @@ class _MyHomePageState extends State<MyHomePage> {
  */
     });
 
+
+    print(User.users.length);
+
+
+    JsonMethods wj = JsonMethods();
+    wj.writeToJSON(User.users);
+
+
+    print("writeDOne");
+
+
   }
 
 
@@ -93,6 +136,20 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("widget.title"),
+        actions: [IconButton(onPressed: () async {
+
+
+          JsonMethods wj = JsonMethods();
+          List<User> rJ= await wj.readFromJSON();
+          
+          print("run From MAin");
+
+          rJ.forEach((element) {
+            print(element.userName);
+          });
+         // print("Read done");
+
+        }, icon: Icon(Icons.add))],
       ),
       body: Center(
       child: Column(

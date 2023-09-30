@@ -1,3 +1,4 @@
+import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Future<void> fetchUser() async {
+ /* Future<void> fetchUser() async {
 
     print("hello world");
     CollectionReference collection = FirebaseFirestore.instance.collection('users');
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // String mediaUrl = doc.get('mediaUrl');
 
 
-/*
+*//*
       UserModel data =  UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h");
       data.username =userName;
       data.email = email;
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       isLoading = false;
 
- */
+ *//*
     });
 
 
@@ -125,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   }
-
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +162,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: fetchUser,
+        onPressed: () async {
+          FirebaseFetchData ffd = FirebaseFetchData("users");
+          List<User> us = await ffd.fetchdata() ;
+
+          print("Runing from main");
+          us.forEach((element) {print(element.userName);});
+        },//fetchUser,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

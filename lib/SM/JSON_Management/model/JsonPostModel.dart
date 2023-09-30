@@ -1,19 +1,17 @@
-
 class JsonPostModel {
-  Post post;
-   String s ="hello";
-  late String id;
-  late String postId;
-  late String userName;
-  late String ownerId;
-  late String location;
-  late String timestamp;
-  late String mediaUrl;
-  late String description;
 
-  JsonPostModel(this.post);
+  final String? id;
+  final String? postId;
+  final String? userName;
+  final String? ownerId;
+  final String? location;
+  final String? timestamp;
+  final String? mediaUrl;
+  final String? description;
 
-  JsonPostModel.fromJson(Map<String, dynamic> json, this.post)
+  JsonPostModel(this.id, this.postId, this.userName, this.ownerId, this.location, this.timestamp, this.mediaUrl, this.description);
+
+  JsonPostModel.fromJson(Map<String, dynamic> json)
       : postId = json['postId'],
         id = json['id'],
         userName = json['userName'],
@@ -21,41 +19,18 @@ class JsonPostModel {
         location = json['location'],
         timestamp = json['timestamp'],
         mediaUrl = json['mediaUrl'],
-        description = json['description'] {
-    // TODO: implement User.fromJson
-    runFun(id, postId, userName, ownerId, location, timestamp, mediaUrl,
-        description);
-    throw UnimplementedError();
-  }
+        description = json['description']
+  ;
 
   Map<String, dynamic> toJson() => {
 
-
-
-    'id': s,
-    'postId':s,
-    'userName':s,
-    'ownerId':s,
-    'location':s,
-    'timestamp':s,
-    'mediaUrl':s,
-    'description':s,
-    // 'id': this.post.id,
-    // 'postId':this.post.postId,
-    // 'userName':this.post.userName,
-    // 'ownerId':this.post.ownerId,
-    // 'location':this.post.location,
-    // 'timestamp':this.post.timestamp,
-    // 'mediaUrl':this.post.mediaUrl,
-    // 'description':this.post.description,
-
-      };
-
-
-  Post runFun(String id, String postId, String userName, String ownerId, String location, String timestamp, String mediaUrl, String description,) {
-    Post p = new Post(id, postId, userName, ownerId, location, timestamp, mediaUrl, description);
-    print('runFun called with postId: $postId, userName: $userName');
-
-    return p;
-  }
+    'id': id,
+    'postId':postId,
+    'userName':userName,
+    'ownerId':ownerId,
+    'location':location,
+    'timestamp':timestamp,
+    'mediaUrl':mediaUrl,
+    'description':description,
+  };
 }

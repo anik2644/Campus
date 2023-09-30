@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 class UserJsonModel {
   final String userName;
   final String email;

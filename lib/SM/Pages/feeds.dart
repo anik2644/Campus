@@ -5,6 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../JSON_Management/JSONFile.dart';
+import '../ModelClass/Post.dart';
+import '../ModelClass/User.dart';
+import '../UI/userpost.dart';
+
 
 
 class FeedsStrategy extends StatefulWidget {
@@ -20,6 +25,33 @@ class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveCl
   int page = 5;
   bool loadingMore = false;
   ScrollController scrollController = ScrollController();
+  List<Post> posts = [];
+  List<User> users = [];
+
+  Future<void> fetchUser() async {
+
+    JSONFile jf = JSONFile("users");
+    List<Object> uka = await jf.read() ;
+    users = uka as List<User>;
+    users.forEach((element) {print(element.userName);});
+    print("users fetch done");
+
+    setState(() {
+      isLoading = false;
+    });
+
+  }
+
+
+  Future<void> fetchData() async {
+    JSONFile jf = JSONFile("posts");
+    List<Object> uka = await jf.read() ;
+    posts = uka as List<Post>;
+    posts.forEach((element) {print(element.userName);});
+    print("posts fetch done");
+
+    fetchUser();
+  }
 
   @override
   void initState() {
@@ -35,120 +67,6 @@ class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveCl
       }
     });
     super.initState();
-  }
-
-  Future<void> fetchUser() async {
-
-    CollectionReference collection = FirebaseFirestore.instance.collection('users');
-    QuerySnapshot querySnapshot = await collection.get();
-
-    // print("hey in userfeth");
-    // print(querySnapshot.docs.length );
-    // print("hey in fetchh");
-    //
-    // int i=0;
-
-    querySnapshot.docs.forEach((doc) {
-
-      print(doc.get('id'));
-
-
-      String bio = doc.get('bio');
-      String country = doc.get('country');
-      String email = doc.get('email');
-      String gender = doc.get('gender');
-      String id = doc.get('id');
-      String photourl = doc.get('photoUrl');
-      String userName = doc.get('username');
-      // String mediaUrl = doc.get('mediaUrl');
-
-
-      UserModel data =  UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h");
-      data.username =userName;
-      data.email = email;
-      data.id = id;
-      data.photoUrl =photourl;
-      data.bio =bio;
-      data.country = country;
-
-
-      print(data.email);
-
-      bool exists = UserModel.um.any((entity) => entity.email == data.email);
-      if(exists)
-      {
-        print("already in the list");
-      }
-      else
-      {
-        print("not exist in the list");
-        UserModel.um.add(data);
-      }
-
-
-
-    });
-
-    print(UserModel.um.length);
-    setState(() {
-      isLoading = false;
-    });
-
-  }
-
-
-  Future<void> fetchData() async {
-
-    CollectionReference collection = FirebaseFirestore.instance.collection('all_Posts');
-    QuerySnapshot querySnapshot = await collection.get();
-
-    print(querySnapshot.docs.length);
-    print(querySnapshot.docs.length);print(querySnapshot.docs.length);print(querySnapshot.docs.length);print(querySnapshot.docs.length);
-    querySnapshot.docs.forEach((doc) {
-
-      //   print(doc.get('id'));
-
-
-      String postID = doc.get('postId');
-      String description = doc.get('description');
-      String id = doc.get('id');
-      String loc = doc.get('location');
-      String ownerId = doc.get('ownerId');
-      String timestamp = doc.get('timestamp');
-      String userName = doc.get('userName');
-      String mediaUrl = doc.get('mediaUrl');
-
-
-
-      Post post = Post("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg","done");
-
-      post.id =id;
-      post.timestamp  =timestamp;
-      post.mediaUrl = mediaUrl;
-      post.description == description;
-      post.location  = loc;
-      post.ownerId  =ownerId;
-      post.userName  = userName;
-      post.postId  = postID;
-
-
-      bool exists = Post.AllPosts.any((post) => post.postId == post.postId);
-      if(exists)
-      {
-        print("already in the list");
-      }
-      else
-      {
-        Post.AllPosts.add(post);
-      }
-    });
-
-
-    print("data fetch done");
-    JsonMethods jm = new JsonMethods();
-    jm.writeToJSON_user(Post.AllPosts);
-
-    fetchUser();
   }
 
   @override
@@ -174,25 +92,25 @@ class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveCl
               Ionicons.chatbubble_ellipses,
               size: 30.0,
             ),
-            onPressed: () {
+            onPressed: () {},
+            /*{
               Navigator.push(
                 context,
                 CupertinoPageRoute(
                   builder: (_) => Chats(),
                 ),
               );
-            },
+            },*/
           ),
           SizedBox(width: 20.0),
         ],
       ),
-      body:
-      Stack(
+      body: Stack(
         children: [
           Visibility(
             visible: !isLoading,
             child: RefreshIndicator(
-              onRefresh: fetchData,
+              onRefresh: (){ return Future(() => null);},// fetchData,
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 // controller: scrollController,
@@ -206,15 +124,15 @@ class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveCl
                       //height: MediaQuery.of(context).size.height,
                         child:  ListView.builder(
                           controller: scrollController,
-                          itemCount: p.Pl.length,
+                          itemCount: posts.length,
                           shrinkWrap: true,
                           //  physics: ScrollPhysics(),
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            PostModel posts = p.Pl[index];
+                            Post post = posts[index];
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: UserPost(post: posts),
+                              child: UserPost(post: post),
                             );
                           },
                         )

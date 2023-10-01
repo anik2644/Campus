@@ -1,4 +1,4 @@
-class JsonPostModel {
+class PostJsonModel {
 
   final String? id;
   final String? postId;
@@ -9,9 +9,9 @@ class JsonPostModel {
   final String? mediaUrl;
   final String? description;
 
-  JsonPostModel(this.id, this.postId, this.userName, this.ownerId, this.location, this.timestamp, this.mediaUrl, this.description);
+  PostJsonModel(this.id, this.postId, this.userName, this.ownerId, this.location, this.timestamp, this.mediaUrl, this.description);
 
-  JsonPostModel.fromJson(Map<String, dynamic> json)
+  PostJsonModel.fromJson(Map<String, dynamic> json)
       : postId = json['postId'],
         id = json['id'],
         userName = json['userName'],

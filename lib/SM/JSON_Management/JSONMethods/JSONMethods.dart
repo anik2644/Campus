@@ -4,7 +4,9 @@ import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
-import 'model/UserJsonModel.dart';
+import '../../ModelClass/Post.dart';
+import '../model/PostJsonModel.dart';
+import '../model/UserJsonModel.dart';
 
 class JSONMethods{
 
@@ -23,7 +25,7 @@ class JSONMethods{
 
 
 
-  Future<List<User>> readFromJSON() async{
+  Future<List<User>> readFromJSON_user() async{
     List<User> returnFormantUsers=[];
 
     try{
@@ -49,7 +51,7 @@ class JSONMethods{
     }
   }
 
-  Future<File> writeToJSON(List<User> listToSendJSON) async{
+  Future<File> writeToJSON_user(List<User> listToSendJSON) async{
 
     List<UserJsonModel> JsonFormatUserList = [];
     listToSendJSON.forEach((element) {
@@ -65,6 +67,53 @@ class JSONMethods{
   }
 
 
+  //for Posts
+
+
+
+  Future<List<Post>> readFromJSON_post() async{
+    List<Post> returnFormantPosts=[];
+
+    try{
+      final file = await FetchFile("post.json")._localFile;
+      String JsonFilecontents = await file.readAsString();
+      final list = json.decode(JsonFilecontents) as List<dynamic> ;
+
+      List<PostJsonModel> JsonFormatPostList =[];
+      JsonFormatPostList  = list.map((e) => PostJsonModel.fromJson(e)).toList() as List<PostJsonModel>;
+
+      //convert the JSON format User to Actual User and create the return list
+      JsonFormatPostList.forEach((element) {
+        Post post = Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
+        returnFormantPosts.add(post);
+      });
+
+      return returnFormantPosts;
+    }
+    catch(e)
+    {
+      print(e);
+      return returnFormantPosts;
+    }
+  }
+
+  Future<File> writeToJSON_post(List<Post> listToSendJSON) async{
+
+    List<PostJsonModel> JsonFormatPostList = [];
+    listToSendJSON.forEach((element) {
+      PostJsonModel JsonFormatPost = PostJsonModel(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
+      JsonFormatPostList.add(JsonFormatPost);
+    });
+
+
+    final file= await FetchFile("post.json")._localFile;
+    JsonFormatPostList.map((eachUserInList) => eachUserInList.toJson()).toList();
+    var encodedJSONString = json.encode(JsonFormatPostList);
+    return file.writeAsString('$encodedJSONString');
+  }
+
+
+
 }
 
 class FetchFile{
@@ -77,8 +126,8 @@ class FetchFile{
   }
   Future<File> get _localFile async{
     final path = await _localpath;
-    print(path.toString());
-    print("myPath");
+    // print(path.toString());
+    // print("myPath");
     return File("$path/$filename");
   }
 

@@ -54,11 +54,11 @@ class FirebaseFetchData{
       // print(curUser.time.toDate());
       if(exists)
       {
-        print("already in the list");
+       // print("already in the list");
       }
       else
       {
-        print("not exist in the list");
+       // print("not exist in the list");
         User.users.add(curUser);
       }
 
@@ -117,11 +117,11 @@ class FirebaseFetchData{
       // print(curUser.time.toDate());
       if(exists)
       {
-        print("already in the list");
+        //print("already in the list");
       }
       else
       {
-        print("not exist in the list");
+        //  print("not exist in the list");
         Post.posts.add(curPost);
       }
 

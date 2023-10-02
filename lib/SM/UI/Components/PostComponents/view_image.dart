@@ -10,9 +10,10 @@ import 'package:like_button/like_button.dart';
 // import 'package:social_media_app/widgets/indicators.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../../ModelClass/Post.dart';
-import '../../ModelClass/User.dart';
-import '../Widgets/indicators.dart';
+import '../../../ModelClass/Post.dart';
+import '../../../ModelClass/User.dart';
+import '../../Widgets/indicators.dart';
+
 
 
 class ViewImage extends StatefulWidget {

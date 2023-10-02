@@ -5,10 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../JSON_Management/JSONFile.dart';
-import '../ModelClass/Post.dart';
-import '../ModelClass/User.dart';
-import '../UI/userpost.dart';
+import '../../JSON_Management/JSONFile.dart';
+import '../../ModelClass/Post.dart';
+import '../../ModelClass/User.dart';
+import '../Model/userpost.dart';
 
 
 

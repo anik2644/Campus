@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -16,10 +17,13 @@ import 'package:like_button/like_button.dart';
 // import 'package:social_media_app/utils/firebase.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../ModelClass/Post.dart';
-import 'PostComponents/custom_card.dart';
-import 'PostComponents/custom_image.dart';
-import 'PostComponents/view_image.dart';
+import '../../ModelClass/Post.dart';
+import '../Components/PostComponents/Raw/ImageCard.dart';
+import '../Components/PostComponents/Raw/PostDescription.dart';
+import '../Components/PostComponents/Raw/PostTimestamp.dart';
+import '../Components/PostComponents/Raw/ProfileCard.dart';
+import '../Components/PostComponents/custom_card.dart';
+import '../Components/PostComponents/view_image.dart';
 
 
 class UserPost extends StatelessWidget {
@@ -60,20 +64,8 @@ class UserPost extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0),
-                    ),
 
-                    child: CustomImage(
-                      imageUrl: post?.mediaUrl ?? '',
-                      height: 350.0,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-
-
-                  ),
-
+                  ImageCard(post),
 
                   Padding(
                     padding:
@@ -153,31 +145,9 @@ class UserPost extends StatelessWidget {
                             ),*/
                           ],
                         ),
-                        Visibility(
-                          visible: post!.description != null &&
-                              post!.description.toString().isNotEmpty,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5.0, top: 3.0),
-                            child: Text(
-                              '${post?.description ?? ""}',
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.caption!.color,
-                                fontSize: 15.0,
-                              ),
-                              maxLines: 2,
-                            ),
-                          ),
-                        ),
+                        PostDescription(post),
                         SizedBox(height: 3.0),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Text(
-                          '${post?.timestamp ?? ""}',
-                           // timeago.format(post!.timestamp!.toDate()),
-                            style: TextStyle(fontSize: 10.0),
-                          ),
-                        ),
+                        PostTimestamp(post),
                         // SizedBox(height: 5.0),
                       ],
                     ),
@@ -186,6 +156,7 @@ class UserPost extends StatelessWidget {
 
                 ],
               ),
+             ProfileCard(post),
              // buildUser(context,post),
             ],
 
@@ -207,30 +178,30 @@ class UserPost extends StatelessWidget {
           List<QueryDocumentSnapshot> docs = snapshot.data?.docs ?? [];
 
           ///replaced this with an animated like button
-          // return IconButton(
-          //   onPressed: () {
-          //     if (docs.isEmpty) {
-          //       likesRef.add({
-          //         'userId': currentUserId(),
-          //         'postId': post!.postId,
-          //         'dateCreated': Timestamp.now(),
-          //       });
-          //       addLikesToNotification();
-          //     } else {
-          //       likesRef.doc(docs[0].id).delete();
-          //       services.removeLikeFromNotification(
-          //           post!.ownerId!, post!.postId!, currentUserId());
-          //     }
-          //   },
-          //   icon: docs.isEmpty
-          //       ? Icon(
-          //           CupertinoIcons.heart,
-          //         )
-          //       : Icon(
-          //           CupertinoIcons.heart_fill,
-          //           color: Colors.red,
-          //         ),
-          // );
+          return IconButton(
+            onPressed: () {
+              if (docs.isEmpty) {
+                likesRef.add({
+                  'userId': currentUserId(),
+                  'postId': post!.postId,
+                  'dateCreated': Timestamp.now(),
+                });
+                addLikesToNotification();
+              } else {
+                likesRef.doc(docs[0].id).delete();
+                services.removeLikeFromNotification(
+                    post!.ownerId!, post!.postId!, currentUserId());
+              }
+            },
+            icon: docs.isEmpty
+                ? Icon(
+                    CupertinoIcons.heart,
+                  )
+                : Icon(
+                    CupertinoIcons.heart_fill,
+                    color: Colors.red,
+                  ),
+          );
           Future<bool> onLikeButtonTapped(bool isLiked) async {
             if (docs.isEmpty) {
               likesRef.add({
@@ -316,7 +287,8 @@ class UserPost extends StatelessWidget {
       ),
     );
   }
-
+*/
+  /*
   buildUser(BuildContext context, PostModel? post) {
     bool isMe = currentUserId() == post!.ownerId;
     return StreamBuilder(

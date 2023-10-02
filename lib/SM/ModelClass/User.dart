@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User{
 
   static List<User> users = [];
+
+
   final String userName;
   final String email;
 

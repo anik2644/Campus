@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'SM/Configuration/config.dart';
-import 'SM/Pages/feeds.dart';
+import 'SM/UI/Pages/feeds.dart';
 import 'SM/Utilites/life_cycle_event_handler.dart';
 
 
@@ -34,7 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return FeedsStrategy();
+   /*
+      Scaffold(
       appBar: AppBar(title: Text("Dhabian Somachar"),),
       body: Center(
         child: Column(
@@ -60,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
 
+*/
 /*        // JSONFile jf = JSONFile("users");
         // List<Object> uk = await jf.read() ;
         // List<User> users = uk as List<User>;
@@ -81,10 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
         JSONFile jf = JSONFile("posts");
         List<Object> uka = await jf.read() ;
         List<Post> postss = uka as List<Post>;
-        postss.forEach((element) {print(element.userName);});*/
+        postss.forEach((element) {print(element.userName);});*//*
 
       },),
 
-    );
+    );*/
   }
 }

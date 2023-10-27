@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../../../../ModelClass/Post.dart';
 
-import '../custom_image.dart';
+import '../../Common/custom_image.dart';
 
 class ImageCard extends StatelessWidget {
   final Post? post;

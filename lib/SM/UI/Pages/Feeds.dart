@@ -8,17 +8,18 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
-import '../Model/userpost.dart';
+import '../Components/FeedComponents/userpost.dart';
 
 
 
-class FeedsStrategy extends StatefulWidget {
+class Feeds extends StatefulWidget {
+
+
   @override
-  _FeedsStrategyState createState() => _FeedsStrategyState();
+  State<Feeds> createState() => _FeedsState();
 }
 
-
-class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveClientMixin{
+class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool isLoading = true;
@@ -33,8 +34,8 @@ class _FeedsStrategyState extends State<FeedsStrategy> with AutomaticKeepAliveCl
     JSONFile jf = JSONFile("users");
     List<Object> uka = await jf.read() ;
     users = uka as List<User>;
-    users.forEach((element) {print(element.userName);});
-    print("users fetch done");
+   // users.forEach((element) {print(element.userName);});
+    //print("users fetch done");
 
     setState(() {
       isLoading = false;

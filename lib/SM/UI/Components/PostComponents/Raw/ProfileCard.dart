@@ -20,6 +20,8 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+
+
   late User postUser;
   bool isLoading =true;
 
@@ -28,106 +30,100 @@ class _ProfileCardState extends State<ProfileCard> {
     List<Object> li = await jf.read();
     List<User> users = li as List<User>;
 
+    print("now to find");
     int ind  = await users.indexWhere((item) => item.email == ownerId);
     postUser = ind==-1? users[0] : users[ind];
+
+    print(postUser.userName);
+
     return postUser;
 
   }
 
   @override
   void initState() {
-    findUser(widget.post?.ownerId);
-    setState(() {
-      isLoading =false;
+    findUser(widget.post?.ownerId).then((user) {
+      setState(() {
+        postUser = user;
+        isLoading = false;
+      });
     });
-
+    super.initState();
   }
+
 
   buildUser(BuildContext context, Post? post) {
     bool isMe = false;//currentUserId() == post!.ownerId;
-    return StreamBuilder(
-      stream: usersRef.doc(post!.ownerId).snapshots(),
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasData) {
-          DocumentSnapshot snap = snapshot.data!;
-          // //int ind  = User.users.indexWhere((item) => item.email == email); UserModel.getUserIndex(post.ownerId ?? "");
-          // User user = findUser(post.ownerId);
-          // // UserModel.fromJson(snap.data() as Map<String, dynamic>);
-          return Visibility(
-            visible: !isMe,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: 50.0,
-                decoration: BoxDecoration(
-                  color: Colors.white60,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
-                  ),
-                ),
-                child: GestureDetector(
-                  onTap: () => showProfile(context, profileId: postUser.id!),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        postUser.photoUrl!.isEmpty
-                            ? CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor:
-                          Theme.of(context).colorScheme.secondary,
-                          child: Center(
-                            child: Text(
-                              '${post.ownerId.toString().toUpperCase()}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                          ),
-                        )
-                            : CircleAvatar(
-                          radius: 20.0,
-                          backgroundImage: CachedNetworkImageProvider(
-                            '${postUser.photoUrl}',
-                          ),
+    return Visibility(
+      visible: !isMe,
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          height: 50.0,
+          decoration: BoxDecoration(
+            color: Colors.white60,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+          ),
+          child: GestureDetector(
+            // onTap: () => showProfile(context, profileId: postUser.id!),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  postUser.photoUrl!.isEmpty
+                      ? CircleAvatar(
+                    radius: 20.0,
+                    backgroundColor:
+                    Theme.of(context).colorScheme.secondary,
+                    child: Center(
+                      child: Text(
+                        '${post?.ownerId.toString().toUpperCase()}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w900,
                         ),
-                        SizedBox(width: 5.0),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${post?.userName ?? ""}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              '${post?.ownerId ?? ""}',
-                              style: TextStyle(
-                                fontSize: 10.0,
-                                color: Color(0xff4D4D4D),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
+                    ),
+                  )
+                      : CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: CachedNetworkImageProvider(
+                      '${postUser.photoUrl}',
                     ),
                   ),
-                ),
+                  SizedBox(width: 5.0),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${post?.userName ?? ""}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        '${post?.ownerId ?? ""}',
+                        style: TextStyle(
+                          fontSize: 10.0,
+                          color: Color(0xff4D4D4D),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          );
-        } else {
-          return Container();
-        }
-      },
+          ),
+        ),
+      ),
     );
   }
 
@@ -143,6 +139,6 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading? circularProgress(context): buildUser(context, widget.post);
+    return isLoading? CircularProgressIndicator(): buildUser(context, widget.post);
   }
 }

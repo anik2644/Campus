@@ -3,13 +3,14 @@ import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.da
 import 'package:dhabiansomachar/SM/JSON_Management/JSONFile.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'SM/Configuration/config.dart';
-import 'SM/UI/Pages/feeds.dart';
+import 'SM/UI/Helper/HPStrategy.dart';
 import 'SM/Utilites/life_cycle_event_handler.dart';
 
 
@@ -34,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return FeedsStrategy();
+    return HPStretegy();//Feeds();
    /*
       Scaffold(
       appBar: AppBar(title: Text("Dhabian Somachar"),),

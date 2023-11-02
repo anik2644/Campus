@@ -28,14 +28,14 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    LoginViewModel viewModel = LoginViewModel(); //Provider.of<LoginViewModel>(context);
+    LoginViewModel viewModel =  Provider.of<LoginViewModel>(context);//LoginViewModel(); //Provider.of<LoginViewModel>(context);
 
     return LoadingOverlay(
       progressIndicator: circularProgress(context),
       isLoading: viewModel.loading,
       child: Scaffold(
         backgroundColor: Colors.white,
-       // key: viewModel.scaffoldKey,
+        key: viewModel.scaffoldKey,
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           children: [

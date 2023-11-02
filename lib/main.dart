@@ -1,9 +1,4 @@
-import 'package:dhabiansomachar/SM/Firebase/FIREBASE.dart';
-import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.dart';
-import 'package:dhabiansomachar/SM/JSON_Management/JSONFile.dart';
-import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
-import 'package:dhabiansomachar/SM/ModelClass/User.dart';
-import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'SM/Configuration/config.dart';
 import 'SM/UI/Helper/HPStrategy.dart';
-import 'SM/Utilites/life_cycle_event_handler.dart';
+import 'SM/UI/Pages/Feeds.dart';
+import 'SM/Utilites/Providers/Providers.dart';
 
 
 void main() async {
@@ -21,7 +17,11 @@ void main() async {
 }
 
 
-class MyApp extends StatelessWidget {@override Widget build(BuildContext context) {return MaterialApp(debugShowCheckedModeBanner: false, theme: ThemeData(primarySwatch: Colors.blue,), home: const MyHomePage(),);}}
+class MyApp extends StatelessWidget {@override Widget build(BuildContext context) {
+  return MultiProvider(
+      providers: providers,
+      child: MaterialApp(debugShowCheckedModeBanner: false, theme: ThemeData(primarySwatch: Colors.blue,), home: const MyHomePage(),)
+  );}}
 
 
 

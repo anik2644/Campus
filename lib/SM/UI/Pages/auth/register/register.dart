@@ -12,31 +12,24 @@ import '../../../Components/Register/text_form_builder.dart';
 import '../../../Widgets/indicators.dart';
 import '../login/login.dart';
 
+
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-
-
-
   @override
   Widget build(BuildContext context) {
-    RegisterViewModel viewModel = RegisterViewModel();//Provider.of<RegisterViewModel>(context);
+    RegisterViewModel viewModel = Provider.of<RegisterViewModel>(context);
     return LoadingOverlay(
       progressIndicator: circularProgress(context),
       isLoading: viewModel.loading,
       child: Scaffold(
-       // key: viewModel.scaffoldKey,
+        key: viewModel.scaffoldKey,
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
           children: [
-/*            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your text here',
-              ),
-            ),*/
             SizedBox(height: MediaQuery.of(context).size.height / 10),
             Text(
               'Welcome to Elegent Society of University of Dhaka\nCreate a new account and connect with friends',
@@ -45,8 +38,6 @@ class _RegisterState extends State<Register> {
                 fontSize: 25.0,
               ),
             ),
-
-
             SizedBox(height: 30.0),
             buildForm(viewModel, context),
             SizedBox(height: 30.0),
@@ -57,11 +48,7 @@ class _RegisterState extends State<Register> {
                   'Already have an account  ',
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    CupertinoPageRoute(
-                      builder: (_) => Login(),
-                    ),
-                  ),
+                  onTap: () => Navigator.pop(context),
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -84,7 +71,6 @@ class _RegisterState extends State<Register> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
-          SizedBox(height: 20.0),
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.person_outline,

@@ -4,17 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:social_media_app/SM/posts/Content/Model/Content.dart';
-import 'package:social_media_app/SM/screens/view_image.dart';
-import 'package:social_media_app/SM/widgets/ContentCard.dart';
-import '../chats/recent_chats.dart';
-import '../models/post.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../models/user.dart';
-import '../utils/constants.dart';
-import '../utils/firebase.dart';
-import '../widgets/story_widget.dart';
-import '../widgets/userpost.dart';
 
 class Contents extends StatefulWidget {
   @override
@@ -35,7 +25,7 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
 
-    fetchData();
+    //fetchData();
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -47,6 +37,7 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
     });
     super.initState();
   }
+/*
 
   Future<void> fetchUser() async {
 
@@ -193,6 +184,7 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
 
   }
 
+*/
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri(scheme: "https", host: url);
@@ -253,12 +245,14 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
               size: 30.0,
             ),
             onPressed: () {
-              Navigator.push(
+/*              Navigator.push(
                 context,
                 CupertinoPageRoute(
                   builder: (_) => Chats(),
                 ),
               );
+
+ */
             },
           ),
           SizedBox(width: 20.0),
@@ -436,7 +430,10 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
         children: [
           Visibility(
             visible: !isLoading,
-            child: RefreshIndicator(
+            child: Container(child: Text("There will be some Contents here"),),
+            /*
+
+            RefreshIndicator(
               onRefresh: fetchData,
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -574,6 +571,10 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
                 ),
                  */
             ),
+
+            //DONE
+
+            */
           ),
           Visibility(
             visible: isLoading,

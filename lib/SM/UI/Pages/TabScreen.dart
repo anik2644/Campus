@@ -2,23 +2,8 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/HP/HomePage/HomePage.dart';
-import 'package:social_media_app/SM/models/user.dart';
-import 'package:social_media_app/SM/posts/Content/Model/Content.dart';
-// import 'package:social_media_app/components/fab_container.dart';
-// import 'package:social_media_app/pages/notification.dart';
-// import 'package:social_media_app/pages/profile.dart';
-// import 'package:social_media_app/pages/search.dart';
-// import 'package:social_media_app/pages/feeds.dart';
-// import 'package:social_media_app/utils/firebase.dart';
-
-import '../components/fab_container.dart';
-import '../pages/contentFeeds.dart';
-import '../pages/feeds.dart';
-import '../pages/notification.dart';
-import '../pages/profile.dart';
-import '../pages/search.dart';
-import '../utils/firebase.dart';
+import 'Contents.dart';
+import 'Feeds.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -38,33 +23,10 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'Content',
       'icon': Icons.newspaper,
-      'page': ContentFeeds(),
+      'page': Contents(),
       'index': 1,
     },
-    {
-      'title': 'Search',
-      'icon': Ionicons.search,
-      'page': Search(),
-      'index': 2,
-    },
-    {
-      'title': 'unsee',
-      'icon': Ionicons.add_circle,
-      'page': Text('nes'),
-      'index': 3,
-    },
-    {
-      'title': 'Notification',
-      'icon': CupertinoIcons.bell_solid,
-      'page': Activities(),
-      'index': 4,
-    },
-    {
-      'title': 'Profile',
-      'icon': CupertinoIcons.person_fill,
-      'page': Profile(profileId: firebaseAuth.currentUser!.uid,email: firebaseAuth.currentUser!.email),
-      'index': 5,
-    },
+
   ];
 
   /*
@@ -137,7 +99,7 @@ class _TabScreenState extends State<TabScreen> {
         setState(() {
           if(_page==0)
           {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homepage()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TabScreen()));
           }
           else
           {
@@ -169,9 +131,7 @@ class _TabScreenState extends State<TabScreen> {
             children: [
               SizedBox(width: 5),
               for (Map item in pages)
-                item['index'] == 3
-                    ? buildFab()
-                    : Padding(
+                Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: IconButton(
                     icon: Icon(
@@ -194,21 +154,9 @@ class _TabScreenState extends State<TabScreen> {
     );
   }
 
-  buildFab() {
-    return Container(
-      height: 45.0,
-      width: 45.0,
-      // ignore: missing_required_param
-      child: FabContainer(
-        icon: Ionicons.add,
-        mini: true,
-      ),
-    );
-  }
 
   void navigationTapped(int page) {
     setState(() {
-
       _page = page;
     });
   }

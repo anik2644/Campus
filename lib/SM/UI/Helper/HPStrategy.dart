@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/TabScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
@@ -39,7 +40,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
   @override
   Widget build(BuildContext context) {
-    return isloading? CircularProgressIndicator(): isloggedin? Feeds(): Landing() ;
+    return isloading? CircularProgressIndicator(): isloggedin? TabScreen(): Landing() ;
   }
 
 

@@ -77,6 +77,50 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     print('>>>');
     return Scaffold(
       backgroundColor: Colors.black,
+/*
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+
+/*
+        FIREBASE fb = FIREBASE("posts");
+        List<Object> uk = await fb.fetchData();
+        List<Post> posts = uk as List<Post>;
+        posts.forEach((element) {print(element.description);});
+
+        print("read done\n\n");
+
+        JSONFile jfl = JSONFile("posts");
+        jfl.write(posts);
+
+        print("write done\n\n");
+
+*/
+
+
+      print("hello json");
+        FIREBASE fu = FIREBASE("users");
+        List<Object> us = await fu.fetchData();
+        List<User> users = us as List<User>;
+        users.forEach((element) {print(element.userName);});
+
+        print("read done\n\n");
+
+        JSONFile jfu = JSONFile("users");
+        jfu.write(users);
+
+        print("write done\n\n");
+
+
+
+         print("Start");
+        JSONFile jf = JSONFile("users");
+        List<Object> uka = await jf.read() ;
+        List<User> userss = uka as List<User>;
+        userss.forEach((element) {print(element.gender);});
+
+
+
+      },),
+*/
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title:  Text(

@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../Services/auth_service.dart';
+import '../../../Firebase/Auth/Auth_Service.dart';
 import '../Validation.dart';
 
 // import 'package:social_media_app/screens/mainscreen.dart';
-// import 'package:social_media_app/services/auth_service.dart';
+// import 'package:social_media_app/services/Auth_Service.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

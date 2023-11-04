@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Constants/firebase.dart';
+import '../../Utilites/Constants/firebase.dart';
 
 //import 'package:social_media_app/utils/firebase.dart';
 

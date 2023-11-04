@@ -1,10 +1,11 @@
+import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:social_media_app/auth/register/profile_pic.dart';
-// import 'package:social_media_app/services/auth_service.dart';
+// import 'package:social_media_app/services/Auth_Service.dart';
 
-import '../../Services/auth_service.dart';
+import '../../../Firebase/Auth/Auth_Service.dart';
 
 /*
 class RegisterViewModel extends ChangeNotifier {
@@ -129,13 +130,12 @@ class RegisterViewModel extends ChangeNotifier {
         notifyListeners();
         try {
          bool success = true;
-/*
          await auth.createUser(
             name: username,
             email: email,
             password: password,
             country: country,
-          );*/
+          );
           print(success);
           if (success) {
 
@@ -144,11 +144,11 @@ class RegisterViewModel extends ChangeNotifier {
               duration: Duration(seconds: 5),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-/*            Navigator.of(context).pushReplacement(
+           Navigator.of(context).pushReplacement(
               CupertinoPageRoute(
-                builder: (_) => ProfilePicture(),
+                builder: (_) => Feeds(),//ProfilePicture(),
               ),
-            );*/
+            );
           }
         } catch (e) {
           loading = false;

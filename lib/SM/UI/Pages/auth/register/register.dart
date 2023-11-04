@@ -110,7 +110,7 @@ class _RegisterState extends State<Register> {
             nextFocusNode: viewModel.passFN,
           ),
           SizedBox(height: 20.0),
-          PasswordFormBuilder(
+      PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.lock_closed_outline,
             suffix: Ionicons.eye_outline,
@@ -126,7 +126,7 @@ class _RegisterState extends State<Register> {
           ),
           SizedBox(height: 20.0),
           PasswordFormBuilder(
-            enabled: !viewModel.loading,
+             enabled: !viewModel.loading,
             prefix: Ionicons.lock_open_outline,
             hintText: "Confirm Password",
             textInputAction: TextInputAction.done,

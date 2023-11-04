@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'Contents.dart';
 import 'Feeds.dart';
+import 'NewPost.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -21,11 +22,18 @@ class _TabScreenState extends State<TabScreen> {
       'index': 0,
     },
     {
+      'title': 'unsee',
+      'icon': Ionicons.add_circle,
+      'page': Text("hello"),//NewPost(),//AddPost(),
+      'index': 1,
+    },
+    {
       'title': 'Content',
       'icon': Icons.newspaper,
       'page': Contents(),
-      'index': 1,
+      'index': 2,
     },
+
 
   ];
 
@@ -131,6 +139,9 @@ class _TabScreenState extends State<TabScreen> {
             children: [
               SizedBox(width: 5),
               for (Map item in pages)
+/*                item['index'] == 1
+                    ? AddPost()
+                    :*/
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: IconButton(
@@ -150,6 +161,18 @@ class _TabScreenState extends State<TabScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  AddPost() {
+    return Container(
+      height: 45.0,
+      width: 45.0,
+      // ignore: missing_required_param
+      child: NewPost(
+        icon: Ionicons.add_circle,
+        mini: true,
       ),
     );
   }

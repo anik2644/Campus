@@ -1,6 +1,7 @@
 import 'package:dhabiansomachar/SM/JSON_Management/JSONMethods/JSONMethods.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 
+import '../ModelClass/Content.dart';
 import '../ModelClass/User.dart';
 
 class JSONFile{
@@ -17,6 +18,10 @@ class JSONFile{
     {
       return await jsonMethods.readFromJSON_user() as List<User>;
     }
+    else if(jsonFileName=="contents")
+    {
+      return await jsonMethods.readFromJSON_content() as List<Content>;
+    }
     else
       return [];
   }
@@ -29,6 +34,10 @@ class JSONFile{
     else if(jsonFileName=="users")
     {
       jsonMethods.writeToJSON_user(list as List<User>);
+    }
+    else if(jsonFileName=="contents")
+    {
+      jsonMethods.writeToJSON_content(list as List<Content>);
     }
   }
 

@@ -6,6 +6,10 @@ import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../Firebase/FIREBASE.dart';
+import '../../JSON_Management/JSONFile.dart';
+import '../../ModelClass/Content.dart';
+
 class Contents extends StatefulWidget {
   @override
   _ContentsState createState() => _ContentsState();
@@ -22,10 +26,26 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
   bool loadingMore = false;
   ScrollController scrollController = ScrollController();
 
+  List<Content> contents = [];
+
+
+  Future<void> fetchData() async {
+    JSONFile jf = JSONFile("contents");
+    List<Object> uka = await jf.read() ;
+    contents = uka as List<Content>;
+    contents.forEach((element) {print(element.Title);});
+    print("posts fetch done");
+
+    setState(() {
+      isLoading = false;
+    });
+
+  }
+
   @override
   void initState() {
 
-    //fetchData();
+    fetchData();
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -203,12 +223,57 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
       backgroundColor: Colors.black,
       //key: scaffoldKey,
 
-      // floatingActionButton: FloatingActionButton(onPressed: () {
-      //
-      //   print("Current USer");
-      //   print(firebaseAuth.currentUser!.email);//firebaseAuth.currentUser
-      //   //fetchData();
-      // },),
+/*
+
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+
+*/
+/*
+
+        FIREBASE fb = FIREBASE("contents");
+        List<Object> uk = await fb.fetchData();
+        List<Content> ccontents = uk as List<Content>;
+       // ccontents.forEach((element) {print(element.Title);});
+
+        print("read done\n\n");
+
+        JSONFile jfl = JSONFile("contents");
+        jfl.write(ccontents);
+
+        print("write done\n\n");
+
+*//*
+
+
+
+
+*/
+/*      print("hello json");
+        FIREBASE fu = FIREBASE("users");
+        List<Object> us = await fu.fetchData();
+        List<User> users = us as List<User>;
+        users.forEach((element) {print(element.userName);});
+
+        print("read done\n\n");
+
+        JSONFile jfu = JSONFile("users");
+        jfu.write(users);
+
+        print("write done\n\n");
+
+
+
+         print("Start");
+        JSONFile jf = JSONFile("users");
+        List<Object> uka = await jf.read() ;
+        List<User> userss = uka as List<User>;
+        userss.forEach((element) {print(element.gender);});*//*
+
+
+
+
+      },),
+*/
 
       appBar: AppBar(
         automaticallyImplyLeading: false,

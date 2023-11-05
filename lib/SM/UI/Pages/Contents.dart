@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/Content.dart';
+import '../Components/Content/ContentCard.dart';
 
 class Contents extends StatefulWidget {
   @override
@@ -30,11 +31,22 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
 
 
   Future<void> fetchData() async {
+
+
+    FIREBASE fb = FIREBASE("contents");
+    List<Object> uk = await fb.fetchData();
+    contents = uk as List<Content>;
+    contents.forEach((element) {print(element.Title);});
+
+/*
     JSONFile jf = JSONFile("contents");
     List<Object> uka = await jf.read() ;
     contents = uka as List<Content>;
     contents.forEach((element) {print(element.Title);});
     print("posts fetch done");
+*/
+
+
 
     setState(() {
       isLoading = false;
@@ -223,56 +235,54 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
       backgroundColor: Colors.black,
       //key: scaffoldKey,
 
+
 /*
 
       floatingActionButton: FloatingActionButton(onPressed: () async {
 
-*/
-/*
+
+
 
         FIREBASE fb = FIREBASE("contents");
         List<Object> uk = await fb.fetchData();
         List<Content> ccontents = uk as List<Content>;
-       // ccontents.forEach((element) {print(element.Title);});
+
+
+        ccontents.forEach((element) {print(element.Title);});
 
         print("read done\n\n");
+        //
+        // JSONFile jfl = JSONFile("contents");
+        // jfl.write(ccontents);
+        //
+        // print("write done\n\n");
 
-        JSONFile jfl = JSONFile("contents");
-        jfl.write(ccontents);
-
-        print("write done\n\n");
-
-*//*
-
-
-
-
-*/
-/*      print("hello json");
-        FIREBASE fu = FIREBASE("users");
-        List<Object> us = await fu.fetchData();
-        List<User> users = us as List<User>;
-        users.forEach((element) {print(element.userName);});
-
-        print("read done\n\n");
-
-        JSONFile jfu = JSONFile("users");
-        jfu.write(users);
-
-        print("write done\n\n");
-
-
-
-         print("Start");
-        JSONFile jf = JSONFile("users");
-        List<Object> uka = await jf.read() ;
-        List<User> userss = uka as List<User>;
-        userss.forEach((element) {print(element.gender);});*//*
-
+        // print("hello json");
+        // FIREBASE fu = FIREBASE("users");
+        // List<Object> us = await fu.fetchData();
+        // List<User> users = us as List<User>;
+        // users.forEach((element) {print(element.userName);});
+        //
+        // print("read done\n\n");
+        //
+        // JSONFile jfu = JSONFile("users");
+        // jfu.write(users);
+        //
+        // print("write done\n\n");
+        //
+        //
+        //
+        // print("Start");
+        // JSONFile jf = JSONFile("users");
+        // List<Object> uka = await jf.read() ;
+        // List<User> userss = uka as List<User>;
+        // userss.forEach((element) {print(element.gender);});
+        //
 
 
 
       },),
+
 */
 
       appBar: AppBar(
@@ -495,8 +505,8 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
         children: [
           Visibility(
             visible: !isLoading,
-            child: Container(child: Text("There will be some Contents here"),),
-            /*
+            child:// Container(child: Text("There will be some Contents here"),),
+
 
             RefreshIndicator(
               onRefresh: fetchData,
@@ -513,12 +523,12 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
                       //height: MediaQuery.of(context).size.height,
                         child:  ListView.builder(
                           controller: scrollController,
-                          itemCount: Content.ContentList.length,
+                          itemCount: contents.length,
                           shrinkWrap: true,
                           //  physics: ScrollPhysics(),
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            Content posts = Content.ContentList[index];
+                            Content posts = contents[index];
                             //print(index);
                             //PostModel.fromJson(docs[index].data());
                             return Padding(
@@ -639,7 +649,6 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
 
             //DONE
 
-            */
           ),
           Visibility(
             visible: isLoading,

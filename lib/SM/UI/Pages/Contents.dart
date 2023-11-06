@@ -313,25 +313,25 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
         //   ),
         // ),
         centerTitle: true,
-        actions: [
+      /*  actions: [
           IconButton(
             icon: Icon(
               Ionicons.chatbubble_ellipses,
               size: 30.0,
             ),
             onPressed: () {
-/*              Navigator.push(
+*//*              Navigator.push(
                 context,
                 CupertinoPageRoute(
                   builder: (_) => Chats(),
                 ),
               );
 
- */
+ *//*
             },
           ),
           SizedBox(width: 20.0),
-        ],
+        ],*/
       ),
       drawer:  Drawer(
         backgroundColor: Colors.black,

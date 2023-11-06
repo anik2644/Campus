@@ -10,6 +10,7 @@ import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
+import '../Components/Feed/FeedsDrawer.dart';
 import '../Components/FeedComponents/userpost.dart';
 
 
@@ -77,6 +78,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     print('>>>');
     return Scaffold(
       backgroundColor: Colors.black,
+      key: scaffoldKey,
 /*
       floatingActionButton: FloatingActionButton(onPressed: () async {
 
@@ -121,8 +123,94 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
       },),
 */
+      drawer:
+      /* Drawer(
+      backgroundColor: Colors.black,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.white,
+
+            ),
+
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 90,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          'https://cdn3.iconfinder.com/data/icons/eziconic-v1-0/256/02.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Portals Here !!!',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                /* Expanded(
+                    child: Text(
+                      'Follow here to be updated..',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),*/
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2), // Adjust the position of the shadow
+                ),
+              ],
+            ),
+            child: ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Back',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),),
+              onTap: () {
+                // Handle drawer item tap
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
+      ),
+    ),*/
+      FeedsDrawer(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+        ),
         title:  Text(
           "ঢাবিয়ান সমাচার",//"Press me to enter",
           style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
@@ -136,7 +224,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
         actions: [
           IconButton(
             icon: Icon(
-              Ionicons.chatbubble_ellipses,
+              Ionicons.person,
               size: 30.0,
             ),
             onPressed: () {},

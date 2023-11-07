@@ -1,29 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/model/PostJsonModel.dart';
+import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../models/post.dart';
-import '../utils/firebase.dart';
+import '../../Utilites/Constants/firebase.dart';
+import '../Components/FeedComponents/userpost.dart';
 import '../widgets/indicators.dart';
-import '../widgets/userpost.dart';
+
 // import 'package:social_media_app/models/post.dart';
 // import 'package:social_media_app/utils/firebase.dart';
 // import 'package:social_media_app/widgets/indicators.dart';
 // import 'package:social_media_app/widgets/userpost.dart';
 
-class ListPosts extends StatefulWidget {
+class AllPostView extends StatefulWidget {
   final userId;
 
   final email;
 
-  const ListPosts({Key? key, required this.userId, required this.email})
+  const AllPostView({Key? key, required this.userId, required this.email})
       : super(key: key);
 
   @override
-  State<ListPosts> createState() => _ListPostsState();
+  State<AllPostView> createState() => _AllPostViewState();
 }
 
-class _ListPostsState extends State<ListPosts> {
+class _AllPostViewState extends State<AllPostView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,10 +70,10 @@ class _ListPostsState extends State<ListPosts> {
                 itemCount: docs.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  PostModel posts = PostModel.fromJson(docs[index].data());
+                  PostJsonModel posts = PostJsonModel.fromJson(docs[index].data());
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: UserPost(post: posts),
+                    child: UserPost(post: converTopost(posts)),
                   );
                 },
               );
@@ -91,5 +93,11 @@ class _ListPostsState extends State<ListPosts> {
         ),
       ),
     );
+  }
+
+  Post converTopost(PostJsonModel element)
+  {
+    //Post post;
+    return Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
   }
 }

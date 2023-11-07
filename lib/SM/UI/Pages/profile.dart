@@ -5,6 +5,7 @@ import 'package:dhabiansomachar/SM/JSON_Management/model/PostJsonModel.dart';
 import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:ionicons/ionicons.dart';
 import '../../Utilites/Constants/firebase.dart';
 import '../Components/ProfilePage/GridWrapper.dart';
 import '../Components/ProfilePage/PostTile.dart';
+import 'AllPostView.dart';
 
 
 class Profile extends StatefulWidget {
@@ -162,7 +164,7 @@ class _ProfileState extends State<Profile> {
                                 radius: 40.0,
                                 backgroundImage:
                                 CachedNetworkImageProvider(
-                                    '${user.photoUrl}'
+                                    user.photoUrl!
                                   //user.photoUrl!.isEmpty}',
                                 ),
                               ),
@@ -221,33 +223,33 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ],
                                     ),
-                                    // widget.profileId == currentUserId()
-                                    //     ? InkWell(
-                                    //   onTap: () {
-                                    //  /*   Navigator.of(context).push(
-                                    //       CupertinoPageRoute(
-                                    //         builder: (_) => Setting(),
-                                    //       ),
-                                    //     );*/
-                                    //   },
-                                    //   child: Column(
-                                    //     children: [
-                                    //       Icon(
-                                    //         Ionicons.settings_outline,
-                                    //         color: Theme.of(context)
-                                    //             .colorScheme
-                                    //             .secondary,
-                                    //       ),
-                                    //       Text(
-                                    //         'settings',
-                                    //         style: TextStyle(
-                                    //           fontSize: 11.5,
-                                    //         ),
-                                    //       )
-                                    //     ],
-                                    //   ),
-                                    // )
-                                    // //: const Text('')
+                                    widget.profileId == currentUserId()
+                                        ? InkWell(
+                                      onTap: () {
+                                     /*   Navigator.of(context).push(
+                                          CupertinoPageRoute(
+                                            builder: (_) => Setting(),
+                                          ),
+                                        );*/
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Ionicons.settings_outline,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
+                                          Text(
+                                            'settings',
+                                            style: TextStyle(
+                                              fontSize: 11.5,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                    : const Text('')
                                     //     : buildLikeButton()
                                   ],
                                 ),
@@ -383,24 +385,18 @@ class _ProfileState extends State<Profile> {
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-/*                              DocumentSnapshot doc =
-                                // widget profile id should be declared by firebase usere id;
-                                await usersRef.doc(widget.profileId).get();
-                                // usersRef.where('ownerId', isEqualTo: widget.email)
-                                // // .orderBy('timestamp', descending: true)
-                                //     .snapshots() as DocumentSnapshot<Object?>;
-                                var currentUser = UserModel.fromJson(
-                                  doc.data() as Map<String, dynamic>,
-                                );
-*//*                              Navigator.push(
+
+                                // print(widget.profileId);
+                                // print(widget.email);
+                                Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (_) => ListPosts(
-                                      userId: currentUser.id,
-                                      email: currentUser.email,
+                                    builder: (_) => AllPostView(
+                                      userId: widget.profileId,
+                                      email:  widget.email,
                                     ),
                                   ),
-                                );*/
+                                );
                               },
                               icon: Icon(Ionicons.grid_outline),
                             )

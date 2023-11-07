@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../JSON_Management/Auth/LoginFlagJson.dart';
+import '../../../ModelClass/LoginFlag.dart';
+import '../../../Utilites/Constants/firebase.dart';
+import '../../Helper/HPStrategy.dart';
+import '../../Pages/Landing.dart';
+
 class FeedsDrawer extends StatefulWidget {
   const FeedsDrawer({Key? key}) : super(key: key);
 
@@ -139,7 +145,20 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
               "Logout",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
+            onTap: ()  async {
+                await firebaseAuth.signOut();
+
+                LoginFlag lf = LoginFlag(false);
+                LoginFlagJson lfj = LoginFlagJson();
+                 await lfj.saveLoginInfo(lf);
+                 print(lf.isloggedin);
+                  Navigator.of(context).pushReplacement(
+                    CupertinoPageRoute(
+                      builder: (_) => HPStretegy() //Landing(),
+                    ),
+                  );
+
+
 /*
               Navigator.push(
                 context,

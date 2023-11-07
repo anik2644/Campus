@@ -7,7 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../JSON_Management/JSONFile.dart';
+import '../../ModelClass/LoginFlag.dart';
 import '../../ModelClass/Post.dart';
 
 import '../Components/FeedComponents/userpost.dart';
@@ -42,7 +44,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     return isloading? CircularProgressIndicator():
     isloggedin?
-    Landing() ://TabScreen():
+    TabScreen(): //Landing() ://
     Landing() ;
   }
 
@@ -51,6 +53,21 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
 
   Future<bool> alreadyLoggedIn() async {
+
+
+    LoginFlagJson lfj = LoginFlagJson();
+    // lfj.saveLoginInfo(lf);
+    //Credential sc = Credential();
+    //sc.saveCredential(us);
+    // User us  = await sc.getLoginInfo();
+    late LoginFlag lg;
+    lg = await lfj.getLoginInfo();
+
+   // print(lg.isloggedin);
+
+    isloggedin =lg.isloggedin ;
+    return lg.isloggedin;
+    /*
     FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     User? _currentUser = await _firebaseAuth.currentUser;
 
@@ -72,6 +89,9 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
           MaterialPageRoute(builder: (context) =>Landing()// TabScreen()//  Landing(),//SecondaryHomepage()
           ));*/
     }
+
+
+    */
   }
 
 

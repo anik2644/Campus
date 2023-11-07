@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Firebase/Auth/Auth_Service.dart';
+import '../../../JSON_Management/Auth/LoginFlagJson.dart';
+import '../../../ModelClass/LoginFlag.dart';
+import '../../../UI/Pages/TabScreen.dart';
 import '../Validation.dart';
 
 // import 'package:social_media_app/screens/mainscreen.dart';
@@ -35,9 +38,22 @@ class LoginViewModel extends ChangeNotifier {
           password: password,
         );
         print(success);
+
+        LoginFlag lf = LoginFlag(true);
+        LoginFlagJson lfj = LoginFlagJson();
+        lfj.saveLoginInfo(lf);
+
+       // print(lf.isloggedin);
+
+
+
+
+
+
+
         if (success) {
           Navigator.of(context).pushReplacement(
-              CupertinoPageRoute(builder: (_) => Feeds()));//TabScreen()));
+              CupertinoPageRoute(builder: (_) => TabScreen()));// Feeds()));//TabScreen()));
         }
       } catch (e) {
         loading = false;

@@ -1,6 +1,8 @@
 import 'package:dhabiansomachar/SM/Firebase/Auth/FetchCredential.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/LoginFlagJson.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Flags.dart';
+import 'package:dhabiansomachar/SM/ModelClass/LoginFlag.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/Body.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/LoginButton.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/SignUpButton.dart';
@@ -21,27 +23,39 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton:
+
+      FloatingActionButton(
         onPressed: () async {
-/*
-          FetchCredential fc = FetchCredential();
-          Object uk =  await fc.findCredential();
-          User us = uk as User;
-          print(us.country);
 
-*/
 
-          Credential sc = Credential();
+          LoginFlag lf = LoginFlag(false);
+          late LoginFlag lg;
+
+
+          //lf.isloggedin =   !lf.isloggedin;
+          // print("ssssobject");
+          // print( lf.isloggedin);
+          // print("ssssobject");
+          LoginFlagJson lfj = LoginFlagJson();
+          lfj.saveLoginInfo(lf);
+          //Credential sc = Credential();
            //sc.saveCredential(us);
-        User us  = await sc.getCredential();
-        print(us.userName);
+       // User us  = await sc.getLoginInfo();
+
+          lg = await lfj.getLoginInfo();
+        print(lg.isloggedin);
 
         },
       ),
+
+           */
       body: Body(),//image space
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,

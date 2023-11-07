@@ -14,6 +14,7 @@ class LoginCredentials {
   void login(User user) {
     print("login done");
     loggedInUser = user;
+   // print(loggedInUser!.email);
   }
 
   void logout() {

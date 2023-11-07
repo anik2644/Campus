@@ -1,24 +1,11 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
-import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/TabScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-
 import '../../JSON_Management/Auth/Credential.dart';
 import '../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/LoginCredential.dart';
 import '../../ModelClass/LoginFlag.dart';
-import '../../ModelClass/Post.dart';
-
-import '../Components/FeedComponents/userpost.dart';
-
-//import 'package:firebase_auth/firebase_auth.dart';
-
 import '../Pages/Landing.dart';
 
 class HPStretegy extends StatefulWidget {
@@ -36,10 +23,6 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   @override
   void initState() {
     alreadyLoggedIn();
-    setState(() {
-     // isloading =false;
-    });
-
     super.initState();
   }
 
@@ -55,78 +38,16 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
 
 
-  Future<bool> alreadyLoggedIn() async {
+  Future<void> alreadyLoggedIn() async {
 
-/*
+    isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
+    setState(() => isloading = false);
 
-    LoginFlag lf = LoginFlag(true);
-    LoginFlagJson lfj = LoginFlagJson();
-    lfj.saveLoginInfo(lf);
-*/
-
-
-    LoginFlagJson lfj = LoginFlagJson();
-    // lfj.saveLoginInfo(lf);
-    //Credential sc = Credential();
-    //sc.saveCredential(us);
-    // User us  = await sc.getLoginInfo();
-    late LoginFlag lg;
-    lg = await lfj.getLoginInfo();
-    if(lg==null)
-    {
-      isloggedin= false;
-    }
-    else{
-      isloggedin =lg.isloggedin ;
+    if(isloggedin) {
+      LoginCredentials().login(await Credential().getCredential());
     }
 
-    setState(() {
-
-      isloading =false;
-    });
-
-
-
-   // print(lg.isloggedin);
-
-    if(lg.isloggedin)
-      {
-
-        Credential sc = Credential();
-        //sc.saveCredential(us);
-        User us  = await sc.getCredential();
-        LoginCredentials().login(us);
-      }
-
-    return lg.isloggedin;
-    /*
-    FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-    User? _currentUser = await _firebaseAuth.currentUser;
-
-    if (_currentUser != null)  {
-      print('yes');
-      isloggedin =true;
-      return true;
-      /*      setState(() {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) =>TabScreen()// Landing(),//SecondaryHomepage()
-            ));
-      });*/
-    }
-    else {
-      print('no');
-      isloggedin =false;
-      return false;
-      /*      Navigator.push(context,
-          MaterialPageRoute(builder: (context) =>Landing()// TabScreen()//  Landing(),//SecondaryHomepage()
-          ));*/
-    }
-
-
-    */
   }
-
-
 
 
   @override

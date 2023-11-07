@@ -52,7 +52,8 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     JSONFile jf = JSONFile("posts");
     List<Object> uka = await jf.read() ;
     posts = uka as List<Post>;
-    posts.forEach((element) {print(element.userName);});
+   /* posts.forEach((element) {
+      print(element.userName);});*/
     print("posts fetch done");
 
     fetchUser();

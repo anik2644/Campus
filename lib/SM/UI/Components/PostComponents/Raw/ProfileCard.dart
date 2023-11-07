@@ -30,11 +30,11 @@ class _ProfileCardState extends State<ProfileCard> {
     List<Object> li = await jf.read();
     List<User> users = li as List<User>;
 
-    print("now to find");
+    //print("now to find");
     int ind  = await users.indexWhere((item) => item.email == ownerId);
     postUser = ind==-1? users[0] : users[ind];
 
-    print(postUser.userName);
+   // print(postUser.userName);
 
     return postUser;
 

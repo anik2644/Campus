@@ -1,6 +1,8 @@
+import 'package:dhabiansomachar/SM/JSON_Management/model/PostJsonModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../ModelClass/Post.dart';
 import '../../Widgets/CachedNetworkImage.dart';
 import '../PostComponents/view_image.dart';
 
@@ -10,7 +12,7 @@ import '../PostComponents/view_image.dart';
 // import 'package:social_media_app/widgets/cached_image.dart';
 
 class PostTile extends StatefulWidget {
-  final PostModel? post;
+  final PostJsonModel? post;
   final int? ii;
 
   PostTile({this.post, this.ii});
@@ -20,6 +22,13 @@ class PostTile extends StatefulWidget {
 }
 
 class _PostTileState extends State<PostTile> {
+
+  Post converTopost(PostJsonModel element)
+  {
+    //Post post;
+    return Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,14 +39,14 @@ class _PostTileState extends State<PostTile> {
         print(widget.post?.description);
         print(widget.post?.ownerId);
         print(widget.post?.postId);
-        print(widget.post?.username);
+        print(widget.post?.userName);
         print(widget.post?.timestamp);
         print(widget.post?.mediaUrl);
 
         // widget.post?.username = "Hasam";
         print(widget.ii);
         Navigator.of(context).push(CupertinoPageRoute(
-          builder: (_) => ViewImage(post: widget.post),
+          builder: (_) => ViewImage(post: converTopost(widget.post!)),
         ));
       },
 

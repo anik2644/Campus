@@ -1,3 +1,5 @@
+import '../../ModelClass/Post.dart';
+
 class PostJsonModel {
 
   final String? id;
@@ -10,6 +12,9 @@ class PostJsonModel {
   final String? description;
 
   PostJsonModel(this.id, this.postId, this.userName, this.ownerId, this.location, this.timestamp, this.mediaUrl, this.description);
+
+
+
 
   PostJsonModel.fromJson(Map<String, dynamic> json)
       : postId = json['postId'],

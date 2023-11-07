@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.dart';
 import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
@@ -192,15 +193,15 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
               Ionicons.person,
               size: 30.0,
             ),
-            onPressed: () {},
-            /*{
+            onPressed: ()
+            {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (_) => Chats(),
+                  builder: (_) =>Profile(profileId: LoginCredentials().loggedInUser?.id,email:  LoginCredentials().loggedInUser?.email,),
                 ),
               );
-            },*/
+            },
           ),
           SizedBox(width: 20.0),
         ],

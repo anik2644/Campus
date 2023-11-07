@@ -1,6 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/FacadeJson/FacadeJson.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/model/PostJsonModel.dart';
+import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
+import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -13,6 +18,7 @@ import '../Components/ProfilePage/PostTile.dart';
 class Profile extends StatefulWidget {
   final profileId;
   final email;
+
 
   Profile({this.profileId, this.email});
 
@@ -27,7 +33,8 @@ class _ProfileState extends State<Profile> {
   int followersCount = 0;
   int followingCount = 0;
   bool isFollowing = false;
-  UserModel? users;
+ // UserModel? users;
+  late User users;
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
 
@@ -51,25 +58,26 @@ class _ProfileState extends State<Profile> {
       isFollowing = doc.exists;
     });
   }
-  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
+  //int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         centerTitle: true,
         title: Text(
           "ঢাবিয়ান সমাচার",//"Press me to enter",
-          style: TextStyle(fontSize: 30,color: Colors.amber, fontFamily: 'Alkatra',),
+          style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
         ),
         actions: [
-          widget.profileId == firebaseAuth.currentUser!.uid
+          LoginCredentials().isLoggedIn()
               ? Center(
             child: Padding(
               padding: const EdgeInsets.only(right: 25.0),
               child: GestureDetector(
                 onTap: () async {
-                  await firebaseAuth.signOut();
+                 // await firebaseAuth.signOut();
 /*                  Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (_) => Homepage(),
@@ -90,10 +98,20 @@ class _ProfileState extends State<Profile> {
         ],
       ),
 
+/*      floatingActionButton: FloatingActionButton(onPressed: () async {
+
+        List<Post> posts = await FacadeJson().findAllPost();
+        List<Post> filteredPosts = posts.where((post) => post.ownerId == "anik11556@gmail.com").toList();
+
+        print(filteredPosts.length);
+        filteredPosts.forEach((element) { print(element.postId);});
+      },),*/
+
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             pinned: true,
             floating: false,
             toolbarHeight: 5.0,
@@ -109,19 +127,17 @@ class _ProfileState extends State<Profile> {
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    UserModel user = UserModel.fromJson(
-                      snapshot.data!.data() as Map<String, dynamic>,
-                    );
+                    User? user = LoginCredentials().loggedInUser;
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
+                            Padding  (
                               padding: const EdgeInsets.only(left: 20.0),
-                              child:UserModel.um[ind].photoUrl == null
-                              //user.photoUrl!.isEmpty
+                              child://UserModel.um[ind].photoUrl == null
+                              user!.photoUrl!.isEmpty
                                   ? CircleAvatar(
                                 radius: 40.0,
                                 backgroundColor: Theme.of(context)
@@ -129,7 +145,7 @@ class _ProfileState extends State<Profile> {
                                     .secondary,
                                 child: Center(
                                   child: Text(
-                                    '${user.username![0].toUpperCase()}',
+                                    '${user.userName.toUpperCase()}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.0,
@@ -165,7 +181,7 @@ class _ProfileState extends State<Profile> {
                                         Container(
                                           width: 130.0,
                                           child: Text(
-                                            user.username!,
+                                            user.userName!,
                                             style: TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w900,
@@ -334,7 +350,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        buildProfileButton(user),
+                        //buildProfileButton(user),
                       ],
                     );
                   }
@@ -347,45 +363,49 @@ class _ProfileState extends State<Profile> {
             delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                 if (index > 0) return null;
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'All Posts',
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () async {
-                              DocumentSnapshot doc =
-                              // widget profile id should be declared by firebase usere id;
-                              await usersRef.doc(widget.profileId).get();
-                              // usersRef.where('ownerId', isEqualTo: widget.email)
-                              // // .orderBy('timestamp', descending: true)
-                              //     .snapshots() as DocumentSnapshot<Object?>;
-                              var currentUser = UserModel.fromJson(
-                                doc.data() as Map<String, dynamic>,
-                              );
-/*                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (_) => ListPosts(
-                                    userId: currentUser.id,
-                                    email: currentUser.email,
+                return Container(
+                  color: Colors.grey,
+                  child: Column(
+
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'All Posts',
+                              style: TextStyle(fontWeight: FontWeight.w900),
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () async {
+/*                              DocumentSnapshot doc =
+                                // widget profile id should be declared by firebase usere id;
+                                await usersRef.doc(widget.profileId).get();
+                                // usersRef.where('ownerId', isEqualTo: widget.email)
+                                // // .orderBy('timestamp', descending: true)
+                                //     .snapshots() as DocumentSnapshot<Object?>;
+                                var currentUser = UserModel.fromJson(
+                                  doc.data() as Map<String, dynamic>,
+                                );
+*//*                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (_) => ListPosts(
+                                      userId: currentUser.id,
+                                      email: currentUser.email,
+                                    ),
                                   ),
-                                ),
-                              );*/
-                            },
-                            icon: Icon(Ionicons.grid_outline),
-                          )
-                        ],
+                                );*/
+                              },
+                              icon: Icon(Ionicons.grid_outline),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    buildPostView()
-                  ],
+                      buildPostView()
+                    ],
+                  ),
                 );
               },
             ),
@@ -418,7 +438,7 @@ class _ProfileState extends State<Profile> {
       ],
     );
   }
-
+/*
   buildProfileButton(user) {
     //if isMe then display "edit profile"
     bool isMe = widget.profileId == firebaseAuth.currentUser!.uid;
@@ -448,7 +468,7 @@ class _ProfileState extends State<Profile> {
       );
     }
   }
-
+*/
   buildButton({String? text, Function()? function}) {
     return Center(
       child: GestureDetector(
@@ -477,7 +497,7 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
+/*
   handleUnfollow() async {
     DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
     users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
@@ -551,24 +571,25 @@ class _ProfileState extends State<Profile> {
       "timestamp": timestamp,
     });
   }
-
+*/
   buildPostView() {
     return buildGridPost();
   }
 
   buildGridPost() {
-    print(widget.email);
+    //print("object");
+   // print(widget.email);
 
     return StreamGridWrapper(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       stream: postRef
           .where('ownerId', isEqualTo: widget.email)
-      // .orderBy('timestamp', descending: true)
+          //.orderBy('timestamp', descending: true)
           .snapshots(),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (_, DocumentSnapshot snapshot) {
-        PostModel posts = PostModel.fromJson(snapshot.data() as Map<String, dynamic>);
+        PostJsonModel posts = PostJsonModel.fromJson(snapshot.data() as Map<String, dynamic>);
         return PostTile(
           post: posts ,ii: 1,
         );

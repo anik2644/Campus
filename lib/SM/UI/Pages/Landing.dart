@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 
 import '../../JSON_Management/JSONFile.dart';
+import '../../ModelClass/LoginCredential.dart';
 import '../../ModelClass/User.dart';
 import '../../Utilites/Constants/firebase.dart';
 
@@ -29,12 +30,15 @@ class _LandingState extends State<Landing> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      /* floatingActionButton:
+  /*     floatingActionButton:
 
       FloatingActionButton(
         onPressed: () async {
 
 
+          print(LoginCredentials().loggedInUser!.userName);
+
+*//*
           LoginFlag lf = LoginFlag(false);
           late LoginFlag lg;
 
@@ -50,12 +54,12 @@ class _LandingState extends State<Landing> {
        // User us  = await sc.getLoginInfo();
 
           lg = await lfj.getLoginInfo();
-        print(lg.isloggedin);
+        print(lg.isloggedin);*//*
 
         },
       ),
+*/
 
-           */
       body: Body(),//image space
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,

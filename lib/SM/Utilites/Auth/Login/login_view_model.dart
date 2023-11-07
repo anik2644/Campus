@@ -4,8 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Firebase/Auth/Auth_Service.dart';
+import '../../../Firebase/Auth/FetchCredential.dart';
+import '../../../JSON_Management/Auth/Credential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
+import '../../../ModelClass/LoginCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
+import '../../../ModelClass/User.dart';
 import '../../../UI/Pages/TabScreen.dart';
 import '../Validation.dart';
 
@@ -43,7 +47,22 @@ class LoginViewModel extends ChangeNotifier {
         LoginFlagJson lfj = LoginFlagJson();
         lfj.saveLoginInfo(lf);
 
-       // print(lf.isloggedin);
+
+
+
+          FetchCredential fc = FetchCredential();
+          Object uk =  await fc.findCredential();
+          User us = uk as User;
+          print(us.country);
+
+
+        LoginCredentials().login(us);
+        Credential sc = Credential();
+        sc.saveCredential(us);
+        // User us  = await sc.getCredential();
+        // print(us.userName);
+
+        // print(lf.isloggedin);
 
 
 

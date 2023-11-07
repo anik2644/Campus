@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/TabScreen.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../JSON_Management/Auth/Credential.dart';
 import '../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../JSON_Management/JSONFile.dart';
+import '../../ModelClass/LoginCredential.dart';
 import '../../ModelClass/LoginFlag.dart';
 import '../../ModelClass/Post.dart';
 
 import '../Components/FeedComponents/userpost.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Pages/Landing.dart';
 
@@ -62,10 +65,24 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
     // User us  = await sc.getLoginInfo();
     late LoginFlag lg;
     lg = await lfj.getLoginInfo();
+    setState(() {
+      isloggedin =lg.isloggedin ;
+      isloading =false;
+    });
+
+
 
    // print(lg.isloggedin);
 
-    isloggedin =lg.isloggedin ;
+    if(lg.isloggedin)
+      {
+
+        Credential sc = Credential();
+        //sc.saveCredential(us);
+        User us  = await sc.getCredential();
+        LoginCredentials().login(us);
+      }
+
     return lg.isloggedin;
     /*
     FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
+import '../../../ModelClass/LoginCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../Helper/HPStrategy.dart';
@@ -25,23 +26,30 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-/*
-          AuthService.is_login ?  UserAccountsDrawerHeader(
+
+          LoginCredentials().isLoggedIn() ?  UserAccountsDrawerHeader(
 
             decoration: BoxDecoration(color: Colors.white),
             accountName: Text(
-              AuthService.name,
+              LoginCredentials().loggedInUser!.userName,
               style: TextStyle(color: Colors.black),
             ),
-            accountEmail: Text(AuthService.email,
+            accountEmail: Text(  LoginCredentials().loggedInUser!.email,
                 style: TextStyle(color: Colors.black)),
             currentAccountPicture: CircleAvatar(
               // backgroundColor: Colors.black,
 
-              backgroundImage: NetworkImage(AuthService.Profilepicurl.toString(), ),
+              backgroundImage: CachedNetworkImageProvider(LoginCredentials().loggedInUser!.photoUrl!,),
+
+
+
+
+
+
+             // NetworkImage(LoginCredentials().loggedInUser!.photoUrl!, ),
             ),
           ):
-           */
+
 
           DrawerHeader(
             decoration: BoxDecoration(
@@ -152,6 +160,9 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
                 LoginFlagJson lfj = LoginFlagJson();
                  await lfj.saveLoginInfo(lf);
                  print(lf.isloggedin);
+
+                LoginCredentials().logout();
+
                   Navigator.of(context).pushReplacement(
                     CupertinoPageRoute(
                       builder: (_) => HPStretegy() //Landing(),

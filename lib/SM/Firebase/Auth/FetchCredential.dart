@@ -12,7 +12,7 @@ class FetchCredential{
 
     User curUser;
     var collectionReference = FirebaseFirestore.instance.collection('users');
-    var query = collectionReference.where('id', isEqualTo: 'ZtVQQ27nhegEynlUCxOlWPdgD713'//firebaseAuth.currentUser!.uid
+    var query = collectionReference.where('id', isEqualTo: firebaseAuth.currentUser!.uid
          );
     var querySnapshot = await query.get();
 

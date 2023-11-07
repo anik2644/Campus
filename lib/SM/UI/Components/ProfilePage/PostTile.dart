@@ -12,7 +12,7 @@ import '../PostComponents/view_image.dart';
 // import 'package:social_media_app/widgets/cached_image.dart';
 
 class PostTile extends StatefulWidget {
-  final PostJsonModel? post;
+  final Post? post;
   final int? ii;
 
   PostTile({this.post, this.ii});
@@ -46,7 +46,7 @@ class _PostTileState extends State<PostTile> {
         // widget.post?.username = "Hasam";
         print(widget.ii);
         Navigator.of(context).push(CupertinoPageRoute(
-          builder: (_) => ViewImage(post: converTopost(widget.post!)),
+          builder: (_) => ViewImage(post: widget.post!)
         ));
       },
 

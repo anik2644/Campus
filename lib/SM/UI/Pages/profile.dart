@@ -28,7 +28,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   User? user;
-  bool isLoading = false;
+  bool isLoading = true;
   int postCount = 0;
   int followersCount = 0;
   int followingCount = 0;
@@ -38,6 +38,9 @@ class _ProfileState extends State<Profile> {
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
 
+   List<Post> filteredlist =[];
+
+
   currentUserId() {
     return firebaseAuth.currentUser?.uid;
   }
@@ -46,6 +49,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+    fetchMypost();
   }
 
   checkIfFollowing() async {
@@ -576,7 +580,7 @@ class _ProfileState extends State<Profile> {
     return buildGridPost();
   }
 
-  buildGridPost() {
+ /* buildGridPost() {
     //print("object");
    // print(widget.email);
 
@@ -596,7 +600,27 @@ class _ProfileState extends State<Profile> {
       },
     );
   }
+*/
 
+ buildGridPost() {
+    return Visibility(
+      visible: !isLoading,
+      child: GridView.builder(
+        shrinkWrap: true, // Add this line
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        itemCount: filteredlist.length,
+        itemBuilder: (context, index) {
+          Post post = filteredlist[index];
+          return PostTile(post: post, ii: 1);
+        },
+      ),
+      replacement: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
   buildLikeButton() {
     return StreamBuilder(
       stream: favUsersRef
@@ -645,5 +669,16 @@ class _ProfileState extends State<Profile> {
         return Container();
       },
     );
+  }
+
+  Future<void> fetchMypost() async {
+
+    List<Post> posts = await FacadeJson().findAllPost();
+    filteredlist = posts.where((post) => post.ownerId == widget.email).toList();
+
+    setState(() {
+      isLoading = false;
+    });
+
   }
 }

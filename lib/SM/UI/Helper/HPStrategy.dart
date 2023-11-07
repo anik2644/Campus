@@ -37,7 +37,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   void initState() {
     alreadyLoggedIn();
     setState(() {
-      isloading =false;
+     // isloading =false;
     });
 
     super.initState();
@@ -57,6 +57,13 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
   Future<bool> alreadyLoggedIn() async {
 
+/*
+
+    LoginFlag lf = LoginFlag(true);
+    LoginFlagJson lfj = LoginFlagJson();
+    lfj.saveLoginInfo(lf);
+*/
+
 
     LoginFlagJson lfj = LoginFlagJson();
     // lfj.saveLoginInfo(lf);
@@ -65,8 +72,16 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
     // User us  = await sc.getLoginInfo();
     late LoginFlag lg;
     lg = await lfj.getLoginInfo();
-    setState(() {
+    if(lg==null)
+    {
+      isloggedin= false;
+    }
+    else{
       isloggedin =lg.isloggedin ;
+    }
+
+    setState(() {
+
       isloading =false;
     });
 

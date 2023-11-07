@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dhabiansomachar/SM/JSON_Management/model/ContentJsonModel.dart';
+import 'package:dhabiansomachar/SM/ModelClass/Flags.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import '../../ModelClass/Content.dart';
 import '../../ModelClass/Post.dart';
+import '../model/FLagsJsonModel.dart';
 import '../model/PostJsonModel.dart';
 import '../model/UserJsonModel.dart';
 
@@ -103,6 +105,48 @@ class JSONMethods{
     }
   }
 
+
+  Future<File> writeToJSON_flags(List<Flags> listToSendJSON) async{
+
+    List<FlagsJsonModel> JsonFormatFlagsList = [];
+    listToSendJSON.forEach((element) {
+      FlagsJsonModel JsonFormatFlag= FlagsJsonModel(element.login);
+      JsonFormatFlagsList.add(JsonFormatFlag);
+    });
+
+
+    final file= await FetchFile("flags.json")._localFile;
+    JsonFormatFlagsList.map((eachContentInList) => eachContentInList.toJson()).toList();
+    var encodedJSONString = json.encode(JsonFormatFlagsList);
+    return file.writeAsString('$encodedJSONString');
+  }
+
+
+  Future<List<Flags>> readFromJSON_flags() async{
+    List<Flags> returnFormantFlags=[];
+
+    try{
+      final file = await FetchFile("flags.json")._localFile;
+      String JsonFilecontents = await file.readAsString();
+      final list = json.decode(JsonFilecontents) as List<dynamic> ;
+
+      List<FlagsJsonModel> JsonFormatFlagList =[];
+      JsonFormatFlagList  = list.map((e) => FlagsJsonModel.fromJson(e)).toList() as List<FlagsJsonModel>;
+
+
+      JsonFormatFlagList.forEach((element) {
+        Flags flags= Flags(element.login);
+        returnFormantFlags.add(flags);
+      });
+
+      return returnFormantFlags;
+    }
+    catch(e)
+    {
+      print(e);
+      return returnFormantFlags;
+    }
+  }
 
   Future<File> writeToJSON_content(List<Content> listToSendJSON) async{
 

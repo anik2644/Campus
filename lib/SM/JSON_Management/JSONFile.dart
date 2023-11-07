@@ -1,4 +1,5 @@
 import 'package:dhabiansomachar/SM/JSON_Management/JSONMethods/JSONMethods.dart';
+import 'package:dhabiansomachar/SM/ModelClass/Flags.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 
 import '../ModelClass/Content.dart';
@@ -22,6 +23,10 @@ class JSONFile{
     {
       return await jsonMethods.readFromJSON_content() as List<Content>;
     }
+    else if(jsonFileName=="flags")
+    {
+      return await jsonMethods.readFromJSON_flags() as List<Flags>;
+    }
     else
       return [];
   }
@@ -38,6 +43,10 @@ class JSONFile{
     else if(jsonFileName=="contents")
     {
       jsonMethods.writeToJSON_content(list as List<Content>);
+    }
+    else if(jsonFileName=="flags")
+    {
+      jsonMethods.writeToJSON_flags(list as List<Flags>);
     }
   }
 

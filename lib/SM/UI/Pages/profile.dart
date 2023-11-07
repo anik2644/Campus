@@ -4,26 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/HP/HomePage/HomePage.dart';
 
-import '../auth/register/register.dart';
-import '../components/stream_grid_wrapper.dart';
-import '../models/post.dart';
-import '../models/user.dart';
-import '../screens/edit_profile.dart';
-import '../screens/list_posts.dart';
-import '../screens/settings.dart';
-import '../utils/firebase.dart';
-import '../widgets/post_tiles.dart';
-// import 'package:social_media_app/auth/register/register.dart';
-// import 'package:social_media_app/components/stream_grid_wrapper.dart';
-// import 'package:social_media_app/models/post.dart';
-// import 'package:social_media_app/models/user.dart';
-// import 'package:social_media_app/screens/edit_profile.dart';
-// import 'package:social_media_app/screens/list_posts.dart';
-// import 'package:social_media_app/screens/settings.dart';
-// import 'package:social_media_app/utils/firebase.dart';
-// import 'package:social_media_app/widgets/post_tiles.dart';
+import '../../Utilites/Constants/firebase.dart';
+import '../Components/ProfilePage/GridWrapper.dart';
+import '../Components/ProfilePage/PostTile.dart';
+
 
 class Profile extends StatefulWidget {
   final profileId;
@@ -85,11 +70,11 @@ class _ProfileState extends State<Profile> {
               child: GestureDetector(
                 onTap: () async {
                   await firebaseAuth.signOut();
-                  Navigator.of(context).push(
+/*                  Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (_) => Homepage(),
                     ),
-                  );
+                  );*/
                 },
                 child: Text(
                   'Log Out',
@@ -104,26 +89,7 @@ class _ProfileState extends State<Profile> {
               : SizedBox()
         ],
       ),
-      /*
-      floatingActionButton: FloatingActionButton(onPressed: () {
 
-
-        FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-        User? _currentUser;
-
-        _currentUser = _firebaseAuth.currentUser;
-        if (_currentUser != null) {
-          print('User is logged in');
-        } else {
-          print('User is not logged in');
-        }
-
-        //
-
-
-      },),
-
-       */
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -235,34 +201,34 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ],
                                     ),
-                                    widget.profileId == currentUserId()
-                                        ? InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          CupertinoPageRoute(
-                                            builder: (_) => Setting(),
-                                          ),
-                                        );
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Icon(
-                                            Ionicons.settings_outline,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                          Text(
-                                            'settings',
-                                            style: TextStyle(
-                                              fontSize: 11.5,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                    //: const Text('')
-                                        : buildLikeButton()
+                                    // widget.profileId == currentUserId()
+                                    //     ? InkWell(
+                                    //   onTap: () {
+                                    //  /*   Navigator.of(context).push(
+                                    //       CupertinoPageRoute(
+                                    //         builder: (_) => Setting(),
+                                    //       ),
+                                    //     );*/
+                                    //   },
+                                    //   child: Column(
+                                    //     children: [
+                                    //       Icon(
+                                    //         Ionicons.settings_outline,
+                                    //         color: Theme.of(context)
+                                    //             .colorScheme
+                                    //             .secondary,
+                                    //       ),
+                                    //       Text(
+                                    //         'settings',
+                                    //         style: TextStyle(
+                                    //           fontSize: 11.5,
+                                    //         ),
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // )
+                                    // //: const Text('')
+                                    //     : buildLikeButton()
                                   ],
                                 ),
                               ],
@@ -403,7 +369,7 @@ class _ProfileState extends State<Profile> {
                               var currentUser = UserModel.fromJson(
                                 doc.data() as Map<String, dynamic>,
                               );
-                              Navigator.push(
+/*                              Navigator.push(
                                 context,
                                 CupertinoPageRoute(
                                   builder: (_) => ListPosts(
@@ -411,7 +377,7 @@ class _ProfileState extends State<Profile> {
                                     email: currentUser.email,
                                   ),
                                 ),
-                              );
+                              );*/
                             },
                             icon: Icon(Ionicons.grid_outline),
                           )
@@ -460,13 +426,13 @@ class _ProfileState extends State<Profile> {
       return buildButton(
           text: "Edit Profile",
           function: () {
-            Navigator.of(context).push(
+/*            Navigator.of(context).push(
               CupertinoPageRoute(
                 builder: (_) => EditProfile(
                   user: user,
                 ),
               ),
-            );
+            );*/
           });
       //if you are already following the user then "unfollow"
     } else if (isFollowing) {

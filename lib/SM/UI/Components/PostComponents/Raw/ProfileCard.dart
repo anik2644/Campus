@@ -42,7 +42,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   void initState() {
-    findUser(widget.post?.ownerId).then((user) {
+    findUser(widget.post?.ownerEmail).then((user) {
       setState(() {
         postUser = user;
         isLoading = false;

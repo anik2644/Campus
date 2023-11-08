@@ -98,6 +98,6 @@ class _AllPostViewState extends State<AllPostView> {
   Post converTopost(PostJsonModel element)
   {
     //Post post;
-    return Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
+    return Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerEmail);
   }
 }

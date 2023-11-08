@@ -180,7 +180,7 @@ class JSONMethods{
 
       //convert the JSON format User to Actual User and create the return list
       JsonFormatPostList.forEach((element) {
-        Post post = Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
+        Post post = Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerEmail);
         returnFormantPosts.add(post);
       });
 
@@ -197,7 +197,7 @@ class JSONMethods{
 
     List<PostJsonModel> JsonFormatPostList = [];
     listToSendJSON.forEach((element) {
-      PostJsonModel JsonFormatPost = PostJsonModel(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description);
+      PostJsonModel JsonFormatPost = PostJsonModel(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerEmail);
       JsonFormatPostList.add(JsonFormatPost);
     });
 

@@ -10,8 +10,10 @@ class PostJsonModel {
   final String? timestamp;
   final String? mediaUrl;
   final String? description;
+  final String? ownerEmail;
+  final String? ownerPhotoUrl;
 
-  PostJsonModel(this.id, this.postId, this.userName, this.ownerId, this.location, this.timestamp, this.mediaUrl, this.description);
+  PostJsonModel(this.id, this.postId, this.userName, this.ownerId, this.location, this.timestamp, this.mediaUrl, this.description,this.ownerEmail,this.ownerPhotoUrl);
 
 
 
@@ -24,7 +26,9 @@ class PostJsonModel {
         location = json['location'],
         timestamp = json['timestamp'],
         mediaUrl = json['mediaUrl'],
-        description = json['description']
+        description = json['description'],
+        ownerEmail = json['ownerEmail'],
+        ownerPhotoUrl = json['ownerPhotoUrl']
   ;
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +41,7 @@ class PostJsonModel {
     'timestamp':timestamp,
     'mediaUrl':mediaUrl,
     'description':description,
+    'ownerEmail' : ownerEmail,
+    'ownerPhotoUrl' : ownerPhotoUrl
   };
 }

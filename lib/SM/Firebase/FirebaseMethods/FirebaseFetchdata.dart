@@ -115,7 +115,10 @@ class FirebaseFetchData{
       String? timestamp = doc.get('timestamp');
       String? mediaUrl = doc.get('mediaUrl');
       String? description = doc.get('description');
-      Post curPost =  Post.Complete(id,postId,userName,ownerId,location,timestamp,mediaUrl,description);
+      String? ownerEmail = doc.get('ownerEmail');
+      String? ownerPhotoUrl = doc.get('ownerPhotoUrl');
+
+      Post curPost =  Post.Complete(id,postId,userName,ownerId,location,timestamp,mediaUrl,description,ownerEmail,ownerPhotoUrl);
       bool exists = Post.posts.any((entity) => entity.postId == curPost.postId);
 
       // print(curUser.userName);

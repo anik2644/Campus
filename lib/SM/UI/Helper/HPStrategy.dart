@@ -30,7 +30,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     return isloading? CircularProgressIndicator():
     isloggedin?
-    TabScreen(): //Landing() ://
+    Landing() ://TabScreen(): //Landing() ://
     Landing() ;
   }
 

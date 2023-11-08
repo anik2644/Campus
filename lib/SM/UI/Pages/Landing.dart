@@ -6,14 +6,18 @@ import 'package:dhabiansomachar/SM/ModelClass/LoginFlag.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/Body.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/LoginButton.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/SignUpButton.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/GetWant.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/LoginCredential.dart';
+import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
+import '../../ModelClass/tempPost.dart';
 import '../../Utilites/Constants/firebase.dart';
 
 //import 'package:social_media_app/auth/login/login.dart';
@@ -30,35 +34,16 @@ class _LandingState extends State<Landing> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-  /*     floatingActionButton:
 
-      FloatingActionButton(
+/*
+       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 
-
-          print(LoginCredentials().loggedInUser!.userName);
-
-*//*
-          LoginFlag lf = LoginFlag(false);
-          late LoginFlag lg;
-
-
-          //lf.isloggedin =   !lf.isloggedin;
-          // print("ssssobject");
-          // print( lf.isloggedin);
-          // print("ssssobject");
-          LoginFlagJson lfj = LoginFlagJson();
-          lfj.saveLoginInfo(lf);
-          //Credential sc = Credential();
-           //sc.saveCredential(us);
-       // User us  = await sc.getLoginInfo();
-
-          lg = await lfj.getLoginInfo();
-        print(lg.isloggedin);*//*
 
         },
       ),
 */
+
 
       body: Body(),//image space
       bottomNavigationBar: BottomAppBar(

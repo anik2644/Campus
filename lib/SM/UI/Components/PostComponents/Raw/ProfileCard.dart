@@ -22,32 +22,34 @@ class ProfileCard extends StatefulWidget {
 class _ProfileCardState extends State<ProfileCard> {
 
 
-  late User postUser;
+ // late User postUser;
   bool isLoading =true;
 
-  Future<User> findUser(String? ownerId) async {
-    JSONFile jf = JSONFile("users");
-    List<Object> li = await jf.read();
-    List<User> users = li as List<User>;
-
-    //print("now to find");
-    int ind  = await users.indexWhere((item) => item.email == ownerId);
-    postUser = ind==-1? users[0] : users[ind];
-
-   // print(postUser.userName);
-
-    return postUser;
-
-  }
+  // Future<User> findUser(String? ownerId) async {
+  //   JSONFile jf = JSONFile("users");
+  //   List<Object> li = await jf.read();
+  //   List<User> users = li as List<User>;
+  //
+  //   //print("now to find");
+  //   int ind  = await users.indexWhere((item) => item.email == ownerId);
+  //   postUser = ind==-1? users[0] : users[ind];
+  //
+  //  // print(postUser.userName);
+  //
+  //   return postUser;
+  //
+  // }
 
   @override
   void initState() {
-    findUser(widget.post?.ownerEmail).then((user) {
-      setState(() {
-        postUser = user;
-        isLoading = false;
-      });
-    });
+    // //findUser(widget.post?.ownerEmail).then((user) {
+    //   setState(() {
+    //   //  postUser = user;
+    //     isLoading = false;
+    //   });
+    // });
+
+    isLoading = false;
     super.initState();
   }
 
@@ -74,7 +76,7 @@ class _ProfileCardState extends State<ProfileCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  postUser.photoUrl!.isEmpty
+                  post?.ownerPhotoUrl == ""
                       ? CircleAvatar(
                     radius: 20.0,
                     backgroundColor:
@@ -93,7 +95,7 @@ class _ProfileCardState extends State<ProfileCard> {
                       : CircleAvatar(
                     radius: 20.0,
                     backgroundImage: CachedNetworkImageProvider(
-                      '${postUser.photoUrl}',
+                      '${post?.ownerPhotoUrl}',
                     ),
                   ),
                   SizedBox(width: 5.0),
@@ -110,7 +112,7 @@ class _ProfileCardState extends State<ProfileCard> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        '${post?.ownerId ?? ""}',
+                        '${post?.ownerEmail ?? ""}',
                         style: TextStyle(
                           fontSize: 10.0,
                           color: Color(0xff4D4D4D),

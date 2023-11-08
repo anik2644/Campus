@@ -7,6 +7,7 @@ import 'package:dhabiansomachar/SM/UI/Components/Landing/Body.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/LoginButton.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/SignUpButton.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/GetWant.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
 import '../../ModelClass/tempPost.dart';
 import '../../Utilites/Constants/firebase.dart';
+import '../../Utilites/Helper/Singleton/PostList.dart';
 
 //import 'package:social_media_app/auth/login/login.dart';
 
@@ -34,15 +36,26 @@ class _LandingState extends State<Landing> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+
 /*
 
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () async {
 
+          FIREBASE fb = FIREBASE("posts");
+          List<Object> uk = await fb.fetchData();
+          List<Post> posts = uk as List<Post>;
+          posts.forEach((element) {print(element.description);});
+
+          print("read done\n\n");
+
+          JSONFile jfl = JSONFile("posts");
+          jfl.write(posts);
 
         },
       ),
 */
+
 
 
       body: Body(),//image space

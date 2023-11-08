@@ -68,7 +68,7 @@ class FacadeJson{
 
       //convert the JSON format User to Actual User and create the return list
       JsonFormatPostList.forEach((element) {
-        Post post = Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerEmail);
+        Post post = Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerPhotoUrl);
         returnFormantPosts.add(post);
       });
 

@@ -197,7 +197,7 @@ class JSONMethods{
 
     List<PostJsonModel> JsonFormatPostList = [];
     listToSendJSON.forEach((element) {
-      PostJsonModel JsonFormatPost = PostJsonModel(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerEmail);
+      PostJsonModel JsonFormatPost = PostJsonModel(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerPhotoUrl);
       JsonFormatPostList.add(JsonFormatPost);
     });
 

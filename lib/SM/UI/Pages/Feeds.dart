@@ -12,6 +12,9 @@ import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
+import '../../Utilites/Helper/GetWant.dart';
+import '../../Utilites/Helper/Singleton/PostList.dart';
+import '../../Utilites/Helper/Singleton/UserList.dart';
 import '../Components/Feed/FeedsDrawer.dart';
 import '../Components/FeedComponents/userpost.dart';
 
@@ -31,9 +34,9 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
   int page = 5;
   bool loadingMore = false;
   ScrollController scrollController = ScrollController();
-  List<Post> posts = [];
-  List<User> users = [];
-
+ // List<Post> posts = [];
+ //  List<User> users = [];
+/*
   Future<void> fetchUser() async {
 
     JSONFile jf = JSONFile("users");
@@ -59,11 +62,23 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
     fetchUser();
   }
+*/
+   Future<void> takeDataToRam() async {
+
+     if(UserList().isListEmpty()||PostList().isListEmpty())
+       {
+         PostList().setPosts(await GetWant().getAllPostfromJson());
+         UserList().setUsers( await GetWant().getAllUserfromJson());
+       }
+     setState(() => isLoading =false);
+   }
+
 
   @override
   void initState() {
-
-    fetchData();
+    isLoading = true;
+    takeDataToRam();
+   // fetchData();
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -225,12 +240,12 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
                       //height: MediaQuery.of(context).size.height,
                         child:  ListView.builder(
                           controller: scrollController,
-                          itemCount: posts.length,
+                          itemCount: PostList().getPosts().length,
                           shrinkWrap: true,
                           //  physics: ScrollPhysics(),
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            Post post = posts[index];
+                            Post? post = PostList().getPostAtIndex(index);;
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: UserPost(post: post),

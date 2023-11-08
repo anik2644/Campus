@@ -31,7 +31,7 @@ final DateTime timestamp = DateTime.now();
   return firebaseAuth.currentUser!.uid;
 }*/
 
-User? user;
+//User? user;
 
 class _ViewImageState extends State<ViewImage> {
   @override

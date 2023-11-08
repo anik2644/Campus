@@ -41,7 +41,7 @@ class _AllPostViewState extends State<AllPostView> {
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w600,
-                color: Colors.grey,
+                color: Colors.white,
               ),
             ),
             Text(
@@ -59,7 +59,7 @@ class _AllPostViewState extends State<AllPostView> {
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder(
           future: postRef
-              .where('ownerId', isEqualTo: widget.email)
+              .where('ownerId', isEqualTo: widget.userId)
           // .orderBy('timestamp', descending: true)
               .get(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -71,6 +71,7 @@ class _AllPostViewState extends State<AllPostView> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   PostJsonModel posts = PostJsonModel.fromJson(docs[index].data());
+                  //print(posts.ownerPhotoUrl);
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: UserPost(post: converTopost(posts)),
@@ -98,6 +99,6 @@ class _AllPostViewState extends State<AllPostView> {
   Post converTopost(PostJsonModel element)
   {
     //Post post;
-    return Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerEmail);
+    return Post.Complete(element.id, element.postId, element.userName!, element.ownerId!, element.location!, element.timestamp!, element.mediaUrl!,element.description,element.ownerEmail,element.ownerPhotoUrl);
   }
 }

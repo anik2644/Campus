@@ -5,6 +5,7 @@ import 'package:dhabiansomachar/SM/JSON_Management/model/PostJsonModel.dart';
 import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/PostList.dart';
 
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../Utilites/Constants/firebase.dart';
+import '../../Utilites/Helper/SpecificWant.dart';
 import '../Components/ProfilePage/GridWrapper.dart';
 import '../Components/ProfilePage/PostTile.dart';
 import 'AllPostView.dart';
@@ -29,6 +31,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+
+
   User? user;
   bool isLoading = true;
   int postCount = 0;
@@ -37,6 +42,8 @@ class _ProfileState extends State<Profile> {
   bool isFollowing = false;
  // UserModel? users;
   late User users;
+
+  late User PossessedUser;
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
 
@@ -51,6 +58,16 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+
+    if(widget.profileId == LoginCredentials().loggedInUser?.id)
+      {
+        user = LoginCredentials().loggedInUser!;
+      }
+    else
+      {
+           user = SpecificWant().specificUser(widget.profileId);
+      }
+
     fetchMypost();
   }
 
@@ -104,14 +121,14 @@ class _ProfileState extends State<Profile> {
         ],
       ),
 
-/*      floatingActionButton: FloatingActionButton(onPressed: () async {
+      floatingActionButton: FloatingActionButton(onPressed: () async {
 
-        List<Post> posts = await FacadeJson().findAllPost();
-        List<Post> filteredPosts = posts.where((post) => post.ownerId == "anik11556@gmail.com").toList();
+        User user = SpecificWant().specificUser(widget.profileId);
+        print(user.userName);
 
-        print(filteredPosts.length);
-        filteredPosts.forEach((element) { print(element.postId);});
-      },),*/
+
+
+      },),
 
       body: CustomScrollView(
         slivers: <Widget>[
@@ -133,7 +150,7 @@ class _ProfileState extends State<Profile> {
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    User? user = LoginCredentials().loggedInUser;
+                   // User? user = LoginCredentials().loggedInUser;
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -151,7 +168,7 @@ class _ProfileState extends State<Profile> {
                                     .secondary,
                                 child: Center(
                                   child: Text(
-                                    '${user.userName.toUpperCase()}',
+                                    '${user?.userName.toUpperCase()}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.0,
@@ -164,7 +181,7 @@ class _ProfileState extends State<Profile> {
                                 radius: 40.0,
                                 backgroundImage:
                                 CachedNetworkImageProvider(
-                                    user.photoUrl!
+                                    user!.photoUrl!
                                   //user.photoUrl!.isEmpty}',
                                 ),
                               ),
@@ -187,7 +204,7 @@ class _ProfileState extends State<Profile> {
                                         Container(
                                           width: 130.0,
                                           child: Text(
-                                            user.userName!,
+                                            user!.userName!,
                                             style: TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w900,
@@ -198,7 +215,7 @@ class _ProfileState extends State<Profile> {
                                         Container(
                                           width: 130.0,
                                           child: Text(
-                                            user.country!,
+                                            user!.country!,
                                             style: TextStyle(
                                               fontSize: 12.0,
                                               fontWeight: FontWeight.w600,
@@ -214,7 +231,7 @@ class _ProfileState extends State<Profile> {
                                           CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              user.email!,
+                                              user!.email!,
                                               style: TextStyle(
                                                 fontSize: 10.0,
                                               ),
@@ -259,12 +276,12 @@ class _ProfileState extends State<Profile> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                          child: user.bio!.isEmpty
+                          child: user!.bio!.isEmpty
                               ? Container()
                               : Container(
                             width: 200,
                             child: Text(
-                              user.bio!,
+                              user!.bio!,
                               style: TextStyle(
                                 fontSize: 10.0,
                                 fontWeight: FontWeight.w600,
@@ -403,7 +420,7 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      buildPostView()
+                      isLoading? CircularProgressIndicator():buildPostView()
                     ],
                   ),
                 );
@@ -599,22 +616,16 @@ class _ProfileState extends State<Profile> {
 */
 
  buildGridPost() {
-    return Visibility(
-      visible: !isLoading,
-      child: GridView.builder(
-        shrinkWrap: true, // Add this line
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
-        itemCount: filteredlist.length,
-        itemBuilder: (context, index) {
-          Post post = filteredlist[index];
-          return PostTile(post: post, ii: 1);
-        },
+    return GridView.builder(
+      shrinkWrap: true, // Add this line
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
       ),
-      replacement: Center(
-        child: CircularProgressIndicator(),
-      ),
+      itemCount: filteredlist.length,
+      itemBuilder: (context, index) {
+        Post post = filteredlist[index];
+        return PostTile(post: post, ii: 1);
+      },
     );
   }
   buildLikeButton() {
@@ -669,8 +680,18 @@ class _ProfileState extends State<Profile> {
 
   Future<void> fetchMypost() async {
 
-    List<Post> posts = await FacadeJson().findAllPost();
-    filteredlist = posts.where((post) => post.ownerId == widget.email).toList();
+    //List<Post> posts = PostList().getPosts();//await FacadeJson().findAllPost();
+/*
+    print("printing list");
+    print( widget.email);
+    posts.forEach((element) {print(element.ownerEmail);});
+*/
+
+    filteredlist = PostList().getPosts().where((post) => post.ownerId == widget.profileId).toList();
+
+     //print(filteredlist.length);
+    //filteredlist.forEach((element) {print(element.description);});
+
 
     setState(() {
       isLoading = false;

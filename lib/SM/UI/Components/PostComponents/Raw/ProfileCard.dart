@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../ModelClass/Post.dart';
 import '../../../../ModelClass/User.dart';
 import '../../../../Utilites/Constants/firebase.dart';
+import '../../../Pages/profile.dart';
 
 
 class ProfileCard extends StatefulWidget {
@@ -70,7 +71,7 @@ class _ProfileCardState extends State<ProfileCard> {
             ),
           ),
           child: GestureDetector(
-            // onTap: () => showProfile(context, profileId: postUser.id!),
+             onTap: () => showProfile(context, profileId: post?.ownerId!),
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: Row(
@@ -130,12 +131,12 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   showProfile(BuildContext context, {String? profileId}) {
-/*    Navigator.push(
+    Navigator.push(
       context,
       CupertinoPageRoute(
         builder: (_) => Profile(profileId: profileId),
       ),
-    );*/
+    );
   }
 
 

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../ModelClass/Post.dart';
 import '../../../../ModelClass/User.dart';
 import '../../../../Utilites/Constants/firebase.dart';
+import '../../../../Utilites/Helper/SpecificWant.dart';
 import '../../../Pages/profile.dart';
 
 
@@ -134,7 +135,7 @@ class _ProfileCardState extends State<ProfileCard> {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (_) => Profile(profileId: profileId),
+        builder: (_) => Profile(user: SpecificWant().specificUser(profileId!),),
       ),
     );
   }

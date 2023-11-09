@@ -15,6 +15,7 @@ import '../../ModelClass/User.dart';
 import '../../Utilites/Helper/GetWant.dart';
 import '../../Utilites/Helper/Singleton/PostList.dart';
 import '../../Utilites/Helper/Singleton/UserList.dart';
+import '../../Utilites/Helper/SpecificWant.dart';
 import '../Components/Feed/FeedsDrawer.dart';
 import '../Components/FeedComponents/userpost.dart';
 
@@ -213,7 +214,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (_) =>Profile(profileId: LoginCredentials().loggedInUser?.id,email:  LoginCredentials().loggedInUser?.email,),
+                  builder: (_) =>  Profile(user: LoginCredentials().loggedInUser,),
                 ),
               );
             },

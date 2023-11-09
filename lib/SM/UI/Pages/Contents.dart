@@ -300,11 +300,14 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
         title:  Text(
           "ঢাবিয়ান সমাচার",//"Press me to enter",
           style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
-        ).animate(
+        )
+        /* .
+
+        animate(
 
           //delay: 1000.ms, // this delay only happens once at the very start
           onPlay: (controller) => controller.repeat(), // loop
-        ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),
+        ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),*/
         ,
         // title: Text(
         //   Constants.appName,

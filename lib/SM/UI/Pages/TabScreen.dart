@@ -1,5 +1,7 @@
 import 'package:animations/animations.dart';
+import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Components/AddPostOrContent/PopupBuilder.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -25,7 +27,7 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'unsee',
       'icon': Ionicons.add_circle,
-      'page': Text("hello"),//NewPost(),//AddPost(),
+      'page':Profile(user: LoginCredentials().loggedInUser,),//NewPost(),//AddPost(),
       'index': 1,
     },
     {
@@ -117,7 +119,7 @@ class _TabScreenState extends State<TabScreen> {
         },
       );
     }, icon: Icon(Icons.add) ,);
-    
+
 /*      Container(
       height: 45.0,
       width: 45.0,

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../Pages/CreatePost.dart';
+
 Widget AddPopUp(BuildContext context) {
   return Padding(
     padding: EdgeInsets.all(16),
@@ -24,6 +26,13 @@ Widget AddPopUp(BuildContext context) {
         children: <Widget>[
           buildOption(context, Icons.edit, 'Add Post', 'Add a new post', () {
             Navigator.pop(context);
+
+            // Navigator.pop(context);
+            Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (_) => CreatePost(),
+              ),
+            );
             // Add your logic here for "Add Post"
             print('Add Post pressed');
           }),

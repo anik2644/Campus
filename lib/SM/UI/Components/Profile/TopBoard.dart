@@ -102,13 +102,13 @@ class _TopBoardState extends State<TopBoard> {
     } else if (isFollowing) {
       return buildButton(
         text: "Unfollow",
-        function: handleUnfollow,
+        function: (){}, // handleUnfollow,
       );
       //if you are not following the user then "follow"
     } else if (!isFollowing) {
       return buildButton(
         text: "Follow",
-        function: handleFollow,
+        function: (){}, //handleFollow,
       );
     }
   }

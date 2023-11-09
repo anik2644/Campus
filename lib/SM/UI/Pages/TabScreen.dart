@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:dhabiansomachar/SM/UI/Components/AddPostOrContent/PopupBuilder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -36,69 +37,6 @@ class _TabScreenState extends State<TabScreen> {
 
 
   ];
-
-  /*
-  Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: UserModel.UserRefresh(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return Scaffold(
-            body: PageTransitionSwitcher(
-              transitionBuilder: (
-                  Widget child,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                  ) {
-                return FadeThroughTransition(
-                  animation: animation,
-                  secondaryAnimation: secondaryAnimation,
-                  child: child,
-                );
-              },
-              child: pages[_page]['page'],
-            ),
-            bottomNavigationBar: BottomAppBar(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(width: 5),
-                  for (Map item in pages)
-                    item['index'] == 2
-                        ? buildFab()
-                        : Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: IconButton(
-                        icon: Icon(
-                          item['icon'],
-                          color: item['index'] != _page
-                              ? Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black
-                              : Theme.of(context).colorScheme.secondary,
-                          size: 25.0,
-                        ),
-                        onPressed: () => navigationTapped(item['index']),
-                      ),
-                    ),
-                  SizedBox(width: 5),
-                ],
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
- */
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -139,9 +77,7 @@ class _TabScreenState extends State<TabScreen> {
             children: [
               SizedBox(width: 5),
               for (Map item in pages)
-/*                item['index'] == 1
-                    ? AddPost()
-                    :*/
+                item['index'] == 1 ? AddPost(context) :
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: IconButton(
@@ -165,8 +101,24 @@ class _TabScreenState extends State<TabScreen> {
     );
   }
 
-  AddPost() {
-    return Container(
+  AddPost(BuildContext context) {
+    return //AddPopUp(context);
+    IconButton(onPressed: () {
+
+      showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: EdgeInsets.all(16),
+            child: AddPopUp(context),
+          );
+        },
+      );
+    }, icon: Icon(Icons.add) ,);
+    
+/*      Container(
       height: 45.0,
       width: 45.0,
       // ignore: missing_required_param
@@ -174,7 +126,7 @@ class _TabScreenState extends State<TabScreen> {
         icon: Ionicons.add_circle,
         mini: true,
       ),
-    );
+    );*/
   }
 
 

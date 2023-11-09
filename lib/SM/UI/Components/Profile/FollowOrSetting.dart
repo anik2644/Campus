@@ -42,12 +42,12 @@ class _FollowOrSettingState extends State<FollowOrSetting> {
       ),
     )
        // : const Text('');
-        : buildLikeButton();
+        : buildFollowButton();
   }
 
 
 
-  buildLikeButton() {
+  buildFollowButton() {
     return StreamBuilder(
       stream: favUsersRef
           .where('postId', isEqualTo: widget.user.id)
@@ -58,6 +58,8 @@ class _FollowOrSettingState extends State<FollowOrSetting> {
           List<QueryDocumentSnapshot> docs = snapshot.data?.docs ?? [];
           return GestureDetector(
             onTap: () {
+
+          /*
               if (docs.isEmpty) {
                 favUsersRef.add({
                   'userId': LoginCredentials().loggedInUser!.id,
@@ -67,6 +69,7 @@ class _FollowOrSettingState extends State<FollowOrSetting> {
               } else {
                 favUsersRef.doc(docs[0].id).delete();
               }
+              */
             },
             child: Container(
               decoration: BoxDecoration(

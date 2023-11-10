@@ -7,6 +7,7 @@ import 'package:dhabiansomachar/SM/UI/Components/Landing/Body.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/LoginButton.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Landing/SignUpButton.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/GetWant.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/SentWant.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -37,20 +38,13 @@ class _LandingState extends State<Landing> {
     return Scaffold(
       backgroundColor: Colors.black,
 
-/*
 
+/*
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 
-          FIREBASE fb = FIREBASE("posts");
-          List<Object> uk = await fb.fetchData();
-          List<Post> posts = uk as List<Post>;
-          posts.forEach((element) {print(element.description);});
-
-          print("read done\n\n");
-
-          JSONFile jfl = JSONFile("posts");
-          jfl.write(posts);
+            SentWant().sentAllPosttoJson();
+            SentWant().sentAllUsertoJson();
 
         },
       ),

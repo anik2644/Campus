@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/UI/Components/CreatePost/AppBar.dart';
+import 'package:dhabiansomachar/SM/UI/Components/CreatePost/DescriptionBox.dart';
+import 'package:dhabiansomachar/SM/UI/Components/CreatePost/LocationBox.dart';
+import 'package:dhabiansomachar/SM/UI/Components/CreatePost/ProfileInfo.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/SendToFbase.dart';
 
 import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/PostList.dart';
@@ -10,7 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -36,271 +40,103 @@ class _CreatePostState extends State<CreatePost> {
   User thisUser =LoginCredentials().loggedInUser!;
   late Post post;
   late String loc;
-
+  File? mediaUrl;
   @override
   Widget build(BuildContext context) {
-/*
-    currentUserId() {
-      return firebaseAuth.currentUser!.uid;
-    }
-*/
+    return Scaffold(
+    //  key: viewModel.scaffoldKey,
+      appBar:PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight),child: CreatAppBar()),
 
-    PostsViewModel viewModel = Provider.of<PostsViewModel>(context);
-    return WillPopScope(
-      onWillPop: () async {
-        await viewModel.resetPost();
-        return true;
-      },
-      child: LoadingOverlay(
-        progressIndicator: circularProgress(context),
-        isLoading: viewModel.loading,
-        child: Scaffold(
-          key: viewModel.scaffoldKey,
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Ionicons.close_outline),
-              onPressed: () {
-                viewModel.resetPost();
-                Navigator.pop(context);
-              },
-            ),
-            title: Text('Create Post'.toUpperCase()),
-            centerTitle: true,
-            actions: [
-              GestureDetector(
-                onTap: () async {
+      body: ListView(
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        children: [
+          
+          ProfileInfo(),
+          flag ==0? InkWell(
+            onTap: () {
+              print("Choose image") ;
+              showImageChoices(context);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width - 30,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              child: //viewModel.imgLink != null
+              // filee != null?
+              // Image.file(
+              //   filee!.path as File ,
+              //   fit: BoxFit.contain,
+              // ):
 
-                  String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-                //  Reference referenceRoot = FirebaseStorage.instance.ref();
-                  //   Reference referenceDirImages = referenceRoot.child('images');
-
-                  // Reference referenceImageToUpload =
-                  // referenceDirImages.child(uniqueFileName);
-
-/*
-
-                  try {
-                    //Store the file
-                    await referenceImageToUpload.putFile(File(pathh));
-                    //Success: get the download URL
-                    imgurl = await referenceImageToUpload.getDownloadURL();
-
-                    print("Img URL:" +imgurl);
-                  } catch (error) {
-                    //Some error occurred
-                  }
-*/
-
-                  DateTime now = DateTime.now();
-                  String formattedDateTime = DateFormat('EEEE, MMMM d, \nHH:mm, yyyy' ).format(now);
-                  post =Post.Complete("vugichugi", "55",thisUser.userName, thisUser.id, loc, formattedDateTime, imgurl, des, thisUser.email, thisUser.photoUrl);
-
-                  /*
-
-                   Post posst = SendToFbase().sendPost(post);
-                   PostList().addPost(posst);
-
-
-                   */
-                  print(">>");
-                  Navigator.pop(context);
-                  //_currentTime;
-                  //  await viewModel.uploadPosts(context);
-                  // viewModel.resetPost();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    'Post'.toUpperCase(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+              flag==1
+                  ?
+              Image.network(imgurl)
+              // CustomImage(
+              //         imageUrl: viewModel.imgLink,
+              //         width: MediaQuery.of(context).size.width,
+              //         height: MediaQuery.of(context).size.width - 30,
+              //         fit: BoxFit.cover,
+              //       )
+                  : mediaUrl == null
+                  ? Center(
+                child: Text(
+                  'Upload a Photo',
+                  style: TextStyle(
+                    color:
+                    Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               )
-            ],
-          ),
-
-          body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            children: [
-              SizedBox(height: 15.0),
-              StreamBuilder(
-                stream: usersRef.doc(LoginCredentials().loggedInUser!.id).snapshots(),
-                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    User user = LoginCredentials().loggedInUser!;
-                    /*UserModel.fromJson(
-                      snapshot.data!.data() as Map<String, dynamic>,
-                    );*/
-                    return ListTile(
-                      leading: CircleAvatar(
-                        radius: 25.0,
-                        backgroundImage: NetworkImage(user.photoUrl!),
-                      ),
-                      title: Text(
-                        user.userName!,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        user.email!,
-                      ),
-                    );
-                  }
-                  return Container();
-                },
+                  : Image.file(
+                  mediaUrl!,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width - 30,
+                fit: BoxFit.cover,
               ),
-
-              /*
-
-              flag ==0? InkWell(
-                onTap: () {
-                  print("Choose image") ;
-                  showImageChoices(context, viewModel);
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width - 30,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                  child: //viewModel.imgLink != null
-                  // filee != null?
-                  // Image.file(
-                  //   filee!.path as File ,
-                  //   fit: BoxFit.contain,
-                  // ):
-
-                  flag==1
-                      ?
-                  Image.network(imgurl)
-                  // CustomImage(
-                  //         imageUrl: viewModel.imgLink,
-                  //         width: MediaQuery.of(context).size.width,
-                  //         height: MediaQuery.of(context).size.width - 30,
-                  //         fit: BoxFit.cover,
-                  //       )
-                      : viewModel.mediaUrl == null
-                      ? Center(
-                    child: Text(
-                      'Upload a Photo',
-                      style: TextStyle(
-                        color:
-                        Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  )
-                      : Image.file(
-                    viewModel.mediaUrl!,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.width - 30,
-                    fit: BoxFit.cover,
-                  ),
+            ),
+          ) : InkWell(
+            onTap: () {
+              print("Choose image") ;
+              showImageChoices(context);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width - 30,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
                 ),
-              ) :
-              InkWell(
-                onTap: () {
-                  print("Choose image") ;
-                  showImageChoices(context, viewModel);
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width - 30,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                  child:Image.file(
-                    File(pathh),
-                    width: 400,
-                    height: 400,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              */
-
-
-              SizedBox(height: 20.0),
-              Text(
-                'Post Caption'.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              TextFormField(
-                initialValue: viewModel.description,
-                decoration: InputDecoration(
-                  hintText: 'Eg. This is very beautiful place!',
-                  focusedBorder: UnderlineInputBorder(),
-                ),
-                maxLines: null,
-                onChanged: (val) {
-                  des =val;
-                  viewModel.setDescription(val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'Location'.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.all(0.0),
-                title: Container(
-                  width: 250.0,
-                  child: TextFormField(
-                    controller: viewModel.locationTEC,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
-                      hintText: 'United States,Los Angeles!',
-                      focusedBorder: UnderlineInputBorder(),
-                    ),
-                    maxLines: null,
-                    onChanged: (val) {
-                      loc =val;
-                      viewModel.setLocation(val);
-                    },
-                  ),
-                ),
-                trailing: IconButton(
-                  tooltip: "Use your current location",
-                  icon: Icon(
-                    CupertinoIcons.map_pin_ellipse,
-                    size: 25.0,
-                  ),
-                  iconSize: 30.0,
+                border: Border.all(
                   color: Theme.of(context).colorScheme.secondary,
-                  onPressed: () => viewModel.getLocation(),
                 ),
               ),
-            ],
+              child:Image.file(
+                File(pathh),
+                width: 400,
+                height: 400,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
+         DescriptionBox( onDescriptionChanged: (description) {setState(() => des = description);},),
+         LocationBox( onLocationChanged: (location) {setState(() => loc = location);},),
+
+
+    ],
       ),
     );
   }
 
-  showImageChoices(BuildContext context, PostsViewModel viewModel) {
+  showImageChoices(BuildContext context) {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -328,7 +164,7 @@ class _CreatePostState extends State<CreatePost> {
                 title: Text('Camera'),
                 onTap: () {
                   Navigator.pop(context);
-                  viewModel.pickImage(camera: true);
+                 // viewModel.pickImage(camera: true);
                 },
               ),
               ListTile(

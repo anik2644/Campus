@@ -5,6 +5,7 @@ import '../../../ModelClass/LoginCredential.dart';
 import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../../Utilites/Helper/SpecificWant.dart';
+import '../../Pages/EditProfile.dart';
 import 'UpperPortion.dart';
 import 'UserActivities.dart';
 import 'UserBio.dart';
@@ -90,13 +91,13 @@ class _TopBoardState extends State<TopBoard> {
       return buildButton(
           text: "Edit Profile",
           function: () {
-/*            Navigator.of(context).push(
+            Navigator.of(context).push(
               CupertinoPageRoute(
                 builder: (_) => EditProfile(
                   user: user,
                 ),
               ),
-            );*/
+            );
           });
       //if you are already following the user then "unfollow"
     } else if (isFollowing) {

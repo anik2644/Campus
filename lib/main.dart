@@ -1,4 +1,5 @@
 
+import 'package:dhabiansomachar/SM/HP/HomePage/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return YourWidget();//HPStretegy();//Feeds();
+    return Homepage();//HPStretegy();//Feeds();
 
   }
 }

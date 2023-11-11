@@ -4,56 +4,79 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../../Utilites/Helper/Raw/PickImage.dart';
 
-class YourWidget extends StatefulWidget {
+class ImagePickBox extends StatefulWidget {
+
+  final void Function(String) onImageSelected;
+
+  ImagePickBox({required this.onImageSelected});
+
   @override
-  _YourWidgetState createState() => _YourWidgetState();
+  _ImagePickBoxState createState() => _ImagePickBoxState();
 }
 
-class _YourWidgetState extends State<YourWidget> {
+class _ImagePickBoxState extends State<ImagePickBox> {
    String path = "null";
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return InkWell(
+      onTap: () {
+        print("Choose image");
+        showImageChoices(context, (String imagePath) {
+          // Handle the selected image path here
+          print('Selected Image Path: $imagePath');
+          // Set the selected image path to pathh variable
+          setState(() {
+            path = imagePath;
+          });
+
+          widget.onImageSelected(path);
+        });
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.width - 30,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+        child: (path != "null")
+            ? Image.file(
+          File(path),
+          width: 400,
+          height: 400,
+          fit: BoxFit.cover,
+        )
+            : Center(
+          child: Text('No Image Selected'),
+        ),
+      ),
+    ) ;
+
+
+/*
+
+
+
+ImagePickBox(
+  onImageSelected: (String imagePath) {
+    // Handle the selected image path here
+    print('Received Image Path: $imagePath');
+    // You can pass this path to your ViewModel or perform any other actions
+  },
+);
+
+
+      Scaffold(
       appBar: AppBar(
       //  title: Text(),
       ),
-      body:   InkWell(
-        onTap: () {
-          print("Choose image");
-          showImageChoices(context, (String imagePath) {
-            // Handle the selected image path here
-            print('Selected Image Path: $imagePath');
-            // Set the selected image path to pathh variable
-            setState(() {
-              path = imagePath;
-            });
-          });
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width - 30,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
-            ),
-            border: Border.all(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-          ),
-          child: (path != "null")
-              ? Image.file(
-            File(path),
-            width: 400,
-            height: 400,
-            fit: BoxFit.cover,
-          )
-              : Center(
-            child: Text('No Image Selected'),
-          ),
-        ),
-      ),
+      body:   ,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 
@@ -66,6 +89,7 @@ class _YourWidgetState extends State<YourWidget> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+*/
 
 
 

@@ -1,3 +1,4 @@
+import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -10,11 +11,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../components/text_form_builder.dart';
-import '../models/user.dart';
-import '../utils/firebase.dart';
-import '../utils/validation.dart';
-import '../view_models/profile/edit_profile_view_model.dart';
+import '../../Utilites/Auth/Validation.dart';
+import '../../Utilites/Constants/firebase.dart';
+import '../Components/Register/text_form_builder.dart';
+import '../Helper/edit_profile_view_model.dart';
 import '../widgets/indicators.dart';
 // import 'package:social_media_app/components/text_form_builder.dart';
 // import 'package:social_media_app/models/user.dart';
@@ -24,7 +24,7 @@ import '../widgets/indicators.dart';
 // import 'package:social_media_app/widgets/indicators.dart';
 
 class EditProfile extends StatefulWidget {
-  final UserModel? user;
+  final User? user;
 
   const EditProfile({this.user});
 
@@ -33,10 +33,10 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  UserModel? user;
+  User? user;
 
 
-  int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
+ // int ind = UserModel.getUserIndex(firebaseAuth.currentUser!.email ?? "");
   String imgurl= "a"; //widget.user.photoUrl  ?? "";
   String? country ="a";// UserModel.um[ind].photoUrl;
   //user.photoUrl!.isEmpty;
@@ -91,7 +91,7 @@ class _EditProfileState extends State<EditProfile> {
                     }
                     if(Username == "a")
                     {
-                      Username =widget.user?.username ?? "";
+                      Username =widget.user?.userName ?? "";
                     }
                     //CollectionReference collection = FirebaseFirestore.instance.collection('users');
 
@@ -268,7 +268,7 @@ class _EditProfileState extends State<EditProfile> {
           children: [
             TextFormBuilder(
               enabled: !viewModel.loading,
-              initialValue: widget.user!.username,
+              initialValue: widget.user!.userName,
               prefix: Ionicons.person_outline,
               hintText: "Username",
               textInputAction: TextInputAction.next,

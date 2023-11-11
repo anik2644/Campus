@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
+import '../Components/Common/ImagePickOption.dart';
 
 
 class CreatePost extends StatefulWidget {
@@ -26,6 +27,7 @@ class _CreatePostState extends State<CreatePost> {
  // PostModel pp =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
 
   late String imgurl;
+  late String path;
   late String des;
   User thisUser =LoginCredentials().loggedInUser!;
   late Post post;
@@ -42,6 +44,21 @@ class _CreatePostState extends State<CreatePost> {
         children: [
           
           ProfileInfo(),
+
+
+        ImagePickBox(
+          onImageSelected: (String imagePath) {
+
+            setState(() {
+              path = imagePath;
+            });
+            // Handle the selected image path here
+            print('Received Image Path: $imagePath');
+            // You can pass this path to your ViewModel or perform any other actions
+          },
+        ),
+          /*
+
           flag ==0? InkWell(
             onTap: () {
               print("Choose image") ;
@@ -117,6 +134,8 @@ class _CreatePostState extends State<CreatePost> {
               ),
             ),
           ),
+
+         */
          DescriptionBox( onDescriptionChanged: (description) {setState(() => des = description);},),
          LocationBox( onLocationChanged: (location) {setState(() => loc = location);},),
 
@@ -125,7 +144,7 @@ class _CreatePostState extends State<CreatePost> {
       ),
     );
   }
-
+/*
 
   showImageChoices(BuildContext context) {
     showModalBottomSheet(
@@ -194,4 +213,8 @@ class _CreatePostState extends State<CreatePost> {
       flag =1;
     });
   }
+
+
+  */
+
 }

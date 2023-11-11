@@ -43,22 +43,16 @@ class LoginViewModel extends ChangeNotifier {
         );
         print(success);
 
-        LoginFlag lf = LoginFlag(true);
-        LoginFlagJson lfj = LoginFlagJson();
-        lfj.saveLoginInfo(lf);
+        LoginFlagJson().saveLoginInfo( LoginFlag(true));
 
 
-
-
-          FetchCredential fc = FetchCredential();
-          Object uk =  await fc.findCredential();
+          Object uk =  await FetchCredential().findCredential();
           User us = uk as User;
           print(us.country);
 
 
         LoginCredentials().login(us);
-        Credential sc = Credential();
-        sc.saveCredential(us);
+        Credential().saveCredential(us);
         // User us  = await sc.getCredential();
         // print(us.userName);
 

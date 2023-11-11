@@ -31,7 +31,7 @@ class SentWant {
     print("read done\n\n");
 
     JSONFile jfl = JSONFile("posts");
-    jfl.write(posts);
+     jfl.write(posts);
   }
 
 }

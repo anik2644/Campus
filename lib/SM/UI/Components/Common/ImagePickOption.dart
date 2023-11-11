@@ -16,18 +16,22 @@ class ImagePickBox extends StatefulWidget {
 
 class _ImagePickBoxState extends State<ImagePickBox> {
    String path = "null";
+   String? url;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         print("Choose image");
-        showImageChoices(context, (String imagePath) {
+        showImageChoices(context, (String imagePath) async {
           // Handle the selected image path here
           print('Selected Image Path: $imagePath');
+
+          //String urll= await SendToFStorage().sendImage(imagePath);
           // Set the selected image path to pathh variable
           setState(() {
             path = imagePath;
+            //url= urll!;
           });
 
           widget.onImageSelected(path);

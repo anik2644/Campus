@@ -1,11 +1,21 @@
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/UI/Helper/HPStrategy.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:social_media_app/auth/register/profile_pic.dart';
 // import 'package:social_media_app/services/Auth_Service.dart';
 
 import '../../../Firebase/Auth/Auth_Service.dart';
+import '../../../Firebase/Auth/FetchCredential.dart';
+import '../../../JSON_Management/Auth/LoginFlagJson.dart';
+import '../../../ModelClass/LoginCredential.dart';
+import '../../../ModelClass/LoginFlag.dart';
+import '../../../ModelClass/User.dart' as local;
+import '../../../UI/Pages/TabScreen.dart';
 
 /*
 class RegisterViewModel extends ChangeNotifier {
@@ -129,16 +139,31 @@ class RegisterViewModel extends ChangeNotifier {
         loading = true;
         notifyListeners();
         try {
-         bool success = true;
-         await auth.createUser(
-            name: username,
-            email: email,
-            password: password,
-            country: country,
-          );
-          print(success);
-          if (success) {
 
+          print("here i am");
+         local.User success = //true;
+         await auth.createUser( name: username, email: email, password: password, country: country, user: extractUser(),);
+          print(success);
+          if (success.id != "id") {
+
+
+            LoginFlagJson().saveLoginInfo( LoginFlag(true));
+
+/*
+
+            Object uk =  await FetchCredential().findCredential();
+            local.User us = uk as local.User;
+            print(us.country);
+
+*/
+
+            UpdateWant().updateJsonUsers();
+            local.User us = success ;//extractUser();
+            print("dq1");
+            LoginCredentials().login(us);
+            print("dq");
+            Credential().saveCredential(us);
+            UpdateWant().updateJsonUsers();
             final snackBar = SnackBar(
               content: Text('signup Done'),
               duration: Duration(seconds: 5),
@@ -146,7 +171,7 @@ class RegisterViewModel extends ChangeNotifier {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
            Navigator.of(context).pushReplacement(
               CupertinoPageRoute(
-                builder: (_) => Feeds(),//ProfilePicture(),
+                builder: (_) => TabScreen(),//Feeds(),//ProfilePicture(),
               ),
             );
           }
@@ -163,6 +188,11 @@ class RegisterViewModel extends ChangeNotifier {
         showInSnackBar('The passwords does not match', context);
       }
     }
+  }
+
+  local.User extractUser()
+  {
+    return local.User.Complete(username!, email!, country!, "no bio", "not Specified", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDwmG52pVI5JZfn04j9gdtsd8pAGbqjjLswg&usqp=CAU", "id", Timestamp.now(), true, Timestamp.now());
   }
 
   setEmail(val) {

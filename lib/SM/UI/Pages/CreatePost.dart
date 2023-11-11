@@ -27,17 +27,24 @@ class _CreatePostState extends State<CreatePost> {
  // PostModel pp =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
 
   late String imgurl;
-  late String path;
-  late String des;
+   String path = " ";
+  late String des= " ";
   User thisUser =LoginCredentials().loggedInUser!;
   late Post post;
-  late String loc;
+  late String loc= " ";
   File? mediaUrl;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
     //  key: viewModel.scaffoldKey,
-      appBar:PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight),child: CreatAppBar()),
+      appBar:PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight),child: CreatAppBar(user: thisUser,path: path,caption: des,location: loc,onSendPressed: (bool flag) {
+        // Handle the flag value here
+        if (flag) {
+          print("truuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuueeeeee");
+        } else {
+          // Do something when the "Send" button is not pressed
+        }
+      },)),
 
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -49,9 +56,7 @@ class _CreatePostState extends State<CreatePost> {
         ImagePickBox(
           onImageSelected: (String imagePath) {
 
-            setState(() {
-              path = imagePath;
-            });
+            setState(() => path = imagePath);
             // Handle the selected image path here
             print('Received Image Path: $imagePath');
             // You can pass this path to your ViewModel or perform any other actions

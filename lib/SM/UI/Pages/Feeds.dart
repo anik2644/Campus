@@ -3,11 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.dart';
 import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/profile.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/SentWant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../Firebase/Auth/FetchCredential.dart';
 import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/Post.dart';
@@ -98,13 +100,14 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     return Scaffold(
       backgroundColor: Colors.black,
       key: scaffoldKey,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //
-      //     print(LoginCredentials().loggedInUser!.userName);
-      //   },
-      //
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+
+          //SentWant().sentAllUsertoJson();
+          PostList().getPosts().forEach((element) {print(element.ownerEmail);});
+        },
+
+      ),
       drawer:
       /* Drawer(
       backgroundColor: Colors.black,

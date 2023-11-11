@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '../../ModelClass/LoginCredential.dart';
 import '../../ModelClass/User.dart';
 import '../../Utilites/Constants/firebase.dart';
 
@@ -11,9 +12,13 @@ class FetchCredential{
   Future<User> findCredential() async {
 
     User curUser;
+/*    print("hello2");
+    print(firebaseAuth.currentUser!.uid);
+    print(firebaseAuth.currentUser!.email);
+
+    print("hello");*/
     var collectionReference = FirebaseFirestore.instance.collection('users');
-    var query = collectionReference.where('id', isEqualTo: firebaseAuth.currentUser!.uid
-         );
+    var query = collectionReference.where('id', isEqualTo: firebaseAuth.currentUser!.uid);
     var querySnapshot = await query.get();
 
     if (querySnapshot.docs.isNotEmpty) {
@@ -30,6 +35,7 @@ class FetchCredential{
       String photoUrl = doc['photoUrl'];
       String userName = doc['username'];
       Timestamp time =  doc['time'];
+
 
 
       curUser = new  User.Complete(userName,email,country,bio,gender,photoUrl,id,lastSeen,isOnline,time);

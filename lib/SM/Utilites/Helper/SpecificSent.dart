@@ -1,15 +1,16 @@
 import 'dart:io';
 
 import '../../ModelClass/Post.dart';
+import '../../ModelClass/User.dart';
 import '../Constants/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class SendToFbase {
-  Post sendPost(Post post) {
+  Future<Post> sendPost(Post post) async {
     late Post retPost;
-    postRef.add({
+   await postRef.add({
       'postId': post.postId,
 
       'userName': post.userName,
@@ -20,6 +21,8 @@ class SendToFbase {
 
       'description': post.description,
       'id': post.id,
+     'ownerEmail': post.ownerEmail,
+     'ownerPhotoUrl': post.ownerPhotoUrl,
 
       'timestamp': post.timestamp,
       'mediaUrl': post.mediaUrl,
@@ -30,7 +33,7 @@ class SendToFbase {
     }).then((DocumentReference document) {
       // Retrieve the generated document ID
       String generatedId = document.id;
-      postRef.doc(generatedId).update({'documentId': generatedId});
+      postRef.doc(generatedId).update({'id': generatedId});
       retPost = Post.Complete(
           generatedId,
           post.postId,
@@ -48,6 +51,53 @@ class SendToFbase {
     }).catchError((error) => print('Failed to add data: $error'));
 
     return retPost;
+  }
+
+
+  Future<void> sendUser(User user) async {
+
+
+  //  late User retUser;
+    usersRef.doc(user.id).set({
+      'username': user.userName,
+      'email': user.email,
+      'time': user.time,//Timestamp.now(),
+      'id': user.id,
+      'bio': user.bio,
+      'country': user.country,
+      'photoUrl': user.photoUrl,
+      'gender': user.gender,
+      'isOnline': user.isOnline,
+      'lastSeen': user.lastSeen
+
+    });
+
+   /*     .then((DocumentReference document) {
+      // Retrieve the generated document ID
+      String generatedId = document.id;
+      usersRef.doc(generatedId).update({'id': generatedId});
+      retUser = User.Complete(
+
+        user.userName,
+        user.email,
+        user.country!,
+        user.bio!,
+        user.gender!,
+        user.photoUrl!,
+        generatedId,
+        user.lastSeen,
+        user.isOnline,
+        user.time,
+
+);
+      // Update the document with the generated ID
+
+      print('Data added to Firestore with ID: $generatedId');
+    }).catchError((error) => print('Failed to add data: $error'));
+
+    */
+
+  //  return retUser;
   }
 }
 

@@ -1,4 +1,6 @@
+import '../../../JSON_Management/JSONFile.dart';
 import '../../../ModelClass/User.dart';
+import '../GetWant.dart';
 
 class UserList {
   final List<User> _users = [];
@@ -21,9 +23,15 @@ class UserList {
     return _users;
   }
 
-  void setUsers(List<User> userList) {
+   void  setUsers(List<User> userList) {
     _users.clear();
     _users.addAll(userList);
   }
+
+  Future<void> uppdateUsers() async {
+    UserList().setUsers( await GetWant().getAllUserfromJson());
+  }
+
+
 
 }

@@ -1,4 +1,5 @@
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+import 'package:dhabiansomachar/SM/UI/Components/EditProfile/AppBAr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -51,92 +52,20 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    EditProfileViewModel viewModel = Provider.of<EditProfileViewModel>(context);
+   // EditProfileViewModel viewModel = Provider.of<EditProfileViewModel>(context);
     return LoadingOverlay(
       progressIndicator: circularProgress(context),
-      isLoading: viewModel.loading,
+      isLoading: false,//viewModel.loading,
       child: Scaffold(
-        key: viewModel.scaffoldKey,
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Edit Profile"),
-          actions: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 25.0),
-                child: GestureDetector(
-                  onTap: () async {
+        //key: viewModel.scaffoldKey,
+        appBar: PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight), child: EditProfileAppBar()),
 
-
-
-                    print(country);
-                    print(imgurl);
-                    print(bio);
-                    print(firebaseAuth.currentUser!.uid);
-                    print(firebaseAuth.currentUser!.photoURL);
-
-
-
-                    if(bio == "a")
-                    {
-                      bio =widget.user?.bio ?? "";
-                    }
-                    if(imgurl == "a")
-                    {
-                      imgurl =widget.user?.photoUrl ?? "";
-                    }
-                    if(country == "a")
-                    {
-                      country =widget.user?.country ?? "";
-                    }
-                    if(Username == "a")
-                    {
-                      Username =widget.user?.userName ?? "";
-                    }
-                    //CollectionReference collection = FirebaseFirestore.instance.collection('users');
-
-                    CollectionReference collection =
-                    FirebaseFirestore.instance.collection('users');
-                    DocumentReference document = collection.doc(firebaseAuth.currentUser!.uid);
-
-                    try {
-                      await document.update({
-
-                        // 'field_name': 'new_value',
-                        'bio': bio,
-                        'country' : country,
-                        'username' : Username,
-                        'photoUrl' : imgurl,
-
-
-                      });
-                      print('Field updated successfully.');
-                    } catch (e) {
-                      print('Error updating field: $e');
-                    }
-
-                    Navigator.of(context).pop();
-                    // viewModel.editProfile(context);
-                  },
-                  child: Text(
-                    'SAVE',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 15.0,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
         body: ListView(
           children: [
             Center(
               child: GestureDetector(
                 onTap: () {
-                  pickImagee();
+                  //pickImagee();
                   //viewModel.pickImage();
                 },
                 child: Container(
@@ -182,9 +111,10 @@ class _EditProfileState extends State<EditProfile> {
                       radius: 65.0,
                       backgroundImage: CachedNetworkImageProvider( widget.user!.photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
                     ),
-                  )
-                      : viewModel.image == null
-                      ? Padding(
+                  ) :
+                     // : viewModel.image == null
+                     // ?
+                  Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: CircleAvatar(
                       radius: 65.0,
@@ -192,19 +122,20 @@ class _EditProfileState extends State<EditProfile> {
                       NetworkImage(widget.user!.photoUrl!),
                     ),
                   )
-                      : Padding(
+/*                      : Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: CircleAvatar(
                       radius: 65.0,
                       backgroundImage: NetworkImage(imgurl),
                       //FileImage(viewModel.image!),
                     ),
-                  ),
+                  ),*/
                 ),
               ),
             ),
             SizedBox(height: 10.0),
-            buildForm(viewModel, context)
+            buildForm( context)
+           // buildForm(viewModel, context)
           ],
         ),
       ),
@@ -256,18 +187,18 @@ class _EditProfileState extends State<EditProfile> {
 
   }
 
-  buildForm(EditProfileViewModel viewModel, BuildContext context) {
+  buildForm(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
-        key: viewModel.formKey,
+        //key: viewModel.formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextFormBuilder(
-              enabled: !viewModel.loading,
+            //  enabled: !viewModel.loading,
               initialValue: widget.user!.userName,
               prefix: Ionicons.person_outline,
               hintText: "Username",
@@ -281,14 +212,14 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(height: 10.0),
             TextFormBuilder(
               initialValue: widget.user!.country,
-              enabled: !viewModel.loading,
+             // enabled: !viewModel.loading,
               prefix: Ionicons.pin_outline,
               hintText: "Country",
               textInputAction: TextInputAction.next,
               validateFunction: Validations.validateName,
               onSaved: (String val) {
                 country =val;
-                viewModel.setCountry(val);
+               // viewModel.setCountry(val);
               },
             ),
             SizedBox(height: 10.0),
@@ -312,7 +243,7 @@ class _EditProfileState extends State<EditProfile> {
               },
               onChanged: (String val) {
                 bio= val;
-                viewModel.setBio(val);
+               // viewModel.setBio(val);
               },
             ),
           ],

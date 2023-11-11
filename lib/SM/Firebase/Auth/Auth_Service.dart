@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/SpecificSent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../ModelClass/User.dart' as local;
 import '../../Utilites/Constants/firebase.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 //import 'package:social_media_app/utils/firebase.dart';
 
 class AuthService {
@@ -11,9 +13,9 @@ class AuthService {
   }
 
 //create a firebase user
-  Future<bool> createUser(
+  Future<local.User> createUser(
       {String? name,
-      User? user,
+      required local.User user,
       String? email,
       String? country,
       String? password}) async {
@@ -21,17 +23,23 @@ class AuthService {
       email: '$email',
       password: '$password',
     );
+
+    User? firebaseUser = res.user;
+
     if (res.user != null) {
-      await saveUserToFirestore(name!, res.user!, email!, country!);
-      return true;
+      user.id = firebaseUser!.uid;
+      await SendToFbase().sendUser(user);
+      local.User us = user;//saveUserToFirestore(name!, res.user!, email!, country!);
+      return us;
     } else {
-      return false;
+      return null as local.User;
     }
   }
 
 //this will save the details inputted by the user to firestore.
+/*
   saveUserToFirestore(
-      String name, User user, String email, String country) async {
+      String name, local.User user, String email, String country) async {
     await usersRef.doc(user.uid).set({
       'username': name,
       'email': email,
@@ -43,6 +51,7 @@ class AuthService {
       'gender': '',
     });
   }
+*/
 
 //function to login a user with his email and password
   Future<bool> loginUser({String? email, String? password}) async {

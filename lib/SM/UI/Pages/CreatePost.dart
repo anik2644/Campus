@@ -5,25 +5,15 @@ import 'package:dhabiansomachar/SM/UI/Components/CreatePost/AppBar.dart';
 import 'package:dhabiansomachar/SM/UI/Components/CreatePost/DescriptionBox.dart';
 import 'package:dhabiansomachar/SM/UI/Components/CreatePost/LocationBox.dart';
 import 'package:dhabiansomachar/SM/UI/Components/CreatePost/ProfileInfo.dart';
-import 'package:dhabiansomachar/SM/Utilites/Helper/SendToFbase.dart';
 
-import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/PostList.dart';
-import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:loading_overlay/loading_overlay.dart';
-//import 'package:provider/provider.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
-import '../../Utilites/Constants/firebase.dart';
-import '../Widgets/indicators.dart';
-import '../Components/CreatePost/posts_view_model.dart';
-
 
 
 class CreatePost extends StatefulWidget {
@@ -136,6 +126,7 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
+
   showImageChoices(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -183,6 +174,8 @@ class _CreatePostState extends State<CreatePost> {
       },
     );
   }
+
+
   XFile? filee ;
   String pathh="";
   int flag =0;

@@ -33,6 +33,8 @@ class _CreatePostState extends State<CreatePost> {
   late Post post;
   late String loc= " ";
   File? mediaUrl;
+  bool ispost = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +42,18 @@ class _CreatePostState extends State<CreatePost> {
       appBar:PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight),child: CreatAppBar(user: thisUser,path: path,caption: des,location: loc,onSendPressed: (bool flag) {
         // Handle the flag value here
         if (flag) {
+
+          setState(() {
+            ispost = flag;
+          });
           print("truuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuueeeeee");
         } else {
           // Do something when the "Send" button is not pressed
         }
       },)),
 
-      body: ListView(
+      body: ispost ? Center(child: CircularProgressIndicator(backgroundColor: Colors.black,)) :
+        ListView(
         padding: EdgeInsets.symmetric(horizontal: 15.0),
         children: [
           

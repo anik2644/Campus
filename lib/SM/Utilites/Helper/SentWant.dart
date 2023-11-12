@@ -4,7 +4,7 @@ import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
 
 class SentWant {
-  void sentAllUsertoJson()
+  Future<void> sentAllUsertoJson()
   async {
     FIREBASE userFirebase = FIREBASE("users");
     List<Object> userObjects = await userFirebase.fetchData();
@@ -20,7 +20,7 @@ class SentWant {
     userJSONFile.write(users);
   }
 
-  void sentAllPosttoJson() async {
+  Future<void> sentAllPosttoJson() async {
 
 
     FIREBASE fb = FIREBASE("posts");

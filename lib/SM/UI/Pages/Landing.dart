@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dhabiansomachar/SM/Firebase/Auth/FetchCredential.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/Auth/LoginFlagJson.dart';
@@ -12,10 +15,11 @@ import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
+import '../../JSON_Management/model/FirstTimeFlagJsonModel.dart';
 import '../../ModelClass/LoginCredential.dart';
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
@@ -33,6 +37,10 @@ class Landing extends StatefulWidget {
 class _LandingState extends State<Landing> {
 
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +51,7 @@ class _LandingState extends State<Landing> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 
-            SentWant().sentAllPosttoJson();
-            SentWant().sentAllUsertoJson();
+          //String fname = "hello.json";
 
         },
       ),

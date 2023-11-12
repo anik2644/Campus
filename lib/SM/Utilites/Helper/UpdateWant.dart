@@ -1,10 +1,10 @@
 import 'package:dhabiansomachar/SM/Utilites/Helper/SentWant.dart';
 
 class UpdateWant{
-  updateJsonUsers() {
-     SentWant().sentAllUsertoJson();
+  updateJsonUsers() async {
+     await SentWant().sentAllUsertoJson();
   }
-  updateJsonPosts() {
-    SentWant().sentAllPosttoJson();
+  updateJsonPosts() async {
+    await SentWant().sentAllPosttoJson();
   }
 }

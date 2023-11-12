@@ -1,3 +1,4 @@
+import 'package:dhabiansomachar/SM/UI/Pages/TabScreen.dart';
 import 'package:dhabiansomachar/SM/Utilites/Constants/firebase.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/PostList.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/SpecificSent.dart';
@@ -99,7 +100,13 @@ class _CreatAppBarState extends State<CreatAppBar> {
               setState(() {
 
                 _isLoading = false;
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (_) =>TabScreen(),
+                  ),
+                );
+               // Navigator.pop(context);
               });
             }
 

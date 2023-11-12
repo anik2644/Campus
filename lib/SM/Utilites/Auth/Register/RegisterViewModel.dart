@@ -157,13 +157,13 @@ class RegisterViewModel extends ChangeNotifier {
 
 */
 
-            UpdateWant().updateJsonUsers();
+            await UpdateWant().updateJsonUsers();
             local.User us = success ;//extractUser();
             print("dq1");
             LoginCredentials().login(us);
             print("dq");
             Credential().saveCredential(us);
-            UpdateWant().updateJsonUsers();
+            await UpdateWant().updateJsonUsers();
             final snackBar = SnackBar(
               content: Text('signup Done'),
               duration: Duration(seconds: 5),

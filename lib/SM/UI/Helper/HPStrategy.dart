@@ -40,6 +40,13 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
   Future<void> alreadyLoggedIn() async {
 
+
+
+
+
+
+
+
     isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
     setState(() => isloading = false);
 

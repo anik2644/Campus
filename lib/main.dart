@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return HPStretegy();//Homepage();//HPStretegy();//Feeds();
+    return  HPStretegy();//Homepage();//HPStretegy();//Feeds();
 
   }
 }

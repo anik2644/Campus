@@ -21,6 +21,8 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
 
+  bool isloading = true;
+
   @override
   void initState() {
     //InternetShowDialougeBox.getConnectivity(context);

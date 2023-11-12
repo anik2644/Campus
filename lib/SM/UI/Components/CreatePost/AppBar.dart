@@ -85,7 +85,7 @@ class _CreatAppBarState extends State<CreatAppBar> {
 
               print(createdPost.description);
               await UpdateWant().updateJsonPosts();
-
+              PostList().setPosts(await GetWant().getAllPostfromJson());
 
 
               // Call the callback with the flag value (true in this case)
@@ -96,13 +96,14 @@ class _CreatAppBarState extends State<CreatAppBar> {
               print('Error sending post: $error');
               // Handle the error if needed
             } finally {
-              setState(() async {
-                PostList().setPosts(await GetWant().getAllPostfromJson());
+              setState(() {
+
                 _isLoading = false;
+                Navigator.pop(context);
               });
             }
 
-            Navigator.pop(context);
+
           },
           icon: _isLoading ? Icon(Icons.ac_unit_outlined) : Icon(Icons.send),
         ),

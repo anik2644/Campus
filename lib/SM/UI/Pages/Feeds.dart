@@ -4,6 +4,7 @@ import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.da
 import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/profile.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/SentWant.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
@@ -232,7 +233,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
           Visibility(
             visible: !isLoading,
             child: RefreshIndicator(
-              onRefresh: (){ return Future(() => null);},// fetchData,
+              onRefresh:  _refreshData,// fetchData,
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 // controller: scrollController,
@@ -276,6 +277,22 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
     );
   }
+
+  Future<void> _refreshData() async {
+
+     await UpdateWant().updateJsonPosts();
+     await UpdateWant().updateJsonUsers();
+     PostList().setPosts(await GetWant().getAllPostfromJson());
+     UserList().setUsers( await GetWant().getAllUserfromJson());
+     setState((){
+
+     });
+
+    // Run the two asynchronous functions here
+    //await takeDataToRam();
+    // Add more asynchronous calls as needed
+  }
+
 
   @override
   bool get wantKeepAlive => true;

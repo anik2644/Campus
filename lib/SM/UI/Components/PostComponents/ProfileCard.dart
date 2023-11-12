@@ -1,9 +1,12 @@
+import 'package:dhabiansomachar/SM/Utilites/Helper/SpecificWant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../ModelClass/Post.dart';
+import '../../../ModelClass/User.dart';
+import '../../Pages/profile.dart';
 
 class ProfileCard extends StatefulWidget {
   final Post post;
@@ -18,7 +21,16 @@ class _ProfileCardState extends State<ProfileCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print(widget.post!.ownerEmail);
+        //print(widget.post!.ownerEmail);
+        User us = SpecificWant().specificUserFromRam(widget.post!.ownerId!);
+        Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => Profile(user: us),
+          ),
+        );
+
+
       },
       child: BottomAppBar(
         elevation: 0.0,

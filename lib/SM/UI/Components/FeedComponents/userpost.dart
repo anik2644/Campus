@@ -20,6 +20,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../ModelClass/Post.dart';
 import '../../../Utilites/Constants/firebase.dart';
+import '../../Pages/PostComment.dart';
 import '../PostComponents/Raw/ImageCard.dart';
 import '../PostComponents/Raw/PostDescription.dart';
 import '../PostComponents/Raw/PostTimestamp.dart';
@@ -86,11 +87,11 @@ class _UserPostState extends State<UserPost> {
                                 borderRadius: BorderRadius.circular(10.0),
                                 onTap: () {
                                   //print("hello");
-/*                                  Navigator.of(context).push(
+                                  Navigator.of(context).push(
                                     CupertinoPageRoute(
-                                      builder: (_) => Comments(post: post),
+                                      builder: (_) => Comments(post: widget.post),
                                     ),
-                                  );*/
+                                  );
                                 },
                                 child: Icon(
                                   CupertinoIcons.chat_bubble,

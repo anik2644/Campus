@@ -11,6 +11,14 @@ class SpecificWant{
     return users.firstWhere((element) => element.id == id);
   }
 
+  User specificUserFromRam(String id)
+  {
+    List<User> users= UserList().getUsers();
+    //users.forEach((element) {print(element.id);});
+    return users.firstWhere((element) => element.id == id);
+  }
+
+
   Future<User> getUserByIdfromFb(String userId) async {
     try {
       CollectionReference<Map<String, dynamic>> usersRef = FirebaseFirestore

@@ -1,20 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/UI/Components/PostComponents/AppBar.dart';
+import 'package:dhabiansomachar/SM/UI/Components/PostComponents/PostCaption.dart';
+import 'package:dhabiansomachar/SM/UI/Components/PostComponents/PostTime.dart';
+import 'package:dhabiansomachar/SM/UI/Components/PostComponents/ProfileCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:like_button/like_button.dart';
-// import 'package:social_media_app/models/post.dart';
-// import 'package:social_media_app/models/user.dart';
-// import 'package:social_media_app/utils/firebase.dart';
-// import 'package:social_media_app/widgets/indicators.dart';
-import 'package:timeago/timeago.dart' as timeago;
-
 import '../../../ModelClass/Post.dart';
-import '../../../ModelClass/User.dart';
-import '../../Widgets/indicators.dart';
-
-
+import 'PostMedia.dart';
 
 class ViewImage extends StatefulWidget {
   final Post? post;
@@ -25,81 +18,25 @@ class ViewImage extends StatefulWidget {
   _ViewImageState createState() => _ViewImageState();
 }
 
-final DateTime timestamp = DateTime.now();
-
-/*currentUserId() {
-  return firebaseAuth.currentUser!.uid;
-}*/
-
-//User? user;
 
 class _ViewImageState extends State<ViewImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: buildImage(context),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0.0,
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            height: 50.0,
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.post!.userName!,
-                      style: TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(height: 3.0),
-                    Row(
-                      children: [
-                        Icon(Ionicons.alarm_outline, size: 13.0),
-                        SizedBox(width: 3.0),
-                        Text(
-                          Timestamp.now().toDate().toString()
-                           //widget.post?.timestamp as String,//timeago.format(widget.post!.timestamp!.toDate()),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Spacer(),
-             //   buildLikeButton(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+      appBar: PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight), child: PostAppBar( post: widget.post!,)),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PostCaption(post: widget.post!),
+          PostMedia(post: widget.post!),
+          //Spacer(),
+          SizedBox(height: 10,),
+          PostTime(post: widget.post!),
 
-  buildImage(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(5.0),
-        child: CachedNetworkImage(
-          imageUrl: widget.post!.mediaUrl!,
-          placeholder: (context, url) {
-            return circularProgress(context);
-          },
-          errorWidget: (context, url, error) {
-            return Icon(Icons.error);
-          },
-          height: 400.0,
-          fit: BoxFit.cover,
-          width: MediaQuery.of(context).size.width,
-        ),
+
+        ],
       ),
+      bottomNavigationBar: ProfileCard( post: widget.post!,),
     );
   }
 /*

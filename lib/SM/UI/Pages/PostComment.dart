@@ -37,6 +37,25 @@ class _CommentsState extends State<Comments> {
     return LoginCredentials().loggedInUser!.id;
   }
 
+  Future<void> fetchComments() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await commentRef.doc(widget.post!.postId).collection('comments')
+          .orderBy('timestamp', descending: true)
+          .get();
+
+      List<CommentModel> commentsList = snapshot.docs.map((doc) {
+        return CommentModel.fromJson(doc.data()!);
+      }).toList();
+
+
+      for (CommentModel comment in commentsList) {
+        print(comment.comment);
+      }
+    } catch (e) {
+      print('Error fetching comments: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +71,11 @@ class _CommentsState extends State<Comments> {
         ),
         centerTitle: true,
         title: Text('Comments'),
+        actions: [
+          IconButton(onPressed: (){
+            fetchComments();
+          }, icon: Icon(Icons.print))
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -77,16 +101,18 @@ class _CommentsState extends State<Comments> {
                   ),
                   Divider(thickness: 1.5),
 
+/*
 
                   Flexible(
                     child: buildComments(),
                   )
 
+*/
 
                 ],
               ),
             ),
-
+/*
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -183,7 +209,7 @@ class _CommentsState extends State<Comments> {
                 ),
               ),
             ),
-
+*/
 
           ],
         ),
@@ -199,10 +225,13 @@ class _CommentsState extends State<Comments> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 350.0,
-          width: MediaQuery.of(context).size.width - 20.0,
-          child: cachedNetworkImage(widget.post!.mediaUrl!),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 200.0,
+            width: MediaQuery.of(context).size.width - 20.0,
+            child: cachedNetworkImage(widget.post!.mediaUrl!),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -271,15 +300,10 @@ class _CommentsState extends State<Comments> {
     return CommentsStreamWrapper(
       shrinkWrap: true,
       // padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      stream: commentRef
-          .doc(widget.post!.postId)
-          .collection('comments')
-          .orderBy('timestamp', descending: true)
-          .snapshots(),
+      stream: commentRef.doc(widget.post!.postId).collection('comments').orderBy('timestamp', descending: true).snapshots(),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (_, DocumentSnapshot snapshot) {
-        CommentModel comments =
-        CommentModel.fromJson(snapshot.data() as Map<String, dynamic>);
+        CommentModel comments = CommentModel.fromJson(snapshot.data() as Map<String, dynamic>);
         // return Column(
         //   crossAxisAlignment: CrossAxisAlignment.start,
         //   mainAxisAlignment: MainAxisAlignment.start,

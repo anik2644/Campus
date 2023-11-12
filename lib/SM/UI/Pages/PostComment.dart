@@ -28,7 +28,8 @@ class Comments extends StatefulWidget {
 
 class _CommentsState extends State<Comments> {
   User? user;
-
+   bool isLoading = true;
+   List<CommentModel> comments = [];
  // PostService services = PostService();
   final DateTime timestamp = DateTime.now();
   TextEditingController commentsTEC = TextEditingController();
@@ -39,24 +40,96 @@ class _CommentsState extends State<Comments> {
 
   Future<void> fetchComments() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await commentRef.doc(widget.post!.postId).collection('comments')
+      QuerySnapshot<Map<String, dynamic>> snapshot = await commentRef.doc(widget.post!.id).collection('comments')
           .orderBy('timestamp', descending: true)
           .get();
 
-      List<CommentModel> commentsList = snapshot.docs.map((doc) {
+         comments = snapshot.docs.map((doc) {
         return CommentModel.fromJson(doc.data()!);
       }).toList();
 
 
-      for (CommentModel comment in commentsList) {
+      for (CommentModel comment in comments) {
         print(comment.comment);
+        print(comment.username);
       }
+
+      setState(() {
+        isLoading = false;
+      });
     } catch (e) {
       print('Error fetching comments: $e');
     }
   }
 
+  Widget buildEachComment(CommentModel comments)
+  {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 20.0,
+                backgroundImage: CachedNetworkImageProvider(comments.userDp!),
+              ),
+              SizedBox(width: 10.0),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    comments.username!,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  Text(
+                    timeago.format(comments.timestamp!.toDate()),
+                    style: TextStyle(fontSize: 10.0),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50.0),
+            child: Text( comments.comment!.trim()),
+          ),
+          SizedBox(height: 10.0),
+        ],
+      ),
+    );
+  }
+
   @override
+  void initState() {
+
+    fetchComments();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<void> _refreshData() async {
+
+    isLoading =true;
+    setState(() {
+
+    });
+    fetchComments();
+    setState(() {
+      print(user?.userName);
+    });
+  }
+
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.black,
@@ -72,12 +145,115 @@ class _CommentsState extends State<Comments> {
         centerTitle: true,
         title: Text('Comments'),
         actions: [
-          IconButton(onPressed: (){
-            fetchComments();
-          }, icon: Icon(Icons.print))
+/*          IconButton(onPressed: (){
+           // fetchComments();
+          }, icon: Icon(Icons.print))*/
         ],
       ),
-      body: Container(
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: buildFullPost(),
+                  ),
+                  Divider(thickness: 1.5),
+
+                 isLoading? Container(
+                   height: 500,
+                   child: CircularProgressIndicator(),
+                 ):comments.length ==0?
+                 Container(
+                   height: 500,
+                   child: Padding(
+                     padding: const EdgeInsets.only(top:20.0),
+                     child: Text("No Comments", style: TextStyle(fontSize: 20),),
+                   ),
+                 ):
+                 Container(
+                    height: MediaQuery.of(context).size.height - 400, // Adjust the height accordingly
+                    child: ListView.builder(
+                      itemCount: comments.length,
+                      itemBuilder: (context, index) {
+                        return buildEachComment(comments[index]);
+
+/*                        ListTile(
+                          title: Text(comments[index].comment!),
+                        );*/
+                      },
+                    ),
+                  ),
+                ],
+
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style: TextStyle(color: Colors.white),
+                          controller: commentsTEC,
+                          decoration: InputDecoration(
+                            hintText: 'Type something...',
+                            hintStyle: TextStyle(color: Colors.white70),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          print("i am preseed");
+
+                              if(commentsTEC.text.isNotEmpty)
+                                {
+                                  await uploadComment(
+                                    currentUserId(),
+                                    commentsTEC.text,
+                                    widget.post!.id!,
+                                    widget.post!.ownerId!,
+                                    widget.post!.mediaUrl!,
+                                  );
+                                }
+
+                                commentsTEC.clear();
+
+
+
+                        },
+                        icon: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+
+
+          ],
+        ),
+      ),
+
+
+      /*
+      Container(
         height: MediaQuery.of(context).size.height,
         child:
         // Center(
@@ -216,8 +392,32 @@ class _CommentsState extends State<Comments> {
 
 
       ),
+
+       */
     );
   }
+
+
+  uploadComment(String currentUserId, String comment, String postId, String ownerId, String mediaUrl) async {
+    //DocumentSnapshot doc = await usersRef.doc(currentUserId).get();
+   //UserJsonModel userr = UserJsonModel.fromJson(doc.data() as Map<String, dynamic>);
+    //RawConversionModel().UserJsonToUser(userr);
+    user = LoginCredentials().loggedInUser;
+    await commentRef.doc(postId).collection("comments").add({
+      "username": user!.userName,
+      "comment": comment,
+      "timestamp": Timestamp.now(),
+      "userDp": user!.photoUrl,
+      "userId": user!.id,
+    });
+    bool isNotMe = ownerId != currentUserId;
+    if (isNotMe) {
+/*      addCommentToNotification("comment", comment, user!.username!, user!.id!,
+          postId, mediaUrl, ownerId, user!.photoUrl!);*/
+    }
+  }
+
+
 
   buildFullPost() {
     return Column(
@@ -295,6 +495,7 @@ class _CommentsState extends State<Comments> {
       ],
     );
   }
+/*
 
   buildComments() {
     return CommentsStreamWrapper(
@@ -378,6 +579,7 @@ class _CommentsState extends State<Comments> {
       },
     );
   }
+*/
 
   buildLikeButton() {
     return StreamBuilder(

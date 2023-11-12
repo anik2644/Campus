@@ -124,6 +124,7 @@ class _MyWidgetState extends State<MyWidget> {
               ),
             ),
             // Bottom ListView
+
             Container(
               height: MediaQuery.of(context).size.height - 400, // Adjust the height accordingly
               child: ListView(
@@ -151,7 +152,34 @@ class _MyWidgetState extends State<MyWidget> {
                 ],
               ),
             ),
+
+
+/*
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  //controller: _textFieldController,
+                  decoration: InputDecoration(
+                    hintText: 'Type something...',
+                    border: OutlineInputBorder(),
+                  ),
+                )
+            ),
+*/
+
+
+
           ],
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+         // controller: _textFieldController,
+          decoration: InputDecoration(
+            hintText: 'Type something...',
+            border: OutlineInputBorder(),
+          ),
         ),
       ),
     );

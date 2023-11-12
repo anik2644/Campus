@@ -84,7 +84,8 @@ class _PostGridState extends State<PostGrid> {
     posts.forEach((element) {print(element.ownerEmail);});
 */
 
-    filteredlist = PostList().getPosts().where((post) => post.ownerId == widget.profileId).toList();
+   List<Post> postss = await PostList().getPosts();
+    filteredlist = postss.where((post) => post.ownerId == widget.profileId).toList();
 
     //print(filteredlist.length);
     //filteredlist.forEach((element) {print(element.description);});

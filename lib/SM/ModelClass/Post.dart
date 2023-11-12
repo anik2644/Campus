@@ -5,7 +5,7 @@ class Post{
 
   final String? id;
   final String? postId;
-  final String? userName;
+  late String? userName;
   final String? ownerId;
   late String? location;
   final String? timestamp;

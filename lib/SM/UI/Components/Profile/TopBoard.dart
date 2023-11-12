@@ -103,13 +103,13 @@ class _TopBoardState extends State<TopBoard> {
     } else if (isFollowing) {
       return buildButton(
         text: "Unfollow",
-        function: (){}, // handleUnfollow,
+        function: handleUnfollow,
       );
       //if you are not following the user then "follow"
     } else if (!isFollowing) {
       return buildButton(
         text: "Follow",
-        function: (){}, //handleFollow,
+        function: handleFollow,
       );
     }
   }
@@ -174,7 +174,7 @@ class _TopBoardState extends State<TopBoard> {
       }
     });
     //remove from notifications feeds
-    notificationRef
+/*    notificationRef
         .doc(widget.user.id)
         .collection('notifications')
         .doc(currentUserId())
@@ -183,7 +183,7 @@ class _TopBoardState extends State<TopBoard> {
       if (doc.exists) {
         doc.reference.delete();
       }
-    });
+    });*/
   }
 
   handleFollow() async {
@@ -207,7 +207,7 @@ class _TopBoardState extends State<TopBoard> {
         .doc(widget.user.id)
         .set({});
     //update the notification feeds
-    notificationRef
+/*    notificationRef
         .doc(widget.user.id)
         .collection('notifications')
         .doc(currentUserId())
@@ -218,7 +218,7 @@ class _TopBoardState extends State<TopBoard> {
       "userId": users?.id,
       "userDp": users?.photoUrl,
       "timestamp": timestamp,
-    });
+    });*/
   }
 
 }

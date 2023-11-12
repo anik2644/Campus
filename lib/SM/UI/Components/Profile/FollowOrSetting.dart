@@ -4,6 +4,8 @@ import 'package:ionicons/ionicons.dart';
 import '../../../ModelClass/LoginCredential.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../Pages/Settings.dart';
 class FollowOrSetting extends StatefulWidget {
   final user;
   FollowOrSetting({this.user});
@@ -18,11 +20,9 @@ class _FollowOrSettingState extends State<FollowOrSetting> {
     return widget.user.id == LoginCredentials().loggedInUser?.id
         ? InkWell(
       onTap: () {
-        /*   Navigator.of(context).push(
-                                          CupertinoPageRoute(
-                                            builder: (_) => Setting(),
-                                          ),
-                                        );*/
+           Navigator.of(context).push(
+             CupertinoPageRoute(
+               builder: (_) => Setting(),),);
       },
       child: Column(
         children: [

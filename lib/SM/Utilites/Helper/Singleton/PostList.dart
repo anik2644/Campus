@@ -1,4 +1,7 @@
+import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
+
 import '../../../ModelClass/Post.dart';
+import '../../../ModelClass/User.dart';
 
 class PostList {
   final List<Post> _posts = [];
@@ -23,13 +26,18 @@ class PostList {
   }
 
 
+  Future<List<Post>> _tempConvert(List<Post> posts) async {
+    List<User> users =await UserList().getUsers();
+
+
+  }
 
   bool isListEmpty() {
     return _posts.isEmpty;
   }
 
-  List<Post> getPosts() {
-    return _posts;
+  Future<List<Post>> getPosts() async {
+    return await _tempConvert(this._posts);
   }
 
   void setPosts(List<Post> postList) {

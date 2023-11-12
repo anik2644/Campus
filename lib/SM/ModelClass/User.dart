@@ -5,7 +5,7 @@ class User{
   static List<User> users = [];
 
 
-  final String userName;
+  late String userName;
   final String email;
 
 
@@ -45,6 +45,22 @@ class User{
     this.time =time;
   }
 
+
+  factory User.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    Map<String, dynamic> data = snapshot.data()!;
+    return User.Complete(
+      data['username'],
+      data['email'],
+      data['country'],
+      data['bio'],
+      data['gender'],
+      data['photoUrl'],
+      data['id'],
+      data['lastSeen'],
+      data['isOnline'],
+      data['time'],
+    );
+  }
 
 
 }

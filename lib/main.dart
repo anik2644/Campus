@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'SM/Configuration/config.dart';
-import 'SM/UI/Components/Common/ImagePickOption.dart';
+import 'SM/UI/Components/Common/ImagePickBox.dart';
 import 'SM/UI/Helper/HPStrategy.dart';
 import 'SM/UI/Pages/Feeds.dart';
 import 'SM/Utilites/Providers/Providers.dart';

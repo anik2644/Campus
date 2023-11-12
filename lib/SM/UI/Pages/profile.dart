@@ -73,10 +73,19 @@ class _ProfileState extends State<Profile> {
       }
     else
       {
-           user = SpecificWant().specificUser(widget.user.id);
+           user = SpecificWant().specificUserFromJson(widget.user.id);
       }
 
    // fetchMypost();
+  }
+
+  Future<void> _refreshData() async {
+
+    user = await SpecificWant().getUserByIdfromFb(user!.id);
+    setState((){
+          print(user?.userName);
+    });
+
   }
 
   @override
@@ -84,25 +93,28 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight), child: ProfileAppBar()),
 
-      body: CustomScrollView(
-        slivers: <Widget>[
-          TopBoard(user: user,),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                if (index > 0) return null;
-                return Container(
-                  color: Colors.grey,
-                  child: Column(
-                    children: [
-                       MiddleBoard(user: user,),
-                       PostGrid( profileId: widget.user.id,email: widget.user.email),
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
-        ],
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            TopBoard(user: user,),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                  if (index > 0) return null;
+                  return Container(
+                    color: Colors.grey,
+                    child: Column(
+                      children: [
+                         MiddleBoard(user: user,),
+                         PostGrid( profileId: widget.user.id,email: widget.user.email),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
       /*
       floatingActionButton: FloatingActionButton(onPressed: () async {

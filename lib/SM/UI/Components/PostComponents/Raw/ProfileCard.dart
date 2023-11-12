@@ -135,7 +135,7 @@ class _ProfileCardState extends State<ProfileCard> {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (_) => Profile(user: SpecificWant().specificUser(profileId!),),
+        builder: (_) => Profile(user: SpecificWant().specificUserFromJson(profileId!),),
       ),
     );
   }

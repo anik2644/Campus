@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
-import '../Components/Common/ImagePickOption.dart';
+import '../Components/Common/ImagePickBox.dart';
 
 
 class CreatePost extends StatefulWidget {
@@ -62,12 +62,10 @@ class _CreatePostState extends State<CreatePost> {
 
         ImagePickBox(
           onImageSelected: (String imagePath) {
-
             setState(() => path = imagePath);
             // Handle the selected image path here
-            print('Received Image Path: $imagePath');
-            // You can pass this path to your ViewModel or perform any other actions
-          },
+           // print('Received Image Path: $imagePath');
+          }, isProfilePhoto: false,
         ),
           /*
 

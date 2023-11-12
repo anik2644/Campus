@@ -1,5 +1,11 @@
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+import 'package:dhabiansomachar/SM/UI/Components/Common/ImagePickBox.dart';
 import 'package:dhabiansomachar/SM/UI/Components/EditProfile/AppBAr.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/TakeImage.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/SpecificSent.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/SpecificUpdate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -14,6 +20,9 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../Utilites/Auth/Validation.dart';
 import '../../Utilites/Constants/firebase.dart';
+import '../../Utilites/Helper/GetWant.dart';
+import '../../Utilites/Helper/Singleton/UserList.dart';
+import '../../Utilites/Helper/UpdateWant.dart';
 import '../Components/Register/text_form_builder.dart';
 import '../Helper/edit_profile_view_model.dart';
 import '../widgets/indicators.dart';
@@ -43,6 +52,24 @@ class _EditProfileState extends State<EditProfile> {
   //user.photoUrl!.isEmpty;
   String Username = "a";
   String bio = "a";
+  String path= "null";
+  bool isUpdating = false;
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController   bioController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    usernameController.text= widget.user!.userName;
+    bioController.text= widget.user!.bio!;
+    countryController.text= widget.user!.country!;
+    super.initState();
+  }
 
   String currentUid() {
     return firebaseAuth.currentUser!.uid;
@@ -60,87 +87,174 @@ class _EditProfileState extends State<EditProfile> {
         //key: viewModel.scaffoldKey,
         appBar: PreferredSize(preferredSize: Size.fromHeight(kToolbarHeight), child: EditProfileAppBar()),
 
-        body: ListView(
+        body:isUpdating? Center(child: CircularProgressIndicator(backgroundColor: Colors.black,)) :
+        ListView(
           children: [
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  //pickImagee();
-                  //viewModel.pickImage();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.transparent,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        offset: new Offset(0.0, 0.0),
-                        blurRadius: 2.0,
-                        spreadRadius: 0.0,
+            Column(
+              children: [
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      //pickImagee();
+                      //viewModel.pickImage();
+
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (_) => TakeImage(
+                            onImageSelected: (String imagePath) {
+
+                              setState(() {
+                                path = imagePath;
+                              });
+
+                              print('getting the path: $imagePath');
+                            },
+                            isProfilePhoto: false, // Provide the flag value here
+                          ),
+                        ));
+
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.transparent,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            offset: new Offset(0.0, 0.0),
+                            blurRadius: 2.0,
+                            spreadRadius: 0.0,
+                          ),
+                        ],
                       ),
-                    ],
+                      child:
+                      path != "null"?
+                      Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: CircleAvatar(
+                          radius: 65.0,
+                          backgroundImage: FileImage(File(path)), //NetworkImage(viewModel.imgLink!),
+                        ),
+                      )
+                          :
+
+                      widget.user!.photoUrl ==null
+                          ? Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: CircleAvatar(
+                          radius: 65.0,
+                          //backgroundImage: CachedNetworkImageProvider( widget.user!.photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
+                        ),
+                      ) :
+                      Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: CircleAvatar(
+                          radius: 65.0,
+                          backgroundImage: CachedNetworkImageProvider(widget.user!.photoUrl!),
+                        ),
+                      )
+                    ),
                   ),
-                  child:
-                  imgurl != "a"?
-                  Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: CircleAvatar(
-                      radius: 65.0,
-                      backgroundImage: CachedNetworkImageProvider( imgurl ?? ""), //NetworkImage(viewModel.imgLink!),
-                    ),
-                  )
-                      :
+                ),
+                SizedBox(height: 10.0),
+                IconButton(onPressed: (){
+                  path = "null";
+                  usernameController.text = widget.user!.userName;
+                  bioController.text = widget.user!.bio!;
+                  countryController.text = widget.user!.country!;
+                  setState(() {});
+                }, icon: Icon(Icons.refresh))
+              ],
+            ),
+            SizedBox(height: 30.0),
+            buildForm( context),
+            SizedBox(height: 30.0),
+            Center(
+              child: Container(
+                width: 120.0,
+                child: TextButton(
+                  onPressed: () async {
 
 
-                  // file != null?
-                  // Image.file(
-                  //    file!.path as File,
-                  //   fit: BoxFit.contain,
-                  // ):
-                  //
+                    isUpdating =true;
+                    setState(() {});
+                    bool isPhotoChanged = false;
+                    bool isBioChanged = false;
+                    bool isUsernameChanged = false;
+                    bool isCountryChanged = false;
 
-                  widget.user!.photoUrl !=null //UserModel.um[ind].photoUrl != null
-                  //viewModel.imgLink != null
-                      ? Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: CircleAvatar(
-                      radius: 65.0,
-                      backgroundImage: CachedNetworkImageProvider( widget.user!.photoUrl ?? ""), //NetworkImage(viewModel.imgLink!),
+
+                    if(path!="null")
+                      {
+                        imgurl = await SendToFStorage().sendImage(path);
+
+                        widget.user!.photoUrl = imgurl;
+                        isPhotoChanged =true;
+                      }
+                    if(usernameController.text != widget.user!.userName)
+                      {
+                        widget.user!.userName = usernameController.text;
+                        isUsernameChanged = true;
+                      }
+
+                    if (bioController.text != widget.user!.bio) {
+                      widget.user?.bio =bioController.text;
+                      isBioChanged = true;
+                    }
+
+                    if (countryController.text != widget.user!.country) {
+                      widget.user?.country =countryController.text;
+                      isCountryChanged = true;
+                    }
+
+/*                    print(path);
+                    print(usernameController.text);
+                    print(bioController.text);
+                    print(countryController.text);*/
+
+                    print(path);
+                    print(widget.user!.id);
+                    print(widget.user!.country);
+                    print(widget.user!.userName);
+                    print(widget.user!.bio);
+
+
+                    await SpecificUpdate().updateUser(widget.user!, isUsernameChanged, isBioChanged, isCountryChanged, isPhotoChanged);
+
+                    await UpdateWant().updateJsonUsers();
+                    UserList().setUsers( await GetWant().getAllUserfromJson());
+
+                    Credential().saveCredential(widget.user!);
+                    LoginCredentials().login(widget.user!);
+
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0, // Adjust the font size as needed
                     ),
-                  ) :
-                     // : viewModel.image == null
-                     // ?
-                  Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: CircleAvatar(
-                      radius: 65.0,
-                      backgroundImage:
-                      NetworkImage(widget.user!.photoUrl!),
-                    ),
-                  )
-/*                      : Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: CircleAvatar(
-                      radius: 65.0,
-                      backgroundImage: NetworkImage(imgurl),
-                      //FileImage(viewModel.image!),
-                    ),
-                  ),*/
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    // You can add more styles as needed
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 10.0),
-            buildForm( context)
-           // buildForm(viewModel, context)
+            )
           ],
         ),
       ),
     );
   }
+
+
+/*
   XFile? file;
 
   Future<void> pickImagee() async {
@@ -155,7 +269,9 @@ class _EditProfileState extends State<EditProfile> {
     String uniqueFileName =
     DateTime.now().millisecondsSinceEpoch.toString();
 
-    /*Step 2: Upload to Firebase storage*/
+    */
+/*Step 2: Upload to Firebase storage*//*
+
     //Install firebase_storage
     //Import the library
 
@@ -186,6 +302,7 @@ class _EditProfileState extends State<EditProfile> {
     }
 
   }
+*/
 
   buildForm(BuildContext context) {
     return Padding(
@@ -197,54 +314,91 @@ class _EditProfileState extends State<EditProfile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFormBuilder(
-            //  enabled: !viewModel.loading,
-              initialValue: widget.user!.userName,
-              prefix: Ionicons.person_outline,
-              hintText: "Username",
-              textInputAction: TextInputAction.next,
-              validateFunction: Validations.validateName,
-              onSaved: (String val) {
-                Username = val;
-                // viewModel.setUsername(val);
-              },
+            Column(
+              children: [
+                TextFormBuilder(
+                //  enabled: !viewModel.loading,
+                 // initialValue: widget.user!.userName,
+                  controller: usernameController,
+                  prefix: Ionicons.person_outline,
+                  hintText: "Username",
+                  textInputAction: TextInputAction.next,
+                  validateFunction: Validations.validateName,
+                  onSaved: (String val) {
+                    Username = val;
+                    // viewModel.setUsername(val);
+                  },
+                ),
+                SizedBox(height: 10.0),
+/*                IconButton(onPressed: (){
+                  usernameController.text = widget.user!.userName;
+                  setState(() {});
+                }, icon: Icon(Icons.refresh))*/
+              ],
             ),
             SizedBox(height: 10.0),
-            TextFormBuilder(
-              initialValue: widget.user!.country,
-             // enabled: !viewModel.loading,
-              prefix: Ionicons.pin_outline,
-              hintText: "Country",
-              textInputAction: TextInputAction.next,
-              validateFunction: Validations.validateName,
-              onSaved: (String val) {
-                country =val;
-               // viewModel.setCountry(val);
-              },
+            Column(
+              children: [
+                TextFormBuilder(
+                //  initialValue: widget.user!.country,
+                  controller: countryController,
+                 // enabled: !viewModel.loading,
+                  prefix: Ionicons.pin_outline,
+                  hintText: "Country",
+                  textInputAction: TextInputAction.next,
+                  validateFunction: Validations.validateName,
+                  onSaved: (String val) {
+                    country =val;
+                   // viewModel.setCountry(val);
+                  },
+                ),
+
+                SizedBox(height: 10.0),
+/*                IconButton(onPressed: (){
+                  countryController.text = widget.user!.country!;
+                  setState(() {});
+                }, icon: Icon(Icons.refresh))*/
+              ],
             ),
             SizedBox(height: 10.0),
             Text(
               "Bio",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            TextFormField(
-              maxLines: null,
-              initialValue: widget.user!.bio,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (String? value) {
-                if (value!.length > 1000) {
-                  return 'Bio must be short';
-                }
-                return null;
-              },
-              onSaved: (String? val) {
-                bio= val!;
-                //viewModel.setBio(val!);
-              },
-              onChanged: (String val) {
-                bio= val;
-               // viewModel.setBio(val);
-              },
+            Column(
+              children: [
+                TextFormField(
+                  maxLines: null,
+                 // initialValue: widget.user!.bio,
+                  controller: bioController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    if (value!.length > 1000) {
+                      return 'Bio must be short';
+                    }
+                    return null;
+                  },
+                  onSaved: (String? val) {
+                    bio= val!;
+                    //viewModel.setBio(val!);
+                  },
+                  onChanged: (String val) {
+                    bio= val;
+                   // viewModel.setBio(val);
+                  },
+
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                    isDense: true,
+                  ),
+
+                ),
+                SizedBox(height: 10.0),
+/*                IconButton(onPressed: (){
+                  bioController.text = widget.user!.bio!;
+                  setState(() {});
+                }, icon: Icon(Icons.refresh))*/
+              ],
             ),
           ],
         ),

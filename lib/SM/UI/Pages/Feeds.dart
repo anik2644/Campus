@@ -71,8 +71,9 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
 
      if(UserList().isListEmpty()||PostList().isListEmpty())
        {
-         PostList().setPosts(await GetWant().getAllPostfromJson());
+
          UserList().setUsers( await GetWant().getAllUserfromJson());
+         PostList().setPosts(await GetWant().getAllPostfromJson());
        }
      setState(() => isLoading =false);
    }

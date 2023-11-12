@@ -8,15 +8,16 @@ class ImagePickBox extends StatefulWidget {
 
   final void Function(String) onImageSelected;
 
-  ImagePickBox({required this.onImageSelected});
+  final bool isProfilePhoto;
+  ImagePickBox({required this.onImageSelected, required this.isProfilePhoto});
 
   @override
   _ImagePickBoxState createState() => _ImagePickBoxState();
 }
 
 class _ImagePickBoxState extends State<ImagePickBox> {
-   String path = "null";
-   String? url;
+  String path = "null";
+  String? url;
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +38,32 @@ class _ImagePickBoxState extends State<ImagePickBox> {
           widget.onImageSelected(path);
         });
       },
-      child: Container(
+      child: widget.isProfilePhoto && path!= "null"?
+
+      Center(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: CircleAvatar(
+              radius: 65.0,
+              backgroundImage: FileImage(File(path)),//CachedNetworkImageProvider( imgurl ?? ""), //NetworkImage(viewModel.imgLink!),
+            ),
+          ),
+        ),
+      )
+      :Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width - 30,
+        height: widget.isProfilePhoto? MediaQuery.of(context).size.width:MediaQuery.of(context).size.width - 30,
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.all(
             Radius.circular(5.0),
           ),
           border: Border.all(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme
+                .of(context)
+                .colorScheme
+                .secondary,
           ),
         ),
         child: (path != "null")
@@ -60,7 +77,7 @@ class _ImagePickBoxState extends State<ImagePickBox> {
           child: Text('No Image Selected'),
         ),
       ),
-    ) ;
+    );
 
 
 /*
@@ -94,8 +111,6 @@ ImagePickBox(
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
 */
-
-
 
 
   }
@@ -148,50 +163,4 @@ ImagePickBox(
       },
     );
   }
-
-
-  // Replace this with your actual image picking logic
-
 }
-
-
-/*
-
-void main() async {
-
-  runApp(MyApp());
-}
-*/
-
-
-/*
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-*/
-
-
-/*
-class MyHomePage extends StatefulWidget {
-  const MyHomePage();
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return YourWidget();
-  }
-}*/

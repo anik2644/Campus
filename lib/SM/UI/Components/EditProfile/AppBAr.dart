@@ -15,7 +15,7 @@ class _EditProfileAppBarState extends State<EditProfileAppBar> {
       centerTitle: true,
       title: Text("Edit Profile",),
       actions: [
-
+/*
         Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 25.0),
@@ -85,7 +85,7 @@ class _EditProfileAppBarState extends State<EditProfileAppBar> {
             ),
           ),
         ),
-
+*/
 
       ],
     );

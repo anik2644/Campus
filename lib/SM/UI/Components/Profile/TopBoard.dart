@@ -40,7 +40,7 @@ class _TopBoardState extends State<TopBoard> {
     }
     else
     {
-      user = SpecificWant().specificUser(widget.user.id);
+      user = SpecificWant().specificUserFromJson(widget.user.id);
     }
 
     // fetchMypost();

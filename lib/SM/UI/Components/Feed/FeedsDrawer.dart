@@ -1,9 +1,12 @@
+import 'package:dhabiansomachar/SM/UI/Pages/SearchUser.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../../ModelClass/LoginCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
+import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../Helper/HPStrategy.dart';
 import '../../Pages/Landing.dart';
@@ -142,6 +145,22 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
             ),
             onTap: () {
              // Navigator.push(context,MaterialPageRoute(builder: (context) =>hotel_description()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.search, color: Colors.white),
+            title:
+            Text("Search", style: TextStyle(color: Colors.white)),
+            onTap: () {
+
+              List<User> userss = UserList().getUsers();
+              String userIdToRemove = LoginCredentials().loggedInUser!.id; // Replace with the ID you want to remove
+
+              List<User> updatedUserss = List.from(userss); // Create a new list
+
+              updatedUserss.removeWhere((user) => user.id == userIdToRemove);
+
+               Navigator.push(context,MaterialPageRoute(builder: (context) =>SearchUser(updatedUserss)));
             },
           ),
           ListTile(

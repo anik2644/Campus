@@ -123,7 +123,13 @@ class _ConversationState extends State<Conversation> {
                               );
                             },
                           );
-                        } else {
+                        }
+                        else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                          // Handle the case where there is no data or the list of messages is empty.
+                          // You can display a message or widget indicating no messages.
+                          return Center(child: Text("No messages to display"));
+                        }
+                        else {
                           return Center(child: circularProgress(context));
                         }
                       },
@@ -397,6 +403,11 @@ class _ConversationState extends State<Conversation> {
   }
 
   Stream<QuerySnapshot> messageListStream(String documentId) {
+    if (documentId == 'newChat') {
+      // If there is no specific chat ID (new chat), return an empty stream.
+      return Stream.empty();
+    }
+
     return chatRef
         .doc(documentId)
         .collection('messages')

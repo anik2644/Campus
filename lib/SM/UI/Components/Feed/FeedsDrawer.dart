@@ -9,6 +9,7 @@ import '../../../ModelClass/LoginFlag.dart';
 import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../Helper/HPStrategy.dart';
+import '../../Pages/Chat.dart';
 import '../../Pages/Landing.dart';
 
 class FeedsDrawer extends StatefulWidget {
@@ -145,6 +146,32 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
             ),
             onTap: () {
              // Navigator.push(context,MaterialPageRoute(builder: (context) =>hotel_description()));
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.chat, color: Colors.white),
+            title:
+            Text("Chat", style: TextStyle(color: Colors.white)),
+            onTap: () {
+
+/*              List<User> userss = UserList().getUsers();
+              String userIdToRemove = LoginCredentials().loggedInUser!.id; // Replace with the ID you want to remove
+
+              List<User> updatedUserss = List.from(userss); // Create a new list
+
+              updatedUserss.removeWhere((user) => user.id == userIdToRemove);*/
+
+              //Navigator.push(context,MaterialPageRoute(builder: (context) =>Chat()));
+
+
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (_) => Chats(),
+                  ),
+                );
+
             },
           ),
           ListTile(

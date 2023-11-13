@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../../ModelClass/LoginCredential.dart';
+import '../../../ModelClass/LoginFlag.dart';
+import '../../../Utilites/Constants/firebase.dart';
+import '../../Helper/HPStrategy.dart';
 
 class ProfileAppBar extends StatefulWidget {
   const ProfileAppBar({super.key});
@@ -27,6 +31,23 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
             padding: const EdgeInsets.only(right: 25.0),
             child: GestureDetector(
               onTap: () async {
+
+                await firebaseAuth.signOut();
+
+                LoginFlag lf = LoginFlag(false);
+                LoginFlagJson lfj = LoginFlagJson();
+                await lfj.saveLoginInfo(lf);
+                print(lf.isloggedin);
+
+                LoginCredentials().logout();
+
+                Navigator.of(context).pushReplacement(
+                  CupertinoPageRoute(
+                      builder: (_) => HPStretegy() //Landing(),
+                  ),
+                );
+
+
                 // await firebaseAuth.signOut();
 /*                  Navigator.of(context).push(
                     CupertinoPageRoute(

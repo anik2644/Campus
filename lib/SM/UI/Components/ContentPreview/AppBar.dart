@@ -26,6 +26,7 @@ class _ContentAppBArState extends State<ContentAppBAr> {
             // Your functionality here
             // SentAllImageTOFireStorage();
             Navigator.pop(context);
+            Navigator.pop(context);
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 16.0),

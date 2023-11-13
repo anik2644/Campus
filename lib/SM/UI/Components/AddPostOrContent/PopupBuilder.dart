@@ -1,6 +1,8 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../Pages/CreateContent.dart';
 import '../../Pages/CreatePost.dart';
 
 Widget AddPopUp(BuildContext context) {
@@ -43,6 +45,12 @@ Widget AddPopUp(BuildContext context) {
               context, Icons.insert_drive_file, 'Add Content', 'Add new content',
                   () {
                 Navigator.pop(context);
+
+                Navigator.of(context).push(
+                  CupertinoPageRoute(
+                    builder: (_) => CreatContent(),
+                  ),
+                );
                 // Add your logic here for "Add Content"
                 print('Add Content pressed');
               }),

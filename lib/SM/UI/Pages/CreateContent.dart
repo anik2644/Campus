@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../Utilites/Services/Content/ContentPreview.dart';
 import '../Components/Common/ImagePickBox.dart';
 import '../Components/Common/ImagePickBox.dart';
-
+/*
 void main() {
   runApp(MyApp());
 }
@@ -15,19 +15,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      home: CreatContent(),
     );
   }
-}
+}*/
 
-class MyHomePage extends StatefulWidget {
+class CreatContent extends StatefulWidget {
 
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _CreatContentState createState() => _CreatContentState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CreatContentState extends State<CreatContent> {
   List<String> imageUrlIndex = [];
   List<String> textDataIndex = [];
 

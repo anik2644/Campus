@@ -5,10 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //import '../../ParticularHP/PHPComponents/ParticularDetails/PHPSffold/ScaffoldItems/BodyComponents/Chat/MessageScreen.dart';
+import '../../../JSON_Management/Auth/LoginFlagJson.dart';
+import '../../../UI/Helper/HPStrategy.dart';
 import 'HomepageDrawerElement/AllSIdeBarItems/AboutUs.dart';
 import 'HomepageDrawerElement/AllSIdeBarItems/campousia.dart';
 import 'HomepageDrawerElement/AllSIdeBarItems/umanualNafisa.dart';
 import 'HomepageDrawerElement/LoginPopup.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Mydrawer extends StatefulWidget {
 
@@ -20,7 +23,22 @@ class Mydrawer extends StatefulWidget {
 
 class _MydrawerState extends State<Mydrawer> {
 
+  bool isloggedin = false;
 
+  alreadyLoggedin()
+  async {
+    isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
+    setState(() {
+
+    });
+  }
+   @override
+  void initState() {
+
+     alreadyLoggedin();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +50,7 @@ class _MydrawerState extends State<Mydrawer> {
           DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.black,
-              image: DecorationImage(image: NetworkImage("https://live.staticflickr.com/3788/11189480813_a84dec1c5d_b.jpg")),
+              image: DecorationImage(image: CachedNetworkImageProvider("https://live.staticflickr.com/3788/11189480813_a84dec1c5d_b.jpg")),
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -50,18 +68,50 @@ class _MydrawerState extends State<Mydrawer> {
                           Container(child: Text(' ')),
                           Container(child: Text(' ')),
                           Container(),
-                          Center (
+
+
+                         isloggedin?
+                         Center (
+                           child: ElevatedButton(
+
+                             child:Container(child: Text('Go Dude!')),
+                             onPressed: (){
+
+                               setState(() {
+                                 Navigator.push(context,
+                                     MaterialPageRoute(builder: (context) =>HPStretegy()// Landing(),//SecondaryHomepage()
+                                     ));
+                               });
+
+
+/*
+                                LoginPopup popup = LoginPopup(context, widget.index);
+                                popup.openDialouge(widget.index);
+*/
+
+
+                             }, ),
+                         ):
+                         Center (
                             child: ElevatedButton(
 
                               child:Container(child: Text('Login')),
                               onPressed: (){
 
+                                setState(() {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) =>HPStretegy()// Landing(),//SecondaryHomepage()
+                                      ));
+                                });
+
+
+/*
                                 LoginPopup popup = LoginPopup(context, widget.index);
                                 popup.openDialouge(widget.index);
+*/
 
-                                setState(() {
-                                  //      Navigator.push(context, MaterialPageRoute(builder: (context) =>  AuthService().handleAuthState()),//AccountPage()),);
-                                });}, ),
+
+                              }, ),
                           ),
 /*
                           Center(

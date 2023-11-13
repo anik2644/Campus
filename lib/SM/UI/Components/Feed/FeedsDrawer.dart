@@ -1,4 +1,6 @@
+import 'package:dhabiansomachar/SM/HP/HomePage/HomePage.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/SearchUser.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/Settings.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import '../../../Utilites/Constants/firebase.dart';
 import '../../Helper/HPStrategy.dart';
 import '../../Pages/Chat.dart';
 import '../../Pages/Landing.dart';
+import '../../Pages/profile.dart';
 
 class FeedsDrawer extends StatefulWidget {
   const FeedsDrawer({Key? key}) : super(key: key);
@@ -127,27 +130,7 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
           ),  */
 
 
-          ListTile(
-            leading: Icon(Icons.contacts, color: Colors.white),
-            title:
-            Text("Contact Us", style: TextStyle(color: Colors.white)),
-            onTap: () {
-             // Navigator.push(context,MaterialPageRoute(builder: (context) =>MessagesScreen(),));
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.flag_rounded,
-              color: Colors.white,
-            ),
-            title: Text(
-              "Terms & Condition",
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-             // Navigator.push(context,MaterialPageRoute(builder: (context) =>hotel_description()));
-            },
-          ),
+
 
           ListTile(
             leading: Icon(Icons.chat, color: Colors.white),
@@ -191,6 +174,28 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.contacts, color: Colors.white),
+            title:
+            Text("Profile", style: TextStyle(color: Colors.white)),
+            onTap: () {
+               Navigator.push(context,MaterialPageRoute(builder: (context) =>Profile(user:LoginCredentials().loggedInUser!),));
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            title: Text(
+              "Settings",
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+               Navigator.push(context,MaterialPageRoute(builder: (context) =>Setting()));
+            },
+          ),
+
+          ListTile(
             leading: Icon(
               Icons.logout,
               color: Colors.white,
@@ -209,11 +214,13 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
 
                 LoginCredentials().logout();
 
-                  Navigator.of(context).pushReplacement(
-                    CupertinoPageRoute(
-                      builder: (_) => HPStretegy() //Landing(),
-                    ),
-                  );
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (_) => Homepage(),//HPStretegy(), //Landing(),
+                  ),
+                      (route) => false, // This makes sure that the user can't go back to the previous screen
+                );
 
 
 /*

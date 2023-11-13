@@ -27,7 +27,7 @@ class _UpperPortionState extends State<UpperPortion> {
             Row(
               children: [
                 ProfileInfo(user: widget.user,),
-                FollowOrSetting(user: widget.user,)
+                //FollowOrSetting(user: widget.user,)
 
               ],
             ),

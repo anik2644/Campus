@@ -1,3 +1,4 @@
+import 'package:dhabiansomachar/SM/HP/HomePage/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -41,11 +42,15 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
 
                 LoginCredentials().logout();
 
-                Navigator.of(context).pushReplacement(
+                Navigator.pushAndRemoveUntil(
+                  context,
                   CupertinoPageRoute(
-                      builder: (_) => HPStretegy() //Landing(),
+                    builder: (_) =>  Homepage(),// HPStretegy(), //Landing(),
                   ),
+                      (route) => false, // This makes sure that the user can't go back to the previous screen
                 );
+
+
 
 
                 // await firebaseAuth.signOut();

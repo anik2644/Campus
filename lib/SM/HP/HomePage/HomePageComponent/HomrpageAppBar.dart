@@ -21,7 +21,7 @@ class _HomepageAppBarState extends State<HomepageAppBar> {
       //automaticallyImplyLeading: true,
       backgroundColor: Colors.black,
       actions: [
-        HomePageFloatingButtion()
+       // HomePageFloatingButtion()
       ],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,

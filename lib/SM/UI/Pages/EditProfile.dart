@@ -226,7 +226,8 @@ class _EditProfileState extends State<EditProfile> {
                     await SpecificUpdate().updateUser(widget.user!, isUsernameChanged, isBioChanged, isCountryChanged, isPhotoChanged);
 
                     await UpdateWant().updateJsonUsers();
-                    UserList().setUsers( await GetWant().getAllUserfromJson());
+                    List <User> us = await GetWant().getAllUserfromJson();
+                    UserList().setUsers( us);
 
                     Credential().saveCredential(widget.user!);
                     LoginCredentials().login(widget.user!);

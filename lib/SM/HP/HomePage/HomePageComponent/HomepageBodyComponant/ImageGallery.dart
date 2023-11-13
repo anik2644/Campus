@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _ImageGalleryState extends State<ImageGallery> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           image: DecorationImage(
-            image: NetworkImage(url),
+            image: CachedNetworkImageProvider(url),
             fit: BoxFit.cover,
           ),
         ),
@@ -51,7 +52,7 @@ class _ImageGalleryState extends State<ImageGallery> {
           ImageContainer("ভিসি চত্ত্বর,\nঢাকা বিশ্ববিদ্যালয়","http://photos1.blogger.com/x/blogger/7702/1941/1600/479828/1172.jpg"),
           ImageContainer("কার্জন হল,\nঢাকা বিশ্ববিদ্যালয়","https://media.istockphoto.com/id/1341969105/photo/one-of-buildings-at-the-campus-of-university-of-dhaka-banglade.jpg?s=612x612&w=0&k=20&c=Yzjgh1p0nwISJSQ5mZQFup9UFTB_7Pufv2s2_gD0HQ0="),
           ImageContainer("টিএসসি,\nঢাকা বিশ্ববিদ্যালয়","https://www.tbsnews.net/sites/default/files/styles/amp_metadata_content_image_min_696px_wide/public/images/2020/07/18/_oor7838.jpg"),
-          ImageContainer("শহীদুল্লহ হল\nঢাকা বিশ্ববিদ্যালয়","https://www.daily-sun.com/assets/news_images/2017/05/15/1491406465_0.jpg"),
+          ImageContainer("শহীদুল্লহ হল\nঢাকা বিশ্ববিদ্যালয়","https://ssl.du.ac.bd/fontView/images/rfacility/1620110507HSH.jpg"),
           ImageContainer("রাজু ভাস্কর্য,\nঢাকা বিশ্ববিদ্যালয়","https://www.tbsnews.net/sites/default/files/styles/big_2/public/images/2020/07/25/01.jpg"),
           ImageContainer("বৃষ্টি স্নাত লাল্বাস,\nঢাকা বিশ্ববিদ্যালয়","https://tariqul09tmgmail.files.wordpress.com/2017/04/khonica-bus-photo.jpg"),
           ImageContainer("চারুকলা ,\nঢাকা বিশ্ববিদ্যালয়","https://live.staticflickr.com/8844/18048563995_97020489fd_b.jpg"),

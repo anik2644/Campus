@@ -57,9 +57,9 @@ class _AdvertisePortionState extends State<AdvertisePortion> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => EcommerceApp()// Landing(),//SecondaryHomepage()
             ));
-
-       // _launchURL("www.rokomari.com");
 */
+        _launchURL("www.foodpanda.com");
+
 
 
       },

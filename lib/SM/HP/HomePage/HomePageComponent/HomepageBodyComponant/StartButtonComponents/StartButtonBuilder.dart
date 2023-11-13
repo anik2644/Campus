@@ -48,41 +48,46 @@ class _StartButtonBuilderState extends State<StartButtonBuilder> {
 
   void StartButtonOnPressed() {
 
+    setState(() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) =>HPStretegy()// Landing(),//SecondaryHomepage()
+          ));
+    });
 
-
-    FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-    User? _currentUser;
-
-    _currentUser = _firebaseAuth.currentUser;
-    // if (_currentUser != null) {
-    //   return Text('User is logged in');
-    // } else {
-    //   return Text('User is not logged in');
-    // }
+    //
+    // FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+    // User? _currentUser;
+    //
+    // _currentUser = _firebaseAuth.currentUser;
+    // // if (_currentUser != null) {
+    // //   return Text('User is logged in');
+    // // } else {
+    // //   return Text('User is not logged in');
+    // // }
+    // //
+    // //
     //
     //
-
-
-        if (_currentUser != null)  {
-
-
-          print('yes');
-
-          //UserModel.UserRefresh();
-
-          setState(() {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) =>HPStretegy()// Landing(),//SecondaryHomepage()
-                ));
-          });
-
-        } else
-          {
-            print('no');
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) =>HPStretegy()// TabScreen()//  Landing(),//SecondaryHomepage()
-                ));
-          }
+    //     if (_currentUser != null)  {
+    //
+    //
+    //       print('yes');
+    //
+    //       //UserModel.UserRefresh();
+    //
+    //       setState(() {
+    //         Navigator.pushReplacement(context,
+    //             MaterialPageRoute(builder: (context) =>HPStretegy()// Landing(),//SecondaryHomepage()
+    //             ));
+    //       });
+    //
+    //     } else
+    //       {
+    //         print('no');
+    //         Navigator.push(context,
+    //             MaterialPageRoute(builder: (context) =>HPStretegy()// TabScreen()//  Landing(),//SecondaryHomepage()
+    //             ));
+    //       }
 
     // User? _currentUser;
     // FirebaseAuth.instance.authStateChanges().listen((User? user) {

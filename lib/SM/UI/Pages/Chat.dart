@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/ChatSearchUser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class Chats extends StatelessWidget {
 
     viewModel.setUser();
     return Scaffold(
+     //backgroundColor: Colors.black,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: (){
@@ -32,6 +34,12 @@ class Chats extends StatelessWidget {
           child: Icon(Icons.keyboard_backspace),
         ),
         title: Text("Chats"),
+        actions: [
+          IconButton(onPressed: (){
+
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Search()));
+          }, icon: Icon(Icons.search))
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: userChatsStream('${viewModel.user!.uid ?? ""}'),

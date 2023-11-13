@@ -183,29 +183,35 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                   });
                 }
                 return ListTile(
-                  onTap: () => showProfile(context, profileId: user.id!,profileEmail: user.email ),
-                  leading: user.photoUrl!.isEmpty
-                      ? CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor:
-                    Theme.of(context).colorScheme.secondary,
-                    child: Center(
-                      child: Text(
-                        '${user.username![0].toUpperCase()}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w900,
+
+                  leading: GestureDetector(
+
+                    onTap: () => showProfile(context, profileId: user.id!,profileEmail: user.email ),
+                    child:  user.photoUrl!.isEmpty
+                        ? CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor:
+                      Theme.of(context).colorScheme.secondary,
+                      child: Center(
+                        child: Text(
+                          '${user.username![0].toUpperCase()}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                      : CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: CachedNetworkImageProvider(
-                      '${user.photoUrl}',
+                    )
+                        : CircleAvatar(
+                      radius: 20.0,
+                      backgroundImage: CachedNetworkImageProvider(
+                        '${user.photoUrl}',
+                      ),
                     ),
                   ),
+
+
                   title: Text(
                     user.username!,
                     style: TextStyle(fontWeight: FontWeight.bold),

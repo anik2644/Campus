@@ -118,7 +118,7 @@ Widget Introduction()
 
 
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
-                    ContentImageSequence: imageUrlIndex, ContentSegments: textDataIndex, title: "title", location: "location",)));
+                    ContentImageSequence: imageUrlIndex, ContentSegments: textDataIndex, title: title, location: "Dhaka, Bangladesh",)));
                   // flag=0;
                 });
 

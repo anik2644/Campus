@@ -509,8 +509,6 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
           Visibility(
             visible: !isLoading,
             child:// Container(child: Text("There will be some Contents here"),),
-
-
             RefreshIndicator(
               onRefresh: fetchData,
               child: SingleChildScrollView(

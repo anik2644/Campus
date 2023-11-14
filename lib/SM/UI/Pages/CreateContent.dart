@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dhabiansomachar/SM/UI/Components/Common/ImagePickBox.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/ContentPreview.dart';
 import 'package:flutter/material.dart';
 
-import '../../Utilites/Services/Content/ContentPreview.dart';
 import '../Components/Common/ImagePickBox.dart';
 import '../Components/Common/ImagePickBox.dart';
 /*
@@ -85,41 +85,17 @@ Widget Introduction()
         actions: [
           IconButton(
               onPressed: () {
-                print(widgetList.length);
-                print("printing text");
-                textDataIndex.forEach((element) {
-                  print(element);
-                });
-
-                print("printing imag");
-                imageUrlIndex.forEach((element) {
-                  print(element);
-                });
-
-                print("printing done");
-                setState(() {});
-
-
-
+                List<String> InputImagesSequence = List.from(imageUrlIndex);
+                InputImagesSequence.removeWhere((element) => element=="");
+                List<String> ContentSegments = List.from(textDataIndex);
+                ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
                 int i=0;
-                List<String> InputImagesSequence = [];
-                imageUrlIndex.forEach((element) {
+                List<String> ContentImageSequence = [];
+                InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
 
-
-                  InputImagesSequence.add(i.toString());
-                  i++;
-                });
-
-                /*ContentImageSequence.clear();
-                ContentSegments.clear();
-                splitString(CaptionController.text, ContentImageSequence, ContentSegments);*/
                 setState(() {
-
-
-
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
-                    ContentImageSequence: imageUrlIndex, ContentSegments: textDataIndex, title: title, location: "Dhaka, Bangladesh",)));
-                  // flag=0;
+                    ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
                 });
 
               },
@@ -180,7 +156,7 @@ Widget Introduction()
 
 
       }
-      print("image pic box");
+     // print("image pic box");
       // Your logic here
     }
 

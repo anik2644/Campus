@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:dhabiansomachar/SM/UI/Widgets/TopRightButtonDecorator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../Utilites/Services/Content/ContentPreview.dart';
+import '../Widgets/ActionButton.dart';
 import '../Widgets/ImageView.dart';
 import '../Widgets/TextLebel.dart';
 import 'CreateContent.dart';
@@ -21,8 +24,11 @@ class MyApp extends StatelessWidget {
 }
 
 class DraggableListView extends StatefulWidget {
+
+  final Function(List<Widget>) retWidget;
+   String title;
    List<Widget> widgetList;
-  DraggableListView(this.widgetList);
+   DraggableListView({required this.title,required  this.retWidget, required this.widgetList,} );
 
   @override
   _DraggableListViewState createState() => _DraggableListViewState();
@@ -89,7 +95,9 @@ class _DraggableListViewState extends State<DraggableListView> {
             tempList.add(widget.widgetList[indexArray[i]]);
           }
 
-        widget.widgetList = tempList;
+       // widget.widgetList = tempList;
+
+        widget.retWidget(tempList);
 
   }
 
@@ -97,45 +105,93 @@ class _DraggableListViewState extends State<DraggableListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Draggable ListView'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print("start");
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle the back button press logic here
+        await updateIndex();
+        return true; // Return true to allow the pop
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Draggable ListView'),
+          actions: [
+            ActionButton(
+              onPressed: () {
 
-          for (int i = 0; i < items.length; i++) {
-            Widget currentWidget = items[i];
-            if (currentWidget is RoundedImageContainer) {
-              print(currentWidget.imageUrl);
-            } else if (currentWidget is RoundedTextContainer) {
-              print(currentWidget.text);
-            }
-          }
+                List<String> InputImagesSequence =[];
+                List<String> ContentSegments = [];
+                List<String> ContentImageSequence = [];
 
-          print("end");
-        },
-      ),
-      body: ReorderableListView(
-        onReorder: (int oldIndex, int newIndex) {
-          setState(() {
-            if (newIndex > oldIndex) {
-              newIndex -= 1;
+
+                for(int i=0;i<items.length;i++)
+                {
+
+                  Widget currentWidget = items[i];
+                  if (currentWidget is RoundedImageContainer) {
+
+                     // print("media");
+                    // print(imageUrlIndex[mediaCount]);
+                     InputImagesSequence.add(currentWidget.imageUrl);
+                     ContentImageSequence.add("1");
+                  }
+                  else if(currentWidget is RoundedTextContainer)
+                  {
+                   // print("text");
+                    //print(currentWidget.text);
+
+                    ContentSegments.add(currentWidget.text);
+                    ContentImageSequence.add("0");
+                  }
+
+                }
+
+                setState(() {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
+                    ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: widget.title, location: "Dhaka, Bangladesh",)));
+                });
+
+                print('Button Pressed');
+              },
+            )
+
+          ],
+        ),
+    /*    floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print("start");
+
+            for (int i = 0; i < items.length; i++) {
+              Widget currentWidget = items[i];
+              if (currentWidget is RoundedImageContainer) {
+                print(currentWidget.imageUrl);
+              } else if (currentWidget is RoundedTextContainer) {
+                print(currentWidget.text);
+              }
             }
-            final Widget item = items.removeAt(oldIndex);
-            items.insert(newIndex, item);
-          });
-        },
-        children: List.generate(
-          items.length,
-          (index) {
-            return ReorderableDelayedDragStartListener(
-              key: ValueKey(items[index]),
-              index: index,
-              child: items[index],
-            );
+
+            print("end");
           },
+        ),*/
+        body: ReorderableListView(
+          onReorder: (int oldIndex, int newIndex) {
+            setState(() {
+              if (newIndex > oldIndex) {
+                newIndex -= 1;
+              }
+              final Widget item = items.removeAt(oldIndex);
+              items.insert(newIndex, item);
+            });
+          },
+          children: List.generate(
+            items.length,
+            (index) {
+              return ReorderableDelayedDragStartListener(
+                key: ValueKey(items[index]),
+                index: index,
+                child: items[index],
+              );
+            },
+          ),
         ),
       ),
     );

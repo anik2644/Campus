@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:dhabiansomachar/SM/UI/Components/Common/ImagePickBox.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/ContentPreview.dart';
+import 'package:dhabiansomachar/SM/UI/Widgets/ImageInput.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Components/Common/ImagePickBox.dart';
 import '../Components/Common/ImagePickBox.dart';
 import '../Widgets/ImageView.dart';
+import '../Widgets/TextInput.dart';
 import '../Widgets/TextLebel.dart';
 import 'ReorderableListView.dart';
 /*
@@ -82,6 +84,288 @@ Widget TitleField() {
   }
 
 
+
+  Future<void> _refreshData() async {
+    setState(() {
+         // editList();
+    });
+  }
+
+
+
+
+
+
+
+  editList()
+  {
+    List<Widget> twlist = [];//List.from(widgetList);;
+    List<Widget> temphere = List.from(widgetList);
+ //   int mediaCount =0;
+ //   int textCount =0;
+    int len = widgetList.length;
+
+    print("start");
+    for(int i=2;i<len;i++)
+      {
+
+        Widget currentWidget = widgetList[i];
+
+        if (currentWidget is MediaInputWidget) {
+
+            print("media");
+         // print(imageUrlIndex[mediaCount]);
+          if(currentWidget.path !="") {
+            twlist.add(currentWidget);
+
+
+           // twlist.removeAt(0);
+          }
+          else{
+            temphere.remove(widgetList[i]);
+            //twlist.removeAt(twlist.length-1);
+
+           // twlist.add(RoundedImageContainer(imageUrl: imageUrlIndex[mediaCount]));
+          }
+          //mediaCount++;
+        }
+        else if(currentWidget is TextInputWidget)
+          {
+            print("text");
+            print(currentWidget.text);
+
+            if(currentWidget.text == "" || currentWidget.text.isEmpty) {
+              temphere.remove(widgetList[i]);
+             // twlist.removeAt();
+            }
+            else{
+
+              twlist.add(RoundedTextContainer(text: currentWidget.text));
+              //twlist.removeAt(twlist.length-1);
+/*
+              twlist.add( Text(textDataIndex[textCount],
+                style: TextStyle(fontSize: 16.0),
+              ));
+*/
+
+            }
+
+          //  textCount++;
+          }
+
+      }
+
+    widgetList = temphere;
+    print("end");
+
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (_) => DraggableListView(title: tc.text,widgetList: twlist,
+
+          retWidget: (List<Widget> returnedWidget) {
+
+            returnedWidget.forEach((element) {
+
+              if(element is RoundedTextContainer)
+                {
+                  int index = returnedWidget.indexOf(element);
+                  Widget temp = TextInputWidget(index: index, text: element.text,);
+                 // Widget temp = TextInputWidget(index: returnedWidget.indexOf(element), text: element.text);
+                  returnedWidget.replaceRange(index, index + 1, [temp]);
+                }
+            });
+
+            setState(() {
+
+              returnedWidget.insert(0, widgetList[1]);
+              returnedWidget.insert(0, widgetList[0]);
+              widgetList = returnedWidget;
+             // path = imagePath;
+            });
+
+           // print('getting the path: $imagePath');
+          },
+        ),
+      ),
+    );
+
+  }
+
+
+
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: _refreshData,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Write Content'),
+          actions: [
+            IconButton(
+                onPressed: () {
+
+
+                  editList();
+
+                  //
+                  // List<String> InputImagesSequence = List.from(imageUrlIndex);
+                  // InputImagesSequence.removeWhere((element) => element=="");
+                  // List<String> ContentSegments = List.from(textDataIndex);
+                  // ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
+                  // int i=0;
+                  // List<String> ContentImageSequence = [];
+                  // InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
+                  //
+                  // setState(() {
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
+                  //     ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
+                  // });
+                  //
+                  //
+
+
+                },
+                icon: Icon(Icons.send))
+          ],
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: widgetList.length,
+                itemBuilder: (context, index) {
+                  return  widgetList[index];//ItemBuilder(index);
+                },
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _showOptions,
+          child: Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+
+ void _showOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text('Add Image'),
+              onTap: () {
+
+
+
+                MediaInputWidget temp = MediaInputWidget(index: imageIndex, path: "");
+                imageIndex++;
+                imageUrlIndex.add("");
+                setState(() {
+                  widgetList.add(temp);
+                });
+                Navigator.pop(context);
+              //  _addImageContainer(imageIndex);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.text_fields),
+              title: Text('Add Text'),
+              onTap: () {
+
+                TextInputWidget temp = TextInputWidget(index: textIndex, text: "");
+                textDataIndex.add("");
+                textIndex++;
+
+                setState(() {
+                  widgetList.add(temp);
+                });
+
+                Navigator.pop(context);
+               // _addTextInputField(textIndex);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
+
+/*
+
+  Widget ItemBuilder(int index) {
+
+      //print('$index this print');
+
+      Widget currentWidget = widgetList[index];
+
+    if (currentWidget is ImagePickBox) {
+
+      int imgind =0;
+     // ImagePickBox imagePickBox = currentWidget;
+      for(int i =0;i<index+1;i++)
+      {
+        Widget cur = widgetList[i];
+        if (cur is ImagePickBox) {
+          imgind++;
+        }
+      }
+      if(imageUrlIndex[imgind - 1] != "") {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: 130.0,
+            height: 240.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              image: DecorationImage(
+                image: FileImage(File(imageUrlIndex[imgind - 1])),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+
+
+      }
+     // print("image pic box");
+      // Your logic here
+    }
+
+    return currentWidget;
+  }
+*/
+
+
+
+
+/*
+  void _addImageContainer(int index) {
+    setState(() {
+      widgetList.add(Mediainput(index));
+    });
+  }
+
+  void _addTextInputField(int index) {
+    setState(() {
+      widgetList.add(TextInput(index));
+    });
+  }
+  */
+
+/*
 
   editList()
   {
@@ -161,153 +445,13 @@ Widget TitleField() {
 
   }
 
-  Future<void> _refreshData() async {
-    setState(() {
-
-    });
-  }
-
-    @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _refreshData,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Write Content'),
-          actions: [
-            IconButton(
-                onPressed: () {
+  */
 
 
-                  editList();
-
-                  //
-                  // List<String> InputImagesSequence = List.from(imageUrlIndex);
-                  // InputImagesSequence.removeWhere((element) => element=="");
-                  // List<String> ContentSegments = List.from(textDataIndex);
-                  // ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
-                  // int i=0;
-                  // List<String> ContentImageSequence = [];
-                  // InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
-                  //
-                  // setState(() {
-                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
-                  //     ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
-                  // });
-                  //
-                  //
 
 
-                },
-                icon: Icon(Icons.send))
-          ],
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: widgetList.length,
-                itemBuilder: (context, index) {
-                  return ItemBuilder(index);
-                },
-              ),
-            ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _showOptions,
-          child: Icon(Icons.add),
-        ),
-      ),
-    );
-  }
 
-  Widget ItemBuilder(int index) {
-
-      //print('$index this print');
-
-      Widget currentWidget = widgetList[index];
-
-    if (currentWidget is ImagePickBox) {
-
-      int imgind =0;
-     // ImagePickBox imagePickBox = currentWidget;
-      for(int i =0;i<index+1;i++)
-      {
-        Widget cur = widgetList[i];
-        if (cur is ImagePickBox) {
-          imgind++;
-        }
-      }
-      if(imageUrlIndex[imgind - 1] != "") {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: 130.0,
-            height: 240.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(
-                image: FileImage(File(imageUrlIndex[imgind - 1])),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        );
-
-
-      }
-     // print("image pic box");
-      // Your logic here
-    }
-
-    return currentWidget;
-  }
-
-  void _showOptions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: Icon(Icons.image),
-              title: Text('Add Image'),
-              onTap: () {
-                imageIndex++;
-                imageUrlIndex.add("");
-                Navigator.pop(context);
-                _addImageContainer(imageIndex);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.text_fields),
-              title: Text('Add Text'),
-              onTap: () {
-                textDataIndex.add("");
-                textIndex++;
-                Navigator.pop(context);
-                _addTextInputField(textIndex);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _addImageContainer(int index) {
-    setState(() {
-      widgetList.add(Mediainput(index));
-    });
-  }
-
-  void _addTextInputField(int index) {
-    setState(() {
-      widgetList.add(TextInput(index));
-    });
-  }
+/*
 
   Widget Mediainput(int index) {
 
@@ -318,7 +462,8 @@ Widget TitleField() {
       },
       isProfilePhoto: false,
     );
-     return ip;/*imageUrlIndex[index - 1] != ""
+     return ip;*/
+/*imageUrlIndex[index - 1] != ""
         ? Container(
             child: Padding(
               padding: const EdgeInsets.all(1.0),
@@ -328,10 +473,12 @@ Widget TitleField() {
               ),
             ),
           )
-        :*/
-  }
+        :*//*
 
-  Widget TextInput(int index) {
+  }
+*/
+
+/*  Widget TextInput(int index) {
     TextEditingController textController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -343,9 +490,9 @@ Widget TitleField() {
           if (textDataIndex.length >= index) {
             textDataIndex[index - 1] = value;
           }
-/*          else{
+*//*          else{
             textDataIndex.add(value);
-          }*/
+          }*//*
           // Handle the text change
         },
         decoration: InputDecoration(
@@ -354,5 +501,5 @@ Widget TitleField() {
         ),
       ),
     );
-  }
+  }*/
 }

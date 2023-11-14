@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class DraggableListView extends StatefulWidget {
-  final List<Widget> widgetList;
+   List<Widget> widgetList;
   DraggableListView(this.widgetList);
 
   @override
@@ -30,11 +30,10 @@ class DraggableListView extends StatefulWidget {
 
 class _DraggableListViewState extends State<DraggableListView> {
   List<Widget> items = [];
-
+  List<Widget> ls = [];
   @override
   void initState() {
     // items = List.generate(10, (index) => MediaInput(index));
-
 /*    items = List.generate(10, (index) {
       if (index % 2 == 0) {
         return MediaInput(index);
@@ -42,9 +41,6 @@ class _DraggableListViewState extends State<DraggableListView> {
         return TextInput(index);
       }
     });*/
-
-
-  List<Widget> ls = [];
   widget.widgetList.asMap().forEach((index, element) {
     ls.add(
       DecoratorWidget(
@@ -56,6 +52,7 @@ class _DraggableListViewState extends State<DraggableListView> {
 
            setState(() {
              items.remove(cur);
+             ls.removeAt(index);
            });
           print("pressed on index $index");
         },
@@ -72,12 +69,27 @@ class _DraggableListViewState extends State<DraggableListView> {
     super.initState();
   }
 
-
-
-
+  List<int> indexArray = [];
   updateIndex()
   {
+        ls.forEach((element) {
+         // final Widget cur = ls.elementAt(index);
+          indexArray.add(items.indexOf(element));
 
+        });
+
+        List<Widget> tempList=[];
+        widget.widgetList.forEach((element) {
+
+
+        });
+
+        for(int i=0;i<ls.length;i++)
+          {
+            tempList.add(widget.widgetList[indexArray[i]]);
+          }
+
+        widget.widgetList = tempList;
 
   }
 

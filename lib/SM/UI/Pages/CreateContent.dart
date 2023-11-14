@@ -89,7 +89,7 @@ Widget TitleField() {
 
     // twlist.removeAt(0);
     // twlist.removeAt(0);
-
+    List<Widget> temphere = List.from(widgetList);
     int mediaCount =0;
     int textCount =0;
     int len = widgetList.length;
@@ -111,6 +111,8 @@ Widget TitleField() {
             //print("object");
           print(imageUrlIndex[mediaCount]);
           if(imageUrlIndex[mediaCount] == "") {
+
+            temphere.remove(widgetList[i]);
            // twlist.removeAt(0);
           }
           else{
@@ -127,6 +129,7 @@ Widget TitleField() {
             print(textDataIndex[textCount]);
 
             if(textDataIndex[textCount] == ""||textDataIndex[textCount].isEmpty) {
+              temphere.remove(widgetList[i]);
              // twlist.removeAt();
             }
             else{
@@ -144,6 +147,8 @@ Widget TitleField() {
           }
 
       }
+
+    widgetList = temphere;
     print("end");
 
 
@@ -156,56 +161,63 @@ Widget TitleField() {
 
   }
 
+  Future<void> _refreshData() async {
+    setState(() {
 
+    });
+  }
 
-  @override
+    @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Write Content'),
-        actions: [
-          IconButton(
-              onPressed: () {
+    return RefreshIndicator(
+      onRefresh: _refreshData,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Write Content'),
+          actions: [
+            IconButton(
+                onPressed: () {
 
 
-                editList();
+                  editList();
 
-                //
-                // List<String> InputImagesSequence = List.from(imageUrlIndex);
-                // InputImagesSequence.removeWhere((element) => element=="");
-                // List<String> ContentSegments = List.from(textDataIndex);
-                // ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
-                // int i=0;
-                // List<String> ContentImageSequence = [];
-                // InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
-                //
-                // setState(() {
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
-                //     ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
-                // });
-                //
-                //
+                  //
+                  // List<String> InputImagesSequence = List.from(imageUrlIndex);
+                  // InputImagesSequence.removeWhere((element) => element=="");
+                  // List<String> ContentSegments = List.from(textDataIndex);
+                  // ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
+                  // int i=0;
+                  // List<String> ContentImageSequence = [];
+                  // InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
+                  //
+                  // setState(() {
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
+                  //     ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
+                  // });
+                  //
+                  //
 
 
-              },
-              icon: Icon(Icons.send))
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: widgetList.length,
-              itemBuilder: (context, index) {
-                return ItemBuilder(index);
-              },
+                },
+                icon: Icon(Icons.send))
+          ],
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: widgetList.length,
+                itemBuilder: (context, index) {
+                  return ItemBuilder(index);
+                },
+              ),
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showOptions,
-        child: Icon(Icons.add),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _showOptions,
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }

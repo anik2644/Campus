@@ -44,18 +44,44 @@ class _DraggableListViewState extends State<DraggableListView> {
     });*/
 
 
-  List<Widget> ls= [];
-  widget.widgetList.forEach((element) {
-    ls.add(DecoratorWidget(child: element,onPressed: (){print("pressed");},));
+  List<Widget> ls = [];
+  widget.widgetList.asMap().forEach((index, element) {
+    ls.add(
+      DecoratorWidget(
+        child: element,
+        onPressed: () {
+          // Access the index here
+         // ls.removeAt(index);
+           final Widget cur = ls.elementAt(index);
 
-    items = List.from(ls);//List.from(widget.widgetList);
+           setState(() {
+             items.remove(cur);
+           });
+          print("pressed on index $index");
+        },
+      ),
+    );
+
+  //List.from(widget.widgetList);
 
   });
+  items = List.from(ls);
 
 
     // TODO: implement initState
     super.initState();
   }
+
+
+
+
+  updateIndex()
+  {
+
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

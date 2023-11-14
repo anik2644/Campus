@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:dhabiansomachar/SM/UI/Components/Common/ImagePickBox.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/ContentPreview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Components/Common/ImagePickBox.dart';
 import '../Components/Common/ImagePickBox.dart';
+import '../Widgets/ImageView.dart';
+import '../Widgets/TextLebel.dart';
+import 'ReorderableListView.dart';
 /*
 void main() {
   runApp(MyApp());
@@ -58,7 +62,7 @@ Widget Introduction()
     ),
   );
 }
-  Widget TitleField() {
+Widget TitleField() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
@@ -77,6 +81,83 @@ Widget Introduction()
     );
   }
 
+
+
+  editList()
+  {
+    List<Widget> twlist = [];//List.from(widgetList);
+
+    // twlist.removeAt(0);
+    // twlist.removeAt(0);
+
+    int mediaCount =0;
+    int textCount =0;
+    int len = widgetList.length;
+
+    print("start");
+ //   imageUrlIndex.forEach((element) {print(element);});
+   // print("done");
+  //  textDataIndex.forEach((element) {print(element);});
+   // print("end");
+
+    for(int i=2;i<len;i++)
+      {
+
+
+        Widget currentWidget = widgetList[i];
+
+        if (currentWidget is ImagePickBox) {
+
+            //print("object");
+          print(imageUrlIndex[mediaCount]);
+          if(imageUrlIndex[mediaCount] == "") {
+           // twlist.removeAt(0);
+          }
+          else{
+
+            //twlist.removeAt(twlist.length-1);
+
+            twlist.add(RoundedImageContainer(imageUrl: imageUrlIndex[mediaCount]));
+          }
+          mediaCount++;
+        }
+        else if(currentWidget is Padding)
+          {
+            print("text");
+            print(textDataIndex[textCount]);
+
+            if(textDataIndex[textCount] == ""||textDataIndex[textCount].isEmpty) {
+             // twlist.removeAt();
+            }
+            else{
+
+              //twlist.removeAt(twlist.length-1);
+/*
+              twlist.add( Text(textDataIndex[textCount],
+                style: TextStyle(fontSize: 16.0),
+              ));
+*/
+             twlist.add(RoundedTextContainer(text: textDataIndex[textCount]));
+            }
+
+            textCount++;
+          }
+
+      }
+    print("end");
+
+
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (_) => DraggableListView(twlist),
+      ),
+    );
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,18 +166,26 @@ Widget Introduction()
         actions: [
           IconButton(
               onPressed: () {
-                List<String> InputImagesSequence = List.from(imageUrlIndex);
-                InputImagesSequence.removeWhere((element) => element=="");
-                List<String> ContentSegments = List.from(textDataIndex);
-                ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
-                int i=0;
-                List<String> ContentImageSequence = [];
-                InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
 
-                setState(() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
-                    ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
-                });
+
+                editList();
+
+                //
+                // List<String> InputImagesSequence = List.from(imageUrlIndex);
+                // InputImagesSequence.removeWhere((element) => element=="");
+                // List<String> ContentSegments = List.from(textDataIndex);
+                // ContentSegments.removeWhere((element) => element==""|| element.isEmpty);
+                // int i=0;
+                // List<String> ContentImageSequence = [];
+                // InputImagesSequence.forEach((element) {ContentImageSequence.add(i.toString());i++;});
+                //
+                // setState(() {
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
+                //     ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: title, location: "Dhaka, Bangladesh",)));
+                // });
+                //
+                //
+
 
               },
               icon: Icon(Icons.send))

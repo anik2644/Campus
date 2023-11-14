@@ -19,7 +19,6 @@ class TopBoard extends StatefulWidget {
 }
 
 class _TopBoardState extends State<TopBoard> {
-
   bool isFollowing = false;
   // UserModel? users;
   late User users;
@@ -34,12 +33,9 @@ class _TopBoardState extends State<TopBoard> {
     super.initState();
     checkIfFollowing();
 
-    if(widget.user.id == LoginCredentials().loggedInUser?.id)
-    {
+    if (widget.user.id == LoginCredentials().loggedInUser?.id) {
       user = LoginCredentials().loggedInUser!;
-    }
-    else
-    {
+    } else {
       user = SpecificWant().specificUserFromJson(widget.user.id);
     }
 
@@ -57,18 +53,34 @@ class _TopBoardState extends State<TopBoard> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return  SliverAppBar(
+    return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       pinned: true,
       floating: false,
       toolbarHeight: 5.0,
-      collapsedHeight: 6.0,
-      expandedHeight: 225.0,
+      collapsedHeight: 5.0,
+      expandedHeight: 400.0,
       flexibleSpace: FlexibleSpaceBar(
+        background: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UpperPortion(user: widget.user),
+
+              SizedBox(height: 10.0),
+              UserActivities(user: widget.user),
+              SizedBox(height: 10.0),
+              buildEditorFollowButton(widget.user),
+
+              SizedBox(height: 7.0,),
+              UserBio(user: widget.user),
+            ],
+          ),
+
+          /* FlexibleSpaceBar(
         background:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,11 +90,11 @@ class _TopBoardState extends State<TopBoard> {
             UserActivities(user: widget.user,),
             buildEditorFollowButton(widget.user),
           ],
+        ),*/
         ),
       ),
     );
   }
-
 
   buildEditorFollowButton(user) {
     //if isMe then display "edit profile"
@@ -220,5 +232,4 @@ class _TopBoardState extends State<TopBoard> {
       "timestamp": timestamp,
     });*/
   }
-
 }

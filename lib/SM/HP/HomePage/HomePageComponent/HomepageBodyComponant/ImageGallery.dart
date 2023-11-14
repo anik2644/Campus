@@ -3,8 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
 import 'ImageGallComp/IGC.dart';
+
+
 class ImageGallery extends StatefulWidget {
   const ImageGallery({Key? key}) : super(key: key);
 
@@ -88,5 +89,23 @@ class _ImageGalleryState extends State<ImageGallery> {
       ),
     );
 
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Image Gallery'),
+        ),
+        body: ImageGallery(),
+      ),
+    );
   }
 }

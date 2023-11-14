@@ -42,12 +42,16 @@ class _UserActivitiesState extends State<UserActivities> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
+              child: VerticalDivider(thickness: 1, color: Colors.grey),
+            ),
+           /* Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
               child: Container(
                 height: 50.0,
                 width: 0.3,
                 color: Colors.grey,
               ),
-            ),
+            ),*/
             StreamBuilder(
               stream: followersRef
                   .doc(widget.user.id)
@@ -68,12 +72,16 @@ class _UserActivitiesState extends State<UserActivities> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
+              child: VerticalDivider(thickness: 1, color: Colors.grey),
+            ), // Vertical line
+          /*  Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
               child: Container(
                 height: 50.0,
                 width: 0.3,
                 color: Colors.grey,
               ),
-            ),
+            ),*/
             StreamBuilder(
               stream: followingRef
                   .doc(widget.user.id)

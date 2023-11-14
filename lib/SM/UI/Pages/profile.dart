@@ -101,20 +101,30 @@ class _ProfileState extends State<Profile> {
           slivers: <Widget>[
             TopBoard(user: user,),
             SliverList(
-              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                  if (index > 0) return null;
-                  return Container(
-                    color: Colors.grey,
-                    child: Column(
-                      children: [
-                         MiddleBoard(user: user,),
-                         PostGrid( profileId: widget.user.id,email: widget.user.email),
-                      ],
-                    ),
-                  );
+
+
+              delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  if (index == 0) {
+                    return Container(
+                      color: Colors.grey,
+                      child: Column(
+                        children: [
+                          MiddleBoard(user: user),
+                          PostGrid(profileId: widget.user.id, email: widget.user.email),
+                        ],
+                      ),
+                    );
+                  } else {
+                    // Add more conditions or widgets as needed
+                    return Container(); // Placeholder, replace with your actual widgets
+                  }
                 },
+                childCount: 2, // Adjust the count based on the number of sections/widgets you have
               ),
             )
+
+
           ],
         ),
       ),

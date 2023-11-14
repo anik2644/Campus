@@ -21,7 +21,7 @@ class _UserBioState extends State<UserBio> {
         child: Text(
           widget.user!.bio!,
           style: TextStyle(
-            fontSize: 10.0,
+            fontSize: 15.0,
             fontWeight: FontWeight.w600,
           ),
           maxLines: null,

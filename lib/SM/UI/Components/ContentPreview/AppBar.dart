@@ -119,7 +119,7 @@ class _ContentAppBArState extends State<ContentAppBAr> {
             widget.onLoading(isloading);
 
            // await Future.delayed(Duration(seconds: 7));
-            await SentAllImageTOFireStorage();
+          //  await SentAllImageTOFireStorage();
             Navigator.pop(context);
             Navigator.pop(context);
           },

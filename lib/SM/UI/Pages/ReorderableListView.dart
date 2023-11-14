@@ -1,16 +1,18 @@
 import 'dart:io';
 
+import 'package:dhabiansomachar/SM/UI/Pages/ContentPreVieww.dart';
+import 'package:dhabiansomachar/SM/UI/Pages/ContentPreview.dart';
 import 'package:dhabiansomachar/SM/UI/Widgets/TopRightButtonDecorator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../Utilites/Services/Content/ContentPreview.dart';
 import '../Widgets/ActionButton.dart';
+import '../Widgets/ImageInput.dart';
 import '../Widgets/ImageView.dart';
 import '../Widgets/TextLebel.dart';
 import 'CreateContent.dart';
 
-void main() {
+/*void main() {
   runApp(MyApp());
 }
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       home: CreatContent(),
     );
   }
-}
+}*/
 
 class DraggableListView extends StatefulWidget {
 
@@ -122,31 +124,41 @@ class _DraggableListViewState extends State<DraggableListView> {
                 List<String> ContentSegments = [];
                 List<String> ContentImageSequence = [];
 
-
+                print("Yes Bro");
                 for(int i=0;i<items.length;i++)
                 {
 
-                  Widget currentWidget = items[i];
-                  if (currentWidget is RoundedImageContainer) {
 
-                     // print("media");
-                    // print(imageUrlIndex[mediaCount]);
-                     InputImagesSequence.add(currentWidget.imageUrl);
-                     ContentImageSequence.add("1");
-                  }
-                  else if(currentWidget is RoundedTextContainer)
-                  {
-                   // print("text");
-                    //print(currentWidget.text);
+                  Widget cur = items[i];
+                  if (cur is DecoratorWidget) {
 
-                    ContentSegments.add(currentWidget.text);
-                    ContentImageSequence.add("0");
+                    Widget currentWidget = cur.child;
+
+                    if (currentWidget is MediaInputWidget) {
+
+                        print("media");
+                      // print(imageUrlIndex[mediaCount]);
+                       InputImagesSequence.add(currentWidget.path);
+                       ContentImageSequence.add("1");
+                    }
+                    else if(currentWidget is RoundedTextContainer)
+                    {
+                        print("text");
+                      //print(currentWidget.text);
+
+                      ContentSegments.add(currentWidget.text);
+                      ContentImageSequence.add("0");
+                    }
                   }
 
                 }
+                print("No Bro");
+                ContentImageSequence.forEach((element) {print(element);});
+                InputImagesSequence.forEach((element) {print(element);});
+                ContentSegments.forEach((element) {print(element);});
 
                 setState(() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPreview(InputImagesSequence: InputImagesSequence,
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPrevieww(InputImagesSequence: InputImagesSequence,
                     ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, title: widget.title, location: "Dhaka, Bangladesh",)));
                 });
 

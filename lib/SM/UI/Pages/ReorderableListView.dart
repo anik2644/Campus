@@ -38,7 +38,8 @@ class DraggableListView extends StatefulWidget {
 
 class _DraggableListViewState extends State<DraggableListView> {
   List<Widget> items = [];
-  List<Widget> ls = [];
+  List<Widget> solidLIst = [];
+  List<Widget> editedSolidLis=[];
   @override
   void initState() {
     // items = List.generate(10, (index) => MediaInput(index));
@@ -50,18 +51,21 @@ class _DraggableListViewState extends State<DraggableListView> {
       }
     });*/
   widget.widgetList.asMap().forEach((index, element) {
-    ls.add(
+    solidLIst.add(
       DecoratorWidget(
         child: element,
         onPressed: () {
           // Access the index here
          // ls.removeAt(index);
-           final Widget cur = ls.elementAt(index);
-
+           final Widget cur = solidLIst.elementAt(index);
+           int elementIndex = editedSolidLis.indexOf(cur);
            setState(() {
              items.remove(cur);
-             ls.removeAt(index);
+             editedSolidLis.remove(cur);
            });
+
+
+           print("index $elementIndex");
           print("pressed on index $index");
         },
       ),
@@ -70,7 +74,9 @@ class _DraggableListViewState extends State<DraggableListView> {
   //List.from(widget.widgetList);
 
   });
-  items = List.from(ls);
+
+  editedSolidLis =List.from(solidLIst);
+  items = List.from(solidLIst);
 
 
     // TODO: implement initState
@@ -78,21 +84,31 @@ class _DraggableListViewState extends State<DraggableListView> {
   }
 
   List<int> indexArray = [];
-  updateIndex()
-  {
-        ls.forEach((element) {
+
+  updateIndex() async{
+/*
+        editedSolidLis.forEach((element) {
          // final Widget cur = ls.elementAt(index);
           indexArray.add(items.indexOf(element));
 
         });
+*/
 
+
+    items.forEach((element) {
+      // final Widget cur = ls.elementAt(index);
+      indexArray.add(solidLIst.indexOf(element));
+
+    });
         List<Widget> tempList=[];
+/*
         widget.widgetList.forEach((element) {
 
 
         });
+*/
 
-        for(int i=0;i<ls.length;i++)
+        for(int i=0;i<editedSolidLis.length;i++)
           {
             tempList.add(widget.widgetList[indexArray[i]]);
           }
@@ -115,7 +131,7 @@ class _DraggableListViewState extends State<DraggableListView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Draggable ListView'),
+          title: Text('Drag And Edit'),
           actions: [
             ActionButton(
               onPressed: () {

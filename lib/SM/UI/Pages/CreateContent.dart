@@ -490,9 +490,11 @@ Widget TitleField() {
           if (textDataIndex.length >= index) {
             textDataIndex[index - 1] = value;
           }
-*//*          else{
+*/
+/*          else{
             textDataIndex.add(value);
-          }*//*
+          }*/
+/*
           // Handle the text change
         },
         decoration: InputDecoration(

@@ -1,9 +1,16 @@
 
+import 'dart:io';
+
+import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/CheckAnything.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/GetFilePAth.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/SentDataToJson.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/TakeDatToRam.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:location/location.dart';
 // import '../Model/InternetConnectionCHecker.dart';
 // import '../Model/InternetShowDialougeBox.dart';
+import '../../Utilites/Helper/Raw/Initialization.dart';
 import 'HomePageComponent/HomePageBody.dart';
 import 'HomePageComponent/HomePageDrawer.dart';
 import 'HomePageComponent/ResetFirebaseData.dart';
@@ -40,16 +47,18 @@ class _HomepageState extends State<Homepage> {
       backgroundColor: Colors.black,
       drawer: Mydrawer(),
       appBar: PreferredSize(preferredSize: Size.fromHeight(80), child: widget.aPpbar,),
-      body: HomePageBody()//widget.bOdy,
+      body: HomePageBody(),//widget.bOdy,
 
-      /*
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        AppSettings.openAppSettings();
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        //AppSettings.openAppSettings();
+
+        print(await CheckAnything().isLoggedIn());
+        //TakeDataToRam().takePostsAndUsersToRam();
+
 
 
       },),
 
-       */
     );
   }
 

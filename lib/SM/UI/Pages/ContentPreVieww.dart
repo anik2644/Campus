@@ -7,6 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ContentPrevieww extends StatefulWidget {
   final List<String> InputImagesSequence; // = [];
@@ -15,13 +16,13 @@ class ContentPrevieww extends StatefulWidget {
 
   final String location;
   final String title;
-
+  final String? optionalParameter;
   const ContentPrevieww(
       {required this.InputImagesSequence,
         required this.ContentImageSequence,
         required this.ContentSegments,
         required this.location,
-        required this.title}); // = [];
+        required this.title, this.optionalParameter}); // = [];
 
   @override
   _ContentPreviewwState createState() => _ContentPreviewwState();
@@ -31,7 +32,6 @@ class _ContentPreviewwState extends State<ContentPrevieww> {
   List<String> AllImagesList = [];
   String imgurl = "";
   bool isloading = false;
-
   int imgIndex=0;
   int textIndex=0;
 
@@ -73,7 +73,14 @@ class _ContentPreviewwState extends State<ContentPrevieww> {
               children: [
                 Container(
                     width: 400,
-                    child: Image.file(
+                    child: widget.optionalParameter == "online_source"?
+                    CachedNetworkImage(
+                      imageUrl: widget.InputImagesSequence[imgIndex++],
+                      placeholder: (context, url) => // You can use any placeholder here
+                      CircularProgressIndicator(), // or other widget of your choice
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ):
+                    Image.file(
                         File(widget.InputImagesSequence[imgIndex++])
                     )),
                 SizedBox(height: 10),
@@ -103,7 +110,15 @@ class _ContentPreviewwState extends State<ContentPrevieww> {
   Widget ImageContainer(int i) {
     return Container(
       margin: EdgeInsets.all(6.0),
-      child: Image.file(
+      child:
+       widget.optionalParameter == "online_source"?
+    CachedNetworkImage(
+      imageUrl:widget.InputImagesSequence[i],
+      placeholder: (context, url) => // You can use any placeholder here
+      CircularProgressIndicator(), // or other widget of your choice
+      errorWidget: (context, url, error) => Icon(Icons.error),
+    ):
+      Image.file(
         File(widget.InputImagesSequence[i]),
         //File(widget.InputImagesSequence[i]),
         //int.parse(widget.InputImagesSequence[index ~/3])
@@ -141,6 +156,7 @@ class _ContentPreviewwState extends State<ContentPrevieww> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: ContentAppBAr(
+            optionalParameter: widget.optionalParameter,
             onLoading: (bool isload) {
 
               setState(() {
@@ -151,73 +167,82 @@ class _ContentPreviewwState extends State<ContentPrevieww> {
             },
             InputImagesSequence: widget.InputImagesSequence, ContentImageSequence:widget.ContentImageSequence, ContentSegments: widget.ContentSegments, location: widget.location, title: widget.title,)),
       body: isloading? circularProgress(context):
-      Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 30, bottom: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.book, // Replace with your desired icon
-                        color: Colors.black87,
-                        size: 40,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(height: 5),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0,right: 12.0),
+            child: Card(
+              color: Colors.black,
+              elevation: 10.0, // Adjust the elevation as needed
+              shadowColor: Colors.grey, // Adjust the shadow color as needed
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 30, bottom: 00),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
                         Icon(
-                          Icons.location_on, // Replace with your desired icon
-                          color: Colors.black87,
-                          size: 15,
+                          Icons.book,
+                          color: Colors.white, // Change to white
+                          size: 40,
                         ),
                         SizedBox(width: 5),
                         Text(
-                          widget.location,
+                          widget.title,
                           style: TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black54),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white, // Change to white
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: 25),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: ListView.builder(
-                  itemCount: listViewList.length,
-                  itemBuilder: (context, index) {
-                    return listViewList[index];
-                  },
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.white, // Change to white
+                            size: 15,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            widget.location,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.white, // Change to white
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 10),
-          ],
-        ),
+          ),
+
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 14.0,right: 14,bottom: 14),
+              child: ListView.builder(
+                itemCount: listViewList.length,
+                itemBuilder: (context, index) {
+                  return listViewList[index];
+                },
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+        ],
       ),
     );
   }

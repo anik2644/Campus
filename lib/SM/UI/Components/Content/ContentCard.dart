@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 
 import '../../../ModelClass/Content.dart';
+import '../../Pages/ContentPreVieww.dart';
 import '../Common/custom_card.dart';
 import '../Common/custom_image.dart';
 import 'ViewSelectedContent.dart';
@@ -26,7 +27,7 @@ class ContentCard extends StatelessWidget {
         transitionType: ContainerTransitionType.fadeThrough,
         openBuilder: (BuildContext context, VoidCallback _) {
           return //Container();//
-            VIewSelectedContent(InputImagesSequence: post.AllImagesList, ContentImageSequence: post.ContentImageSequence, ContentSegments: post.ContentSegments, location: post.Location, title: post.Title);
+            ContentPrevieww(InputImagesSequence: post.AllImagesList, ContentImageSequence: post.ContentImageSequence, ContentSegments: post.ContentSegments, location: post.Location, title: post.Title,optionalParameter: "online_source",);
         },
         closedElevation: 0.0,
         closedShape: const RoundedRectangleBorder(

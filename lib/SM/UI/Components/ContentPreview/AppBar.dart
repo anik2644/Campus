@@ -15,6 +15,7 @@ class ContentAppBAr extends StatefulWidget {
   final String location;
   final String title;
   final Function(bool) onLoading;
+  final String? optionalParameter;
 
   const ContentAppBAr(
       { required this.onLoading,
@@ -22,7 +23,7 @@ class ContentAppBAr extends StatefulWidget {
         required this.ContentImageSequence,
         required this.ContentSegments,
         required this.location,
-        required this.title}); //
+        required this.title, this.optionalParameter}); //
   @override
   State<ContentAppBAr> createState() => _ContentAppBArState();
 }
@@ -91,6 +92,71 @@ class _ContentAppBArState extends State<ContentAppBAr> {
   }
 
 
+  List<Widget>? buildActions() {
+
+    print(widget.optionalParameter);
+    if (widget.optionalParameter == "online_source") {
+      // If optionalParameter is not "online_source", return null
+      return null;
+    }
+
+    // Return the list of actions based on your logic
+    return [
+      isloading
+          ? Padding(
+        padding: const EdgeInsets.only(right: 18.0),
+        child: Icon(Icons.refresh_rounded),
+      )
+          : TextButton(
+        onPressed: () async {
+          isloading = true;
+          setState(()  {
+            widget.onLoading(isloading);
+
+          });
+          await SentAllImageTOFireStorage();
+          // Your functionality here
+
+          setState(() {
+
+          });
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          backgroundColor: Colors.blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        child: Card(
+          elevation: 8.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text(
+                  'Post',
+                  style: TextStyle(color: Colors.blueAccent, fontSize: 17),
+                ),
+                SizedBox(width: 8.0),
+                Icon(
+                  Icons.send,
+                  color: Colors.blueAccent,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -102,60 +168,64 @@ class _ContentAppBArState extends State<ContentAppBAr> {
           Navigator.pop(context);
         },
       ),
-      actions: [
+     actions:buildActions(),
+
+     /* [
+
+
        isloading?
-           Padding(
-             padding: const EdgeInsets.only(right:18.0),
-             child: Icon(Icons.refresh_rounded),
-           )
+       Padding(
+         padding: const EdgeInsets.only(right:18.0),
+         child: Icon(Icons.refresh_rounded),
+       )
            :TextButton(
-          onPressed: () async {
+         onPressed: () async {
 
-            isloading =true;
-            setState(() {
+           isloading =true;
+           setState(() {
 
-            });
-            // Your functionality here
-            widget.onLoading(isloading);
+           });
+           // Your functionality here
+           widget.onLoading(isloading);
 
            // await Future.delayed(Duration(seconds: 7));
-          //  await SentAllImageTOFireStorage();
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            backgroundColor: Colors.blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-          ),
-          child: Card(
-            elevation: 8.0, // Adjust the elevation as needed
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Post',
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 17),
-                  ),
-                  SizedBox(width: 8.0), // Add some spacing between icon and text
-                  Icon(
-                    Icons.send, // Replace with your desired icon
-                    color: Colors.blueAccent, // Set the icon color
-                  ),
-                ],
-              ),
-            ),
-          ),
+           //  await SentAllImageTOFireStorage();
+           Navigator.pop(context);
+           Navigator.pop(context);
+         },
+         style: TextButton.styleFrom(
+           padding: EdgeInsets.symmetric(horizontal: 16.0),
+           backgroundColor: Colors.blue,
+           shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(8.0),
+           ),
+         ),
+         child: Card(
+           elevation: 8.0, // Adjust the elevation as needed
+           shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(8.0),
+           ),
+           child: Padding(
+             padding: EdgeInsets.all(8.0),
+             child: Row(
+               children: [
+                 Text(
+                   'Post',
+                   style: TextStyle(color: Colors.blueAccent, fontSize: 17),
+                 ),
+                 SizedBox(width: 8.0), // Add some spacing between icon and text
+                 Icon(
+                   Icons.send, // Replace with your desired icon
+                   color: Colors.blueAccent, // Set the icon color
+                 ),
+               ],
+             ),
+           ),
+         ),
 
-        ),
+       ) ,
 
-      ],
+      ],*/
       title: Text(
         'Content Preview',
         style: TextStyle(

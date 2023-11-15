@@ -1,6 +1,7 @@
 
 import 'package:dhabiansomachar/SM/HP/HomePage/HomePage.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Chat.dart';
+import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/Initialization.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,9 @@ import 'SM/Utilites/Providers/Providers.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Config.initFirebase();
+  await FirstTimeCheck().Initialization();
   runApp(MyApp());
+  print("App Starting");
 }
 
 

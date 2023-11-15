@@ -37,6 +37,10 @@ class FirstTimeCheck{
 
   }
 
+  Initialization() async {
+    await ifFirstTimeFileCreation();
+  }
+
 }
 
 class CreteNecessaryFiles{

@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:location/location.dart';
@@ -23,8 +24,12 @@ class _HomepageState extends State<Homepage> {
 
   bool isloading = true;
 
+
+
   @override
   void initState() {
+
+
     //InternetShowDialougeBox.getConnectivity(context);
     super.initState();
   }
@@ -47,4 +52,6 @@ class _HomepageState extends State<Homepage> {
        */
     );
   }
+
+
 }

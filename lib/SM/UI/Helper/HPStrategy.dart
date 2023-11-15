@@ -4,6 +4,7 @@ import 'package:dhabiansomachar/SM/JSON_Management/model/LoginFlagJsonModel.dart
 import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
+
 import 'package:dhabiansomachar/SM/UI/Pages/TabScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +25,6 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
   bool isloggedin = false;
   bool isloading = true;
-
 
   @override
   void initState() {

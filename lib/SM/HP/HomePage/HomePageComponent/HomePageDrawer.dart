@@ -12,7 +12,8 @@ import 'HomepageDrawerElement/AllSIdeBarItems/campousia.dart';
 import 'HomepageDrawerElement/AllSIdeBarItems/umanualNafisa.dart';
 import 'HomepageDrawerElement/LoginPopup.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 class Mydrawer extends StatefulWidget {
 
   int index =5;
@@ -23,14 +24,23 @@ class Mydrawer extends StatefulWidget {
 
 class _MydrawerState extends State<Mydrawer> {
 
+
+
+  bool firstTime = true;
   bool isloggedin = false;
 
   alreadyLoggedin()
   async {
-    isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
-    setState(() {
 
-    });
+    firstTime = await  _firstTime();
+    if(firstTime==false)
+      {
+        isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
+        setState(() {
+
+        });
+      }
+
   }
    @override
   void initState() {
@@ -249,4 +259,33 @@ class _MydrawerState extends State<Mydrawer> {
     );
 
   }
+
+
+  Future<File> _findFile(String filename) async {
+    final path = await _localPatgh;
+    return File("$path/$filename");
+  }
+
+
+  Future<bool> _doesFileExist(String filename) async {
+    File file = await _findFile(filename);
+    return file.exists();
+  }
+
+  Future<bool> _firstTime() async {
+    String fname = "loginFlag.json";
+    bool fileExists = await _doesFileExist(fname);
+    if (fileExists) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
+  Future<String> get _localPatgh async{
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path ;
+  }
+
 }

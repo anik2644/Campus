@@ -17,7 +17,7 @@ class _UserBioState extends State<UserBio> {
       child: widget.user!.bio!.isEmpty
           ? Container()
           : Container(
-        width: 200,
+        width: MediaQuery.of(context).size.width,
         child: Text(
           widget.user!.bio!,
           style: TextStyle(

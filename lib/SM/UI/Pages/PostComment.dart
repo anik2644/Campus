@@ -473,7 +473,7 @@ class _CommentsState extends State<Comments> {
                   SizedBox(width: 10,),
                   StreamBuilder(
                     stream: likesRef
-                        .where('postId', isEqualTo: widget.post!.postId)
+                        .where('postId', isEqualTo: widget.post!.id)
                         .snapshots(),
                     builder:
                         (context, AsyncSnapshot<QuerySnapshot> snapshot) {

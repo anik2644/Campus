@@ -27,7 +27,7 @@ class _HomepageAppBarState extends State<HomepageAppBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Campousia"),
+          Text("ঢাবিয়ান সমাচার"),
         ],
       ),
     );

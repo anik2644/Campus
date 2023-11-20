@@ -27,7 +27,16 @@ class _HomepageAppBarState extends State<HomepageAppBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("ঢাবিয়ান সমাচার"),
+          Padding(
+            padding: const EdgeInsets.only(top:12.0),
+            child: Text(
+              "ঢাবিয়ান সমাচার",
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ],
       ),
     );

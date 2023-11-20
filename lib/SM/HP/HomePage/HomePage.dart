@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/CheckAnything.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/GetFilePAth.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/SentDataToJson.dart';
-import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/TakeDatToRam.dart';
+import 'package:dhabiansomachar/SM/HP/HomePage/HomePageComponent/HomepageDrawerElement/AboutAppPage.java';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:location/location.dart';
@@ -48,18 +48,23 @@ class _HomepageState extends State<Homepage> {
       drawer: Mydrawer(),
       appBar: PreferredSize(preferredSize: Size.fromHeight(80), child: widget.aPpbar,),
       body: HomePageBody(),//widget.bOdy,
-/*
 
-      floatingActionButton: FloatingActionButton(onPressed: () async {
+
+/*      floatingActionButton: FloatingActionButton(onPressed: () async {
         //AppSettings.openAppSettings();
 
-        print(await CheckAnything().isLoggedIn());
+        //print(await CheckAnything().isLoggedIn());
         //TakeDataToRam().takePostsAndUsersToRam();
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => AboutAppPage(),
+          ),
+        );
 
 
+      },),*/
 
-      },),
-*/
 
     );
   }

@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 //import '../../ParticularHP/PHPComponents/ParticularDetails/PHPSffold/ScaffoldItems/BodyComponents/Chat/MessageScreen.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../../UI/Helper/HPStrategy.dart';
+import 'HomepageDrawerElement/AboutAppPage.java';
+
+import 'package:dhabiansomachar/SM/HP/HomePage/HomePageComponent/HomepageDrawerElement/UserManualPage.java';
 import 'HomepageDrawerElement/AllSIdeBarItems/AboutUs.dart';
-import 'HomepageDrawerElement/AllSIdeBarItems/campousia.dart';
-import 'HomepageDrawerElement/AllSIdeBarItems/umanualNafisa.dart';
-import 'HomepageDrawerElement/LoginPopup.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+
+import 'HomepageDrawerElement/TermsAndCondition.dart';
 class Mydrawer extends StatefulWidget {
 
   int index =5;
@@ -163,25 +165,30 @@ class _MydrawerState extends State<Mydrawer> {
             title:
             Text("User MAnual", style: TextStyle(color: Colors.white)),
             onTap: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) =>UserManuall(),));
+              Navigator.push(context,MaterialPageRoute(builder: (context) =>UserManualPage(),));
             },
           ),
           ListTile(
             leading: Icon(Icons.question_mark, color: Colors.white),
             title:
-            Text("Campousia", style: TextStyle(color: Colors.white)),
+            Text("ঢাবিয়ান সমাচার", style: TextStyle(color: Colors.white)),
             onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) =>campousia(),));
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => AboutAppPage(),
+                ),
+              );
             },
           ),
-/*          ListTile(
+          ListTile(
             leading: Icon(Icons.message, color: Colors.white),
             title:
-            Text("Feedback", style: TextStyle(color: Colors.white)),
+            Text("Terms & Condition", style: TextStyle(color: Colors.white)),
             onTap: () {
-              //Navigator.push(context,MaterialPageRoute(builder: (context) =>MessagesScreen(),));
+              Navigator.push(context,MaterialPageRoute(builder: (context) =>TermsAndCondition(),));
             },
-          ),*/
+          ),
           ListTile(
             leading: Icon(Icons.person, color: Colors.white),
             title:

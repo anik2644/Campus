@@ -14,10 +14,10 @@ import '../Widgets/TextLebel.dart';
 import 'ReorderableListView.dart';
 /*
 void main() {
-  runApp(MyApp());
+  runApp(TermsAndCondition());
 }
 
-class MyApp extends StatelessWidget {
+class TermsAndCondition extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -18,12 +18,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Config.initFirebase();
   await FirstTimeCheck().Initialization();
-  runApp(MyApp());
+  runApp(TermsAndCondition());
   print("App Starting");
 }
 
 
-class MyApp extends StatelessWidget {@override Widget build(BuildContext context) {
+class TermsAndCondition extends StatelessWidget {@override Widget build(BuildContext context) {
   return MultiProvider(
       providers: providers,
       child: MaterialApp(debugShowCheckedModeBanner: false, theme: ThemeData(primarySwatch: Colors.blue,), home: const MyHomePage(),)

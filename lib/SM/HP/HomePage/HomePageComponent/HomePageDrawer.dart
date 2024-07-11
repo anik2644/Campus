@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 //import '../../ParticularHP/PHPComponents/ParticularDetails/PHPSffold/ScaffoldItems/BodyComponents/Chat/MessageScreen.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../../UI/Helper/HPStrategy.dart';
-import 'HomepageDrawerElement/AboutAppPage.java';
+import 'HomepageDrawerElement/AboutAppPage.dart';
 
-import 'package:dhabiansomachar/SM/HP/HomePage/HomePageComponent/HomepageDrawerElement/UserManualPage.java';
+import 'package:dhabiansomachar/SM/HP/HomePage/HomePageComponent/HomepageDrawerElement/UserManualPage.dart';
 import 'HomepageDrawerElement/AllSIdeBarItems/AboutUs.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:io';

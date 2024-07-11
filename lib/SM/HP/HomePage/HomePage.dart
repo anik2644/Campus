@@ -1,10 +1,7 @@
 
 import 'dart:io';
 
-import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/CheckAnything.dart';
-import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/GetFilePAth.dart';
-import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/SentDataToJson.dart';
-import 'package:dhabiansomachar/SM/HP/HomePage/HomePageComponent/HomepageDrawerElement/AboutAppPage.java';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:location/location.dart';

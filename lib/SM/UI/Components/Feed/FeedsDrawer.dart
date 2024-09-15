@@ -1,4 +1,5 @@
 import 'package:dhabiansomachar/SM/HP/HomePage/HomePage.dart';
+import 'package:dhabiansomachar/SM/UI/Components/Blood/BloodHome.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/SearchUser.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Settings.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Singleton/UserList.dart';
@@ -12,8 +13,11 @@ import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../Helper/HPStrategy.dart';
 import '../../Pages/Chat.dart';
+import '../../Pages/Events.dart';
 import '../../Pages/Landing.dart';
 import '../../Pages/profile.dart';
+import '../ClubSpace/ClubHomePage.dart';
+import '../Tolet/ToletHome.dart';
 
 class FeedsDrawer extends StatefulWidget {
   const FeedsDrawer({Key? key}) : super(key: key);
@@ -154,6 +158,70 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
                     builder: (_) => Chats(),
                   ),
                 );
+
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.event_sharp, color: Colors.white),
+            title:
+            Text("Events", style: TextStyle(color: Colors.white)),
+            onTap: () {
+
+
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => EventPage(),
+                ),
+              );
+
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.event_sharp, color: Colors.white),
+            title:
+            Text("Clubs", style: TextStyle(color: Colors.white)),
+            onTap: () {
+
+
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => ClubListHomePage(),
+                ),
+              );
+
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.event_sharp, color: Colors.white),
+            title:
+            Text("To-Let", style: TextStyle(color: Colors.white)),
+            onTap: () {
+
+
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => ToletHome(),
+                ),
+              );
+
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.bloodtype_outlined, color: Colors.white),
+            title:
+            Text("Blood", style: TextStyle(color: Colors.white)),
+            onTap: () {
+
+
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => BloodHome(),
+                ),
+              );
 
             },
           ),

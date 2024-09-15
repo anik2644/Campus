@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dhabiansomachar/SM/JSON_Management/model/LoginFlagJsonModel.dart';
+// import 'package:dhabiansomachar/SM/UI/Pages/Blood.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
@@ -12,6 +13,22 @@ import '../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../JSON_Management/model/FirstTimeFlagJsonModel.dart';
 import '../../ModelClass/LoginCredential.dart';
 import '../../ModelClass/LoginFlag.dart';
+import '../Components/Blood/obsulteHome.dart';
+import '../Components/Blood/BloodHome.dart';
+import '../Components/Blood/BloodRegistration.dart';
+import '../Components/Blood/BloodRequestForm.dart';
+import '../Components/Blood/Bloodprofile.dart';
+import '../Components/Blood/SearchDonor.dart';
+import '../Components/ClubSpace/ClubDetails.dart';
+import '../Components/ClubSpace/ClubHomePage.dart';
+import '../Components/ClubSpace/Committee.dart';
+import '../Components/ClubSpace/Information.dart';
+import '../Components/ClubSpace/Trial.dart';
+import '../Components/Event/CreateEvent.dart';
+import '../Components/Tolet/HouseDetails.dart';
+import '../Components/Tolet/SecondHome.dart';
+import '../Components/Tolet/ToletHome.dart';
+import '../Pages/Events.dart';
 import '../Pages/Landing.dart';
 
 class HPStretegy extends StatefulWidget {
@@ -37,7 +54,9 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     return isloading? CircularProgressIndicator():
     isloggedin?
-    TabScreen(): //Landing() ://TabScreen(): // Landing() ://Landing() ://
+    EventPage():// //TabScreen()://HomePage()://ClubListHomePage()://BalsamicBasilChickenPage()://TabScreen():// Information()://ExecutiveCommitteePage()://ClubDetails():// ToletHomePage():
+
+    //ToletHome(): // HouseDetail()://BloodHome()://BloodDonationHome()://FindDonorsPage()://RegistrationPage()://BloodRequest()://BloodProfile()://BloodHome():// TabScreen()://EventPage():/TabScreen(): //Landing() ://TabScreen(): // Landing() ://Landing() ://
     Landing() ;
   }
 
@@ -47,11 +66,13 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   Future<void> alreadyLoggedIn() async {
 
     isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
-    setState(() => isloading = false);
+
 
     if(isloggedin) {
       LoginCredentials().login(await Credential().getCredential());
     }
+
+    setState(() => isloading = false);
     //print("from already login?");
   }
 

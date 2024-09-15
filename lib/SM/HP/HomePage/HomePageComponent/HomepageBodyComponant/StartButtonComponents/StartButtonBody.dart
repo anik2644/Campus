@@ -22,11 +22,13 @@ class _StartButtonBodyState extends State<StartButtonBody> {
           child: Text(
             "ঢাবিয়ান সমাচার",//"Press me to enter",
             style: TextStyle(fontSize: 30,color: Colors.amber, fontFamily: 'Alkatra',),
-          ).animate(
+          )
 
-            //delay: 1000.ms, // this delay only happens once at the very start
-            onPlay: (controller) => controller.repeat(), // loop
-          ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),
+          //     .animate(
+          //
+          //   //delay: 1000.ms, // this delay only happens once at the very start
+          //   onPlay: (controller) => controller.repeat(), // loop
+          // ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),
     ));
   }
 }

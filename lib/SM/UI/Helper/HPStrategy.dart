@@ -54,7 +54,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     return isloading? CircularProgressIndicator():
     isloggedin?
-    EventPage():// //TabScreen()://HomePage()://ClubListHomePage()://BalsamicBasilChickenPage()://TabScreen():// Information()://ExecutiveCommitteePage()://ClubDetails():// ToletHomePage():
+    TabScreen()://EventPage():// //TabScreen()://HomePage()://ClubListHomePage()://BalsamicBasilChickenPage()://TabScreen():// Information()://ExecutiveCommitteePage()://ClubDetails():// ToletHomePage():
 
     //ToletHome(): // HouseDetail()://BloodHome()://BloodDonationHome()://FindDonorsPage()://RegistrationPage()://BloodRequest()://BloodProfile()://BloodHome():// TabScreen()://EventPage():/TabScreen(): //Landing() ://TabScreen(): // Landing() ://Landing() ://
     Landing() ;

@@ -67,7 +67,7 @@ class _EventPageState extends State<EventPage> {
                // SearchBar(),
                 SizedBox(height: 20),
                 UpcomingEventsSection(),
-                SizedBox(height: 20),
+                SizedBox(height: 40),
                 TopPicksSection(),
               ],
             ),
@@ -305,20 +305,32 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF2196F3), // Light Blue
-              Color(0xFF0D47A1), // Dark Blue
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg.png'), // Path to your asset image
+            fit: BoxFit.cover, // Adjust the fit property as needed (cover, fill, etc.)
           ),
-
         ),
       ),
-      title: Padding(
+
+      // flexibleSpace: Container(
+      //   decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //       colors: [
+      //         Color(0xFF2196F3), // Light Blue
+      //         Color(0xFF0D47A1), // Dark Blue
+      //       ],
+      //       begin: Alignment.topLeft,
+      //       end: Alignment.bottomRight,
+      //     ),
+      //
+      //   ),
+      // ),
+
+
+  /*    title: Padding(
         padding: const EdgeInsets.only(top: 18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,6 +364,8 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
+      */
+
       actions: [
         IconButton(
           icon: Icon(Icons.notifications, size: 30),
@@ -360,6 +374,7 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
           },
         ),
       ],
+
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(76.0),  // Adjust this height if needed
         child: Padding(
@@ -384,6 +399,7 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+
     );
   }
 }
@@ -478,8 +494,8 @@ class TopPicksSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(title: 'অগ্রাধিকার পছন্দ 🔥', showViewAll: true),
-        SizedBox(height: 10),
+        SectionHeader(title: '🌟 আসন্ন অনুষ্ঠানসমূহ 🌟', showViewAll: true),
+        SizedBox(height: 20),
         Container(
           height: 300,
           child: ListView.builder(
@@ -496,7 +512,7 @@ class TopPicksSection extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 25),
         EventCategoryFilter(),
       ],
     );
@@ -542,31 +558,31 @@ class UpcomingEventsSection extends StatelessWidget {
   // Create a list of events with asset images
   List<Event> eventList_upcomming = [
     Event(
-      title: 'Summer Music Festival 2023',
+      title: 'গান গেয়ে পরিচয়',
       imagePath: 'assets/Event/banglaband.jpg',
       location: 'California, USA',
       dateTime: '17 Mar, 2023',
     ),
     Event(
-      title: 'Autumn Art Show',
+      title: 'বর্ষবরণ অনুষ্ঠান',
       imagePath: 'assets/Event/boisakh.jpg',
       location: 'New York, USA',
       dateTime: '21 Sep, 2023',
     ),
     Event(
-      title: 'Winter Tech Expo',
+      title: 'নবান্ন উৎসব',
       imagePath: 'assets/Event/nobanno.jpg',
       location: 'San Francisco, USA',
       dateTime: '05 Dec, 2023',
     ),
     Event(
-      title: 'Spring Food Fair',
+      title: 'ইফতার মাহফিল',
       imagePath: 'assets/Event/iftar.jpg',
       location: 'Chicago, USA',
       dateTime: '15 Apr, 2023',
     ),
     Event(
-      title: 'International Film Festival',
+      title: ' বসন্ত এসে গেছে',
       imagePath: 'assets/Event/boshonto.png',
       location: 'Los Angeles, USA',
       dateTime: '12 Jul, 2023',
@@ -578,10 +594,10 @@ class UpcomingEventsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(title: 'আসন্ন অনুষ্ঠানসমূহ'),
-        SizedBox(height: 10),
+        SectionHeader(title: '🔥 অগ্রাধিকার পছন্দ 🔥'),
+        SizedBox(height: 25),
         Container(
-          height: 120,
+          height: 180,
           child:
           ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -654,7 +670,8 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: 250,
+
       margin: EdgeInsets.only(right: 16),
       child: Stack(
         children: [
@@ -664,7 +681,7 @@ class EventCard extends StatelessWidget {
             child: Image(
               image: imageUrl, // Use ImageProvider here
               fit: BoxFit.cover,
-              width: 200,
+              width: 250,
               height: 300,
             ),
           ),
@@ -685,14 +702,54 @@ class EventCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  dateTime,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+                // Text(
+                //   dateTime,
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     fontSize: 14,
+                //   ),
+                // ),
+                // SizedBox(height: 4),
+                Container(
+                  width: 184, // Set your desired width
+                  height: 40, // Set your desired height
+                  decoration: BoxDecoration(
+                    color: Colors.transparent, // Transparent background color
+                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                    border: Border.all(color: Colors.yellow, width: 2), // Yellow border
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.7), // Shadow color
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2), // Shadow offset
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 4),
+                  alignment: Alignment.center, // Center the text
+                  padding: EdgeInsets.all(8), // Padding around the text
+                  child: Text(
+                    title.length > 15 ? title.substring(0, 15) + '...' : title,
+                    style: TextStyle(
+                      color: Colors.black, // Text color
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10.0,
+                          color: Colors.black.withOpacity(0.5), // Shadow color
+                          offset: Offset(0, 0), // Shadow offset
+                        ),
+                      ],
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis, // Hide overflow text
+                    textAlign: TextAlign.center, // Center the text
+                  ),
+                )
+
+
+                /*
                 Text(
                   title,
                   style: TextStyle(
@@ -703,15 +760,17 @@ class EventCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  location,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                */
+
+                // Text(
+                //   location,
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     fontSize: 14,
+                //   ),
+                //   maxLines: 1,
+                //   overflow: TextOverflow.ellipsis,
+                // ),
               ],
             ),
           ),

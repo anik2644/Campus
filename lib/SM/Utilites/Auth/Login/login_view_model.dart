@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../Firebase/Auth/Auth_Service.dart';
+import '../../../Firebase/Auth/FB_Auth_Service.dart';
 import '../../../Firebase/Auth/FetchCredential.dart';
 import '../../../JSON_Management/Auth/Credential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
@@ -14,7 +14,7 @@ import '../../../UI/Pages/TabScreen.dart';
 import '../Validation.dart';
 
 // import 'package:social_media_app/screens/mainscreen.dart';
-// import 'package:social_media_app/services/Auth_Service.dart';
+// import 'package:social_media_app/services/FB_Auth_Service.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -24,7 +24,7 @@ class LoginViewModel extends ChangeNotifier {
   String? email, password;
   FocusNode emailFN = FocusNode();
   FocusNode passFN = FocusNode();
-  AuthService auth = AuthService();
+  FBAuthService auth = FBAuthService();
 
   login(BuildContext context) async {
     FormState form = formKey.currentState!;
@@ -52,7 +52,7 @@ class LoginViewModel extends ChangeNotifier {
 
 
         LoginCredentials().login(us);
-        Credential().saveCredential(us);
+        JSONCredential().saveCredential(us);
         // User us  = await sc.getCredential();
         // print(us.userName);
 

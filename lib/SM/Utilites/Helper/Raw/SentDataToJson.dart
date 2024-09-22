@@ -19,7 +19,7 @@ class SendDataToJSon{
     Object uk =  await FetchCredential().findCredential();
     User us = uk as User;
     print(us.country);
-    await Credential().saveCredential(us);
+    await JSONCredential().saveCredential(us);
   }
 
   updateUsersAndPosts() async {

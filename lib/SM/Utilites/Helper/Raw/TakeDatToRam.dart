@@ -25,7 +25,7 @@ class TakeDataToRam {
   takeLoggertoRam() async {
     bool isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
     if (isloggedin) {
-      LoginCredentials().login(await Credential().getCredential());
+      LoginCredentials().login(await JSONCredential().getCredential());
     } else {
       print("No User to take in Ram .Because there is no logged in user");
     }

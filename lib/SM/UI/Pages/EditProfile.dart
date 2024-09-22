@@ -229,7 +229,7 @@ class _EditProfileState extends State<EditProfile> {
                     List <User> us = await GetWant().getAllUserfromJson();
                     UserList().setUsers( us);
 
-                    Credential().saveCredential(widget.user!);
+                    JSONCredential().saveCredential(widget.user!);
                     LoginCredentials().login(widget.user!);
 
                     Navigator.of(context).pop();

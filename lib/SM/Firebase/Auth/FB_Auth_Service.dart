@@ -1,16 +1,66 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/SpecificSent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+
 import '../../ModelClass/User.dart' as local;
+
 import '../../Utilites/Constants/firebase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 //import 'package:social_media_app/utils/firebase.dart';
 
-class AuthService {
+class FBAuthService {
   User getCurrentUser() {
     User user = firebaseAuth.currentUser!;
     return user;
   }
+
+
+  bool isUserLoggedIn() {
+    User? user = firebaseAuth.currentUser;
+    return user != null;
+  }
+
+  Future<local.User> getLoginCredential() async {
+
+    local.User curUser;
+/*    print("hello2");
+    print(firebaseAuth.currentUser!.uid);
+    print(firebaseAuth.currentUser!.email);
+
+    print("hello");*/
+    var collectionReference = FirebaseFirestore.instance.collection('users');
+    var query = collectionReference.where('id', isEqualTo: firebaseAuth.currentUser!.uid);
+    var querySnapshot = await query.get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Access the first document (you may need to loop through if you expect multiple matches)
+      var doc = querySnapshot.docs[0].data();
+
+      String bio = doc['bio'];
+      String country = doc['country'];
+      String email = doc['email'];
+      String gender = doc['gender'];
+      String id = doc['id'];
+      bool isOnline = doc['isOnline'];
+      Timestamp lastSeen = doc['lastSeen'];
+      String photoUrl = doc['photoUrl'];
+      String userName = doc['username'];
+      Timestamp time =  doc['time'];
+
+
+
+      curUser = local.User.Complete(userName,email,country,bio,gender,photoUrl,id,lastSeen,isOnline,time);
+      return curUser as local.User;
+
+      print(curUser.email);
+    } else {
+      print('No matching documents found.');
+    }
+
+    return null as local.User;
+  }
+
 
 //create a firebase user
   Future<local.User> createUser(

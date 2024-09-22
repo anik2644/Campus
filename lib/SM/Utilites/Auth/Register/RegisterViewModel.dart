@@ -7,9 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:social_media_app/auth/register/profile_pic.dart';
-// import 'package:social_media_app/services/Auth_Service.dart';
+// import 'package:social_media_app/services/FB_Auth_Service.dart';
 
-import '../../../Firebase/Auth/Auth_Service.dart';
+import '../../../Firebase/Auth/FB_Auth_Service.dart';
 import '../../../Firebase/Auth/FetchCredential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../../ModelClass/LoginCredential.dart';
@@ -124,7 +124,7 @@ class RegisterViewModel extends ChangeNotifier {
   FocusNode countryFN = FocusNode();
   FocusNode passFN = FocusNode();
   FocusNode cPassFN = FocusNode();
-  AuthService auth = AuthService();
+  FBAuthService auth = FBAuthService();
 
   register(BuildContext context) async {
     FormState form = formKey.currentState!;
@@ -162,7 +162,7 @@ class RegisterViewModel extends ChangeNotifier {
             print("dq1");
             LoginCredentials().login(us);
             print("dq");
-            Credential().saveCredential(us);
+            JSONCredential().saveCredential(us);
             await UpdateWant().updateJsonUsers();
             final snackBar = SnackBar(
               content: Text('signup Done'),

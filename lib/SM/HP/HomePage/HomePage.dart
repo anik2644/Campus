@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 import '../../Utilites/Helper/Raw/Initialization.dart';
 import 'HomePageComponent/HomePageBody.dart';
 import 'HomePageComponent/HomePageDrawer.dart';
-import 'HomePageComponent/ResetFirebaseData.dart';
+
 import 'HomePageComponent/HomrpageAppBar.dart';
 import 'package:app_settings/app_settings.dart';
 class Homepage extends StatefulWidget {
 
   HomepageAppBar aPpbar = HomepageAppBar();
-  HomePageFloatingButtion fLoatingButtton = HomePageFloatingButtion();
+
  // ConnectionChecker bOdy = ConnectionChecker( HomePageBody());
 
   @override
@@ -47,7 +47,7 @@ class _HomepageState extends State<Homepage> {
       body: HomePageBody(),//widget.bOdy,
 
 
-/*      floatingActionButton: FloatingActionButton(onPressed: () async {
+      floatingActionButton: FloatingActionButton(onPressed: () async {
         //AppSettings.openAppSettings();
 
         //print(await CheckAnything().isLoggedIn());
@@ -60,7 +60,7 @@ class _HomepageState extends State<Homepage> {
         );
 
 
-      },),*/
+      },),
 
 
     );

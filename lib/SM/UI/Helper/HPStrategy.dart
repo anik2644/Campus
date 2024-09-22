@@ -69,7 +69,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
 
     if(isloggedin) {
-      LoginCredentials().login(await Credential().getCredential());
+      LoginCredentials().login(await JSONCredential().getCredential());
     }
 
     setState(() => isloading = false);

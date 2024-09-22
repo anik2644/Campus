@@ -6,7 +6,7 @@ import 'dart:async';
 import '../model/UserJsonModel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-class Credential{
+class JSONCredential{
   Future<File> saveCredential(User element) async{
 
       UserJsonModel JsonFormatUser = UserJsonModel(element.userName, element.email, element.country, element.bio, element.gender, element.photoUrl, element.id, element.lastSeen.toString(), element.isOnline ? 'true' : 'false', element.time.toString());

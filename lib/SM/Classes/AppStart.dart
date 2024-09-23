@@ -3,14 +3,15 @@ import 'package:dhabiansomachar/SM/JSON_Management/JSONOFFICE.dart';
 import '../JSON_Management/Auth/LoginFlagJson.dart';
 
 
-class AppStarting{
+class AppStart{
+  JsonOffice jsonOffice = JsonOffice();
 
-  Future<void> handleFirstTimeCheck() async {
-    JsonOffice jsonOffice = JsonOffice();
-
+  Future<void> firstTimeCheckCreateJSON() async {
     if (await _isFirstTime()) {
       jsonOffice.createFirstTimeFiles();
     }
+
+
   }
 
 
@@ -18,7 +19,6 @@ class AppStarting{
 
 
   Future<bool> _isFirstTime() async {
-    JsonOffice jsonOffice = JsonOffice();
     return !(await jsonOffice.fileExist("loginFlag.json"));
   }
 }

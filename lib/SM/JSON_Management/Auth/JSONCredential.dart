@@ -17,6 +17,17 @@ class JSONCredential{
     return file.writeAsString('$encodedJSONString');
   }
 
+  Future<File> removeCredential() async {
+    // Fetch the credential file
+    final file = await FetchFile("credential.json")._localFile;
+
+    // Overwrite with an empty object or default values
+    Map<String, dynamic> emptyUserJson = {};  // Empty object to clear credentials
+    var encodedJSONString = json.encode(emptyUserJson);
+
+    // Write empty JSON string to the file
+    return file.writeAsString('$encodedJSONString');
+  }
 
   Future<User> getCredential() async{
    // List<Flags> returnFormantFlags=[];

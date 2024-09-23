@@ -154,6 +154,8 @@ class FirebaseFetchData{
 
   Future<List<Content>> fetchContent() async {
 
+    List<Content> Contents = [];
+
     List<String> AllImagesList=[];
     List<String> ContentImageSequence =[];
     List<String> ContentSegments =[];
@@ -176,7 +178,7 @@ class FirebaseFetchData{
       Title = doc.get('Title');
 
       Content content =Content(AllImagesList,ContentImageSequence,ContentSegments,Location,Title);
-      Content.Contents.add(content);
+      Contents.add(content);
       //print(content.Title);
 
 /*      setState(() {
@@ -185,7 +187,7 @@ class FirebaseFetchData{
     });
     print("data fetch done");
 
-    print(Content.Contents.length);
+    print(Contents.length);
 /*
 
 
@@ -196,7 +198,7 @@ class FirebaseFetchData{
 
     print("writeDOne");
 
-    return Content.Contents;
+    return Contents;
 
   }
 

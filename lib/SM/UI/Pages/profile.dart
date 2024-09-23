@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/FacadeJson/FacadeJson.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/model/PostJsonModel.dart';
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Post.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Profile/AppBAr.dart';
@@ -67,9 +67,9 @@ class _ProfileState extends State<Profile> {
     super.initState();
   //  checkIfFollowing();
 
-    if(widget.user.id == LoginCredentials().loggedInUser?.id)
+    if(widget.user.id == SingletonCredential().loggedInUser?.id)
       {
-        user = LoginCredentials().loggedInUser!;
+        user = SingletonCredential().loggedInUser!;
       }
     else
       {

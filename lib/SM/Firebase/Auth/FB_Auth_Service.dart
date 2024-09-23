@@ -10,7 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 //import 'package:social_media_app/utils/firebase.dart';
 
 class FBAuthService {
-  User getCurrentUser() {
+  User _getCurrentUser() {
     User user = firebaseAuth.currentUser!;
     return user;
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
 
@@ -21,10 +21,10 @@ class _ProfileInfoState extends State<ProfileInfo> {
       children: [
         SizedBox(height: 15.0),
         StreamBuilder(
-          stream: usersRef.doc(LoginCredentials().loggedInUser!.id).snapshots(),
+          stream: usersRef.doc(SingletonCredential().loggedInUser!.id).snapshots(),
           builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.hasData) {
-              User user = LoginCredentials().loggedInUser!;
+              User user = SingletonCredential().loggedInUser!;
               /*UserModel.fromJson(
                       snapshot.data!.data() as Map<String, dynamic>,
                     );*/

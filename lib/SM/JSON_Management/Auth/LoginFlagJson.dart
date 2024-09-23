@@ -5,9 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'dart:io';
 
-class LoginFlagJson{
+class JSONLoginFlag{
 
-  Future<File> saveLoginInfo(LoginFlag element) async{
+  Future<File> saveLoginFlag(LoginFlag element) async{
 
     LoginFlagsJsonModel JsonFormatlogin = LoginFlagsJsonModel( element.isloggedin ? 'true' : 'false');
 

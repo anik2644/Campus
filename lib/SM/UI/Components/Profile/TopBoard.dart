@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../../Utilites/Helper/SpecificWant.dart';
@@ -33,8 +33,8 @@ class _TopBoardState extends State<TopBoard> {
     super.initState();
     checkIfFollowing();
 
-    if (widget.user.id == LoginCredentials().loggedInUser?.id) {
-      user = LoginCredentials().loggedInUser!;
+    if (widget.user.id == SingletonCredential().loggedInUser?.id) {
+      user = SingletonCredential().loggedInUser!;
     } else {
       user = SpecificWant().specificUserFromJson(widget.user.id);
     }
@@ -98,7 +98,7 @@ class _TopBoardState extends State<TopBoard> {
 
   buildEditorFollowButton(user) {
     //if isMe then display "edit profile"
-    bool isMe = widget.user.id == LoginCredentials().loggedInUser!.id;
+    bool isMe = widget.user.id == SingletonCredential().loggedInUser!.id;
     if (isMe) {
       return buildButton(
           text: "Edit Profile",
@@ -159,7 +159,7 @@ class _TopBoardState extends State<TopBoard> {
     /*DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
     users = UserModel.fromJson(doc.data() as Map<String, dynamic>);*/
 
-    users = LoginCredentials().loggedInUser!;
+    users = SingletonCredential().loggedInUser!;
     setState(() {
       isFollowing = false;
     });
@@ -202,7 +202,7 @@ class _TopBoardState extends State<TopBoard> {
     /* DocumentSnapshot doc = await usersRef.doc(currentUserId()).get();
     users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
     */
-    users = LoginCredentials().loggedInUser!;
+    users = SingletonCredential().loggedInUser!;
     setState(() {
       isFollowing = true;
     });

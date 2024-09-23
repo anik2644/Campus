@@ -2,12 +2,17 @@
 import 'dart:io';
 
 
+import 'package:dhabiansomachar/SM/Classes/AppStart.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/AuthOffice.dart';
+import 'package:dhabiansomachar/SM/Classes/Contents/ContentsOffice.dart';
+import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:location/location.dart';
 // import '../Model/InternetConnectionCHecker.dart';
 // import '../Model/InternetShowDialougeBox.dart';
-import '../../Utilites/Helper/Raw/Initialization.dart';
+import '../../Firebase/Auth/FB_Auth_Service.dart';
+import '../../ModelClass/Content.dart';
 import 'HomePageComponent/HomePageBody.dart';
 import 'HomePageComponent/HomePageDrawer.dart';
 
@@ -48,16 +53,20 @@ class _HomepageState extends State<Homepage> {
 
 
       floatingActionButton: FloatingActionButton(onPressed: () async {
-        //AppSettings.openAppSettings();
+/*
+       List<Content> contents = await ContentsOffice().fetchContentsFromFB();
 
-        //print(await CheckAnything().isLoggedIn());
-        //TakeDataToRam().takePostsAndUsersToRam();
-        Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (_) => AboutAppPage(),
-          ),
-        );
+
+// Loop through each content and print its fields
+        for (Content content in contents) {
+          print('Title: ${content.Title}');
+          print('Location: ${content.Location}');
+          print('All Images List: ${content.AllImagesList}');
+          print('Content Image Sequence: ${content.ContentImageSequence}');
+          print('Content Segments: ${content.ContentSegments}');
+          print('---------------------------');
+        }
+*/
 
 
       },),

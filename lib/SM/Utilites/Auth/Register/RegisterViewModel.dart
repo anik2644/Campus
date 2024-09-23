@@ -1,4 +1,4 @@
-import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/JSONCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Helper/HPStrategy.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
@@ -12,7 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../Firebase/Auth/FB_Auth_Service.dart';
 import '../../../Firebase/Auth/FetchCredential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
 import '../../../ModelClass/User.dart' as local;
 import '../../../UI/Pages/TabScreen.dart';
@@ -147,7 +147,7 @@ class RegisterViewModel extends ChangeNotifier {
           if (success.id != "id") {
 
 
-            LoginFlagJson().saveLoginInfo( LoginFlag(true));
+            JSONLoginFlag().saveLoginFlag( LoginFlag(true));
 
 /*
 
@@ -160,7 +160,7 @@ class RegisterViewModel extends ChangeNotifier {
             await UpdateWant().updateJsonUsers();
             local.User us = success ;//extractUser();
             print("dq1");
-            LoginCredentials().login(us);
+            SingletonCredential().login(us);
             print("dq");
             JSONCredential().saveCredential(us);
             await UpdateWant().updateJsonUsers();

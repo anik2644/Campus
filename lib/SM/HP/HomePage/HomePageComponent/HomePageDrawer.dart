@@ -37,7 +37,7 @@ class _MydrawerState extends State<Mydrawer> {
     firstTime = await  _firstTime();
     if(firstTime==false)
       {
-        isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
+        isloggedin = (await JSONLoginFlag().getLoginInfo()).isloggedin;
         setState(() {
 
         });

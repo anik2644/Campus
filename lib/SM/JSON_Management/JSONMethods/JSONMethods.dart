@@ -90,8 +90,8 @@ class JSONMethods{
 
       //convert the JSON format User to Actual User and create the return list
       JsonFormatContentList.forEach((element) {
-        print(element.Title);
-        Content content= Content(element.AllImagesList, element.ContentImageSequence, element.ContentSegments, element.Location, element.Title);
+        print(element.title);
+        Content content= Content(element.allImagesList, element.contentImageSequence, element.contentSegments, element.location, element.title);
         returnFormantContents.add(content);
         print(content.Title);
       });

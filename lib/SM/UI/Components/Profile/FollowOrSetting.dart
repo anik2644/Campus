@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,7 +17,7 @@ class FollowOrSetting extends StatefulWidget {
 class _FollowOrSettingState extends State<FollowOrSetting> {
   @override
   Widget build(BuildContext context) {
-    return widget.user.id == LoginCredentials().loggedInUser?.id
+    return widget.user.id == SingletonCredential().loggedInUser?.id
         ? InkWell(
       onTap: () {
            Navigator.of(context).push(
@@ -51,7 +51,7 @@ class _FollowOrSettingState extends State<FollowOrSetting> {
     return StreamBuilder(
       stream: favUsersRef
           .where('postId', isEqualTo: widget.user.id)
-          .where('userId', isEqualTo: LoginCredentials().loggedInUser!.id)
+          .where('userId', isEqualTo: SingletonCredential().loggedInUser!.id)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {

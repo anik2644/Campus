@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/Classes/Contents/ContentsOffice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../Firebase/FIREBASE.dart';
+import '../../JSON_Management/Contents/JSONContentsOffice.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../ModelClass/Content.dart';
 import '../Components/Content/ContentCard.dart';
@@ -30,22 +32,24 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
   List<Content> contents = [];
 
 
+  Future<void> onrefresh() async {
+
+    contents = [];
+
+    contents = await ContentsOffice().updateContents();
+
+
+    setState(() {
+      isLoading = false;
+    });
+
+  }
+
   Future<void> fetchData() async {
 
+    contents = [];
 
-    FIREBASE fb = FIREBASE("contents");
-    List<Object> uk = await fb.fetchData();
-    contents = uk as List<Content>;
-    contents.forEach((element) {print(element.Title);});
-
-/*
-    JSONFile jf = JSONFile("contents");
-    List<Object> uka = await jf.read() ;
-    contents = uka as List<Content>;
-    contents.forEach((element) {print(element.Title);});
-    print("posts fetch done");
-*/
-
+    contents = await ContentsOffice().getContents();
 
 
     setState(() {
@@ -69,154 +73,6 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
     });
     super.initState();
   }
-/*
-
-  Future<void> fetchUser() async {
-
-    //print("hey in userfeth upper");
-    UserModel.um.clear();
-    CollectionReference collection = FirebaseFirestore.instance.collection('users');
-    QuerySnapshot querySnapshot = await collection.get();
-
-    // print("hey in userfeth");
-    // print(querySnapshot.docs.length );
-    // print("hey in fetchh");
-    //
-    // int i=0;
-
-    querySnapshot.docs.forEach((doc) {
-
-      print(doc.get('id'));
-
-
-      String bio = doc.get('bio');
-      String country = doc.get('country');
-      String email = doc.get('email');
-      String gender = doc.get('gender');
-      String id = doc.get('id');
-      String photourl = doc.get('photoUrl');
-      String userName = doc.get('username');
-      // String mediaUrl = doc.get('mediaUrl');
-
-
-      UserModel data =  UserModel("anik", "anik11556@gmail.com", "userID", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg", "e", "f", "h");
-      data.username =userName;
-      data.email = email;
-      data.id = id;
-      data.photoUrl =photourl;
-      data.bio =bio;
-      data.country = country;
-
-      // data.timestamp =timestamp;
-      // data.mediaUrl = mediaUrl;
-      // data.description= description;
-      // data.location = loc;
-      // data.ownerId =ownerId;
-      // data.username = userName;
-      // data.postId = postID;
-
-      print(data.email);
-
-      bool exists = UserModel.um.any((entity) => entity.email == data.email);
-      if(exists)
-      {
-        print("already in the list");
-      }
-      else
-      {
-        print("not exist in the list");
-        UserModel.um.add(data);
-      }
-
-
-
-    });
-
-    print(UserModel.um.length);
-    setState(() {
-      isLoading = false;
-    });
-
-  }
-
-  List<String> AllImagesList=[];
-  List<String> ContentImageSequence =[];
-  List<String> ContentSegments =[];
-  late String Location;
-  late String Title;
-
-  Future<void> fetchData() async {
-
-    Content.ContentList.clear();
-    AllImagesList.clear();
-    ContentSegments.clear();
-    ContentImageSequence.clear();
-
-
-    CollectionReference collection = FirebaseFirestore.instance.collection('Contents');
-    QuerySnapshot querySnapshot = await collection.get();
-
-    print(querySnapshot.docs.length);
-
-    querySnapshot.docs.forEach((doc) {
-
-
-      AllImagesList = List<String>.from(doc.get('AllImagesList'));
-      ContentSegments= List<String>.from(doc.get('ContentSegments'));
-      ContentImageSequence= List<String>.from(doc.get('ContentImageSequence'));
-      Location = doc.get('Location');
-      Title = doc.get('Title');
-
-      Content data =Content(AllImagesList: AllImagesList, ContentImageSequence: ContentImageSequence, ContentSegments: ContentSegments, Location: Location, Title: Title);
-      Content.ContentList.add(data);
-      print(data.Title);
-
-      setState(() {
-        isLoading = false;
-      });
-
-      //   print(doc.get('id'));
-      //
-      //
-      // String postID = doc.get('postId');
-      // String description = doc.get('description');
-      // String id = doc.get('id');
-      // String loc = doc.get('location');
-      // String ownerId = doc.get('ownerId');
-      // String timestamp = doc.get('timestamp');
-      // String userName = doc.get('userName');
-      // String mediaUrl = doc.get('mediaUrl');
-      //
-      //
-      // PostModel data =  PostModel("a", "2", "mhdank15865@gmail.com", "Dhaka,Bangladesh", "Mhd", "All my focus is on the good.", "https://devdiscourse.blob.core.windows.net/devnews/17_07_2019_19_18_59_861541.jpg");
-      // data.id=id;
-      // data.timestamp =timestamp;
-      // data.mediaUrl = mediaUrl;
-      // data.description= description;
-      // data.location = loc;
-      // data.ownerId =ownerId;
-      // data.username = userName;
-      // data.postId = postID;
-      //
-      // print(data.description);
-      //
-      // bool exists = p.Pl.any((post) => post.postId == data.postId);
-      // if(exists)
-      // {
-      //   print("already in the list");
-      // }
-      // else
-      // {
-      //   p.Pl.add(data);
-      // }
-
-    });
-    print("data fetch done");
-//    fetchUser();
-
-  }
-
-*/
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri(scheme: "https", host: url);
@@ -236,55 +92,6 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
       //key: scaffoldKey,
 
 
-/*
-
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-
-
-
-
-        FIREBASE fb = FIREBASE("contents");
-        List<Object> uk = await fb.fetchData();
-        List<Content> ccontents = uk as List<Content>;
-
-
-        ccontents.forEach((element) {print(element.Title);});
-
-        print("read done\n\n");
-        //
-        // JSONFile jfl = JSONFile("contents");
-        // jfl.write(ccontents);
-        //
-        // print("write done\n\n");
-
-        // print("hello json");
-        // FIREBASE fu = FIREBASE("users");
-        // List<Object> us = await fu.fetchData();
-        // List<User> users = us as List<User>;
-        // users.forEach((element) {print(element.userName);});
-        //
-        // print("read done\n\n");
-        //
-        // JSONFile jfu = JSONFile("users");
-        // jfu.write(users);
-        //
-        // print("write done\n\n");
-        //
-        //
-        //
-        // print("Start");
-        // JSONFile jf = JSONFile("users");
-        // List<Object> uka = await jf.read() ;
-        // List<User> userss = uka as List<User>;
-        // userss.forEach((element) {print(element.gender);});
-        //
-
-
-
-      },),
-
-*/
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: Builder(
@@ -301,40 +108,10 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
           "ঢাবিয়ান সমাচার",//"Press me to enter",
           style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
         )
-        /* .
-
-        animate(
-
-          //delay: 1000.ms, // this delay only happens once at the very start
-          onPlay: (controller) => controller.repeat(), // loop
-        ).fadeIn(duration: 1500.ms).fadeOut(delay: 3500.ms, duration: 200.ms) // runs after fade.),*/
         ,
-        // title: Text(
-        //   Constants.appName,
-        //   style: TextStyle(
-        //     fontWeight: FontWeight.w900,
-        //   ),
-        // ),
-        centerTitle: true,
-      /*  actions: [
-          IconButton(
-            icon: Icon(
-              Ionicons.chatbubble_ellipses,
-              size: 30.0,
-            ),
-            onPressed: () {
-*//*              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (_) => Chats(),
-                ),
-              );
 
- *//*
-            },
-          ),
-          SizedBox(width: 20.0),
-        ],*/
+        centerTitle: true,
+
       ),
       drawer:  Drawer(
         backgroundColor: Colors.black,
@@ -503,8 +280,7 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
         ),
       ),
 
-      body:
-      Stack(
+      body: Stack(
         children: [
           Visibility(
             visible: !isLoading,
@@ -538,114 +314,11 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
                             );
                           },
                         )
-                      /*FutureBuilder(
-                          future: postRef
-                              .orderBy('timestamp', descending: true)
-                              .limit(page)
-                              .get(),
-                          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasData) {
-                              var snap = snapshot.data;
-                              List docs = snap!.docs;
-                              return ListView.builder(
-                                controller: scrollController,
-                                itemCount: docs.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  PostModel posts =
-                                      PostModel.fromJson(docs[index].data());
-                                  return Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: UserPost(post: posts),
-                                  );
-                                },
-                              );
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return circularProgress(context);
-                            } else
-                              return Center(
-                                child: Text(
-                                  'No Feeds',
-                                  style: TextStyle(
-                                    fontSize: 26.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              );
-                          },
-                        ),*/
                     ),
                   ],
                 ),
               ),
 
-              /*
-                SingleChildScrollView(
-                  // controller: scrollController,
-                  //physics: NeverScrollableScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //StoryWidget(),
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        child:  ListView.builder(
-                          controller: scrollController,
-                          itemCount: p.Pl.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            PostModel posts = p.Pl[index];
-                            //PostModel.fromJson(docs[index].data());
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: UserPost(post: posts),
-                            );
-                          },
-                        )
-                        /*FutureBuilder(
-                          future: postRef
-                              .orderBy('timestamp', descending: true)
-                              .limit(page)
-                              .get(),
-                          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasData) {
-                              var snap = snapshot.data;
-                              List docs = snap!.docs;
-                              return ListView.builder(
-                                controller: scrollController,
-                                itemCount: docs.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  PostModel posts =
-                                      PostModel.fromJson(docs[index].data());
-                                  return Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: UserPost(post: posts),
-                                  );
-                                },
-                              );
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return circularProgress(context);
-                            } else
-                              return Center(
-                                child: Text(
-                                  'No Feeds',
-                                  style: TextStyle(
-                                    fontSize: 26.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              );
-                          },
-                        ),*/
-                      ),
-                    ],
-                  ),
-                ),
-                 */
             ),
 
             //DONE
@@ -659,15 +332,38 @@ class _ContentsState extends State<Contents> with AutomaticKeepAliveClientMixin{
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () async {
 
-      /*
-      RefreshIndicator(
-        color: Theme.of(context).colorScheme.secondary,
+        List<Content> contents = await JSONContentsOffice().readFromJSON_content();
+        print("Now From JSON \n\n\n\n");
+        for (var entry in contents.asMap().entries) {
+          int index = entry.key;
+          Content content = entry.value;
 
-        onRefresh: () =>
-            postRef.orderBy('timestamp', descending: true).limit(page).get(),
+          print('Index: $index');
+          print('Title: ${content.Title}');
+          print('Location: ${content.Location}');
+          print('All Images List: ${content.AllImagesList}');
+          print('Content Image Sequence: ${content.ContentImageSequence}');
+          print('Content Segments: ${content.ContentSegments}');
+          print('---------------------------');
+        }
+        /*
+        *  for (Content content in contents) {
+          print('Title: ${content.Title}'); // Use lowercase 'title' to match the property name
+          print('Location: ${content.Location}'); // Use lowercase 'location'
+          print('All Images List: ${content.AllImagesList}'); // Use lowercase 'allImagesList'
+          print('Content Image Sequence: ${content.ContentImageSequence}'); // Use lowercase 'contentImageSequence'
+          print('Content Segments: ${content.ContentSegments}'); // Use lowercase 'contentSegments'
+          print('---------------------------');
+        }*/
 
-        child: */
+       print("Now From Firebase \n\n\n\n");
+
+      },),
+
+
+
     );
   }
 

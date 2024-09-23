@@ -1,13 +1,13 @@
-import 'User.dart';
+import '../../ModelClass/User.dart';
 
-class LoginCredentials {
+class SingletonCredential {
   User? loggedInUser; // This will store the currently logged-in user
 
-  LoginCredentials._privateConstructor();
+  SingletonCredential._privateConstructor();
 
-  static final LoginCredentials _instance = LoginCredentials._privateConstructor();
+  static final SingletonCredential _instance = SingletonCredential._privateConstructor();
 
-  factory LoginCredentials() {
+  factory SingletonCredential() {
     return _instance;
   }
 

@@ -1,7 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhabiansomachar/SM/Classes/Posts/PostsOffice.dart';
+import 'package:dhabiansomachar/SM/Classes/Users/UsersOffice.dart';
 import 'package:dhabiansomachar/SM/Firebase/FirebaseMethods/FirebaseFetchdata.dart';
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/profile.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/SentWant.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
@@ -22,24 +23,20 @@ import '../../Utilites/Helper/SpecificWant.dart';
 import '../Components/Feed/FeedsDrawer.dart';
 import '../Components/FeedComponents/userpost.dart';
 
-
-
 class Feeds extends StatefulWidget {
-
-
   @override
   State<Feeds> createState() => _FeedsState();
 }
 
-class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
+class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool isLoading = true;
   int page = 5;
   bool loadingMore = false;
   ScrollController scrollController = ScrollController();
- // List<Post> posts = [];
- //  List<User> users = [];
+  // List<Post> posts = [];
+  //  List<User> users = [];
 /*
   Future<void> fetchUser() async {
 
@@ -67,23 +64,22 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
     fetchUser();
   }
 */
-   Future<void> takeDataToRam() async {
+  Future<void> takeDataToRam() async {
+    if (UserList().isListEmpty() || PostList().isListEmpty()) {
+      await PostsOffice().takeDataToRam();
+      await UsersOffice().takeDataToRam();
 
-     if(UserList().isListEmpty()||PostList().isListEmpty())
-       {
-
-         UserList().setUsers( await GetWant().getAllUserfromJson());
-         PostList().setPosts(await GetWant().getAllPostfromJson());
-       }
-     setState(() => isLoading =false);
-   }
-
+      // UserList().setUsers( await GetWant().getAllUserfromJson());
+      // PostList().setPosts(await GetWant().getAllPostfromJson());
+    }
+    setState(() => isLoading = false);
+  }
 
   @override
   void initState() {
     isLoading = true;
     takeDataToRam();
-   // fetchData();
+    // fetchData();
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -119,9 +115,13 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
             scaffoldKey.currentState?.openDrawer();
           },
         ),
-        title:  Text(
-          "ঢাবিয়ান সমাচার",//"Press me to enter",
-          style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
+        title: Text(
+          "ঢাবিয়ান সমাচার", //"Press me to enter",
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+            fontFamily: 'Alkatra',
+          ),
         ),
 /*
             .animate(
@@ -137,12 +137,13 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
               Ionicons.person,
               size: 30.0,
             ),
-            onPressed: ()
-            {
+            onPressed: () {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (_) =>  Profile(user: LoginCredentials().loggedInUser,),
+                  builder: (_) => Profile(
+                    user: SingletonCredential().loggedInUser,
+                  ),
                 ),
               );
             },
@@ -155,7 +156,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
           Visibility(
             visible: !isLoading,
             child: RefreshIndicator(
-              onRefresh:  _refreshData,// fetchData,
+              onRefresh: _refreshData, // fetchData,
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 // controller: scrollController,
@@ -166,26 +167,25 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
                   children: [
                     //StoryWidget(),
                     Container(
-                      //height: MediaQuery.of(context).size.height,
-                        child:  ListView.builder(
-                          controller: scrollController,
-                          itemCount: PostList().getPosts().length,
-                          shrinkWrap: true,
-                          //  physics: ScrollPhysics(),
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            Post? post = PostList().getPostAtIndex(index);;
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: UserPost(post: post),
-                            );
-                          },
-                        )
-                    ),
+                        //height: MediaQuery.of(context).size.height,
+                        child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: PostList().getPosts().length,
+                      shrinkWrap: true,
+                      //  physics: ScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        Post? post = PostList().getPostAtIndex(index);
+                        ;
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: UserPost(post: post),
+                        );
+                      },
+                    )),
                   ],
                 ),
               ),
-
             ),
           ),
           Visibility(
@@ -196,25 +196,18 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin{
           ),
         ],
       ),
-
     );
   }
 
   Future<void> _refreshData() async {
-
-     await UpdateWant().updateJsonPosts();
-     await UpdateWant().updateJsonUsers();
-     PostList().setPosts(await GetWant().getAllPostfromJson());
-     UserList().setUsers( await GetWant().getAllUserfromJson());
-     setState((){
-
-     });
+    await UsersOffice().updateUsers();
+    await PostsOffice().updatePosts();
+    setState(() {});
 
     // Run the two asynchronous functions here
     //await takeDataToRam();
     // Add more asynchronous calls as needed
   }
-
 
   @override
   bool get wantKeepAlive => true;

@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import '../../ModelClass/LoginCredential.dart';
+import '../../Classes/Auth/SingletonCredential.dart';
 import '../../ModelClass/User.dart';
 import '../../Utilites/Constants/firebase.dart';
 

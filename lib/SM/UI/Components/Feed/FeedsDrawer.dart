@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
 import '../../../ModelClass/User.dart';
 import '../../../Utilites/Constants/firebase.dart';
@@ -38,19 +38,19 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
 
-          LoginCredentials().isLoggedIn() ?  UserAccountsDrawerHeader(
+          SingletonCredential().isLoggedIn() ?  UserAccountsDrawerHeader(
 
             decoration: BoxDecoration(color: Colors.white),
             accountName: Text(
-              LoginCredentials().loggedInUser!.userName,
+              SingletonCredential().loggedInUser!.userName,
               style: TextStyle(color: Colors.black),
             ),
-            accountEmail: Text(  LoginCredentials().loggedInUser!.email,
+            accountEmail: Text(  SingletonCredential().loggedInUser!.email,
                 style: TextStyle(color: Colors.black)),
             currentAccountPicture: CircleAvatar(
               // backgroundColor: Colors.black,
 
-              backgroundImage: CachedNetworkImageProvider(LoginCredentials().loggedInUser!.photoUrl!,),
+              backgroundImage: CachedNetworkImageProvider(SingletonCredential().loggedInUser!.photoUrl!,),
 
 
 
@@ -232,7 +232,7 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
             onTap: () {
 
               List<User> userss = UserList().getUsers();
-              String userIdToRemove = LoginCredentials().loggedInUser!.id; // Replace with the ID you want to remove
+              String userIdToRemove = SingletonCredential().loggedInUser!.id; // Replace with the ID you want to remove
 
               List<User> updatedUserss = List.from(userss); // Create a new list
 
@@ -246,7 +246,7 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
             title:
             Text("Profile", style: TextStyle(color: Colors.white)),
             onTap: () {
-               Navigator.push(context,MaterialPageRoute(builder: (context) =>Profile(user:LoginCredentials().loggedInUser!),));
+               Navigator.push(context,MaterialPageRoute(builder: (context) =>Profile(user:SingletonCredential().loggedInUser!),));
             },
           ),
           ListTile(
@@ -276,11 +276,11 @@ class _FeedsDrawerState extends State<FeedsDrawer> {
                 await firebaseAuth.signOut();
 
                 LoginFlag lf = LoginFlag(false);
-                LoginFlagJson lfj = LoginFlagJson();
-                 await lfj.saveLoginInfo(lf);
+                JSONLoginFlag lfj = JSONLoginFlag();
+                 await lfj.saveLoginFlag(lf);
                  print(lf.isloggedin);
 
-                LoginCredentials().logout();
+                SingletonCredential().logout();
 
                 Navigator.pushAndRemoveUntil(
                   context,

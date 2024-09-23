@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Components/CreatePost/AppBar.dart';
 import 'package:dhabiansomachar/SM/UI/Components/CreatePost/DescriptionBox.dart';
 import 'package:dhabiansomachar/SM/UI/Components/CreatePost/LocationBox.dart';
@@ -29,7 +29,7 @@ class _CreatePostState extends State<CreatePost> {
   late String imgurl;
    String path = " ";
   late String des= " ";
-  User thisUser =LoginCredentials().loggedInUser!;
+  User thisUser =SingletonCredential().loggedInUser!;
   late Post post;
   late String loc= " ";
   File? mediaUrl;

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/model/UserJsonModel.dart';
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/Raw/RawConvertion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class _CommentsState extends State<Comments> {
   TextEditingController commentsTEC = TextEditingController();
 
   currentUserId() {
-    return LoginCredentials().loggedInUser!.id;
+    return SingletonCredential().loggedInUser!.id;
   }
 
   Future<void> fetchComments() async {
@@ -402,7 +402,7 @@ class _CommentsState extends State<Comments> {
     //DocumentSnapshot doc = await usersRef.doc(currentUserId).get();
    //UserJsonModel userr = UserJsonModel.fromJson(doc.data() as Map<String, dynamic>);
     //RawConversionModel().UserJsonToUser(userr);
-    user = LoginCredentials().loggedInUser;
+    user = SingletonCredential().loggedInUser;
     await commentRef.doc(postId).collection("comments").add({
       "username": user!.userName,
       "comment": comment,

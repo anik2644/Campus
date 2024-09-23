@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -175,7 +175,7 @@ class _UserPostState extends State<UserPost> {
     return StreamBuilder(
       stream: likesRef
           .where('postId', isEqualTo: widget.post!.id)
-          .where('userId', isEqualTo: LoginCredentials().loggedInUser!.id)
+          .where('userId', isEqualTo: SingletonCredential().loggedInUser!.id)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
@@ -209,7 +209,7 @@ class _UserPostState extends State<UserPost> {
           Future<bool> onLikeButtonTapped(bool isLiked) async {
             if (docs.isEmpty) {
               likesRef.add({
-                'userId': LoginCredentials().loggedInUser!.id,
+                'userId': SingletonCredential().loggedInUser!.id,
                 'postId': widget.post!.id,
                 'dateCreated': Timestamp.now(),
               });

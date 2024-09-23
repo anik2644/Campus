@@ -1,5 +1,5 @@
 import 'package:animations/animations.dart';
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 import 'package:dhabiansomachar/SM/UI/Components/AddPostOrContent/PopupBuilder.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +27,7 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'unsee',
       'icon': Ionicons.add_circle,
-      'page':Profile(user: LoginCredentials().loggedInUser,),//NewPost(),//AddPost(),
+      'page':Profile(user: SingletonCredential().loggedInUser,),//NewPost(),//AddPost(),
       'index': 1,
     },
     {

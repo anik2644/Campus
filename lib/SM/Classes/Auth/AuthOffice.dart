@@ -1,120 +1,130 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dhabiansomachar/SM/Classes/TakeDataToRam.dart';
 import 'package:dhabiansomachar/SM/Firebase/Auth/FB_Auth_Service.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/JSONOFFICE.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../Firebase/Auth/FetchCredential.dart';
-import '../../JSON_Management/Auth/Credential.dart';
+import '../../JSON_Management/Auth/JSONCredential.dart';
 import '../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../ModelClass/LoginCredential.dart';
+import '../../Utilites/Constants/firebase.dart';
+import 'SingletonCredential.dart';
 import '../../ModelClass/LoginFlag.dart';
 import '../../ModelClass/User.dart';
 
-
 class AuthOffice {
+  JsonOffice jsonOffice = JsonOffice();
 
-  Future<bool> alreadyLoggedInn() async {
-
-      JsonOffice jsonOffice = JsonOffice();
-      FBAuthService fbAuthService = FBAuthService();
-      bool isloggedininfojson= false;
-
-      isloggedininfojson = (await LoginFlagJson().getLoginInfo()).isloggedin;
+  FBAuthService fbAuthService = FBAuthService();
+  JSONCredential jsonCredential = JSONCredential();
+  JSONLoginFlag jsonLoginFlag = JSONLoginFlag();
 
 
 
-
-      bool isloggedininfofb= false;
-      if(isloggedininfojson)
-      {
-         return true;
-        //check json credentials
-      }
-      else{
-        isloggedininfofb = fbAuthService.isUserLoggedIn();
-        //check firebase login
-      }
-
-      if(isloggedininfofb)
-      {
-
-
-        LoginFlagJson().saveLoginInfo( LoginFlag(true));
-
-
-        Object uk =  await fbAuthService.getLoginCredential();
-        User us = uk as User;
-        print(us.country);
-
-
-        LoginCredentials().login(us);
-        JSONCredential().saveCredential(us);
-
-        return true;
-
-        // LoginCredentials().login(await Credential().getCredential());
-        // update Json flag + credentials
-      }
-      else{
-
-        return false;
-        // move to login signup
+  Future<bool> firstImpression() async {
+    bool check = await _alreadyLoggedInCheck();
+    if (check) {
+      await login();
+      return true;
     }
-
-
-    //print("from already login?");
+    return false;
   }
 
 
-  Future<bool> alreadyLoggedIn() async {
-    JsonOffice jsonOffice = JsonOffice();
-    FBAuthService fbAuthService = FBAuthService();
+  registration() {}
 
-    // Check if the user is logged in via JSON
-    bool isloggedininfojson = await _checkLoginFromJson();
-
-    if (isloggedininfojson) {
-      return true; // User is logged in via JSON
-    }
-
-    // Check if the user is logged in via Firebase
-    bool isloggedininfofb = await _checkLoginFromFirebase(fbAuthService);
-
-    return isloggedininfofb; // Return Firebase login status
+  login() async {
+    User user = await _getCrendialfromFB();
+    SingletonCredential().login(user);
+    await _saveCredentialToJson(user);
+    // await _saveLoginFlaglToJson();
   }
 
-// Private method to check login from JSON
+  logout() async {
+    await firebaseAuth.signOut();
+    SingletonCredential().logout();
+    await _removeCredentialFromJson();
+    //await _removeLoginFlaglfromJson();
+  }
+
+
+  Future<User?> getCurrentCredential() async {
+    return SingletonCredential().loggedInUser;
+  }
+
+  Future<bool?> isLoggedIn() async {
+    return SingletonCredential().isLoggedIn();
+  }
+
+
+
+
+
+
+
+
+  Future<User> _getCrendialfromFB() async {
+    return await fbAuthService.getLoginCredential();
+  }
+
+  _saveCredentialToJson(User user) async {
+    await jsonCredential.saveCredential(user);
+  }
+
+  _saveLoginFlaglToJson() async {
+    await jsonLoginFlag.saveLoginFlag(LoginFlag(true));
+  }
+
+  _removeCredentialFromJson() async {
+    await jsonCredential.removeCredential();
+  }
+
+  _removeLoginFlaglfromJson() async {
+    await jsonLoginFlag.saveLoginFlag(LoginFlag(false));
+  }
+
+  // _takeAuthInfoToRam()
+  // async {
+  //  await takeDataToRam.authData();
+  // }
+
+  // Future<bool> _checkLoginFromJson() async {
+  //   JSONLoginFlag loginFlagJson = JSONLoginFlag();
+  //   bool isloggedininfojson = (await loginFlagJson.getLoginInfo()).isloggedin;
+  //   return isloggedininfojson;
+  // }
+
+  Future<bool> _alreadyLoggedInCheck() async {
+    return await _checkLoginFromJson() || await _checkLoginFromFirebase();
+  }
+
+
+
   Future<bool> _checkLoginFromJson() async {
-    LoginFlagJson loginFlagJson = LoginFlagJson();
-    bool isloggedininfojson = (await loginFlagJson.getLoginInfo()).isloggedin;
-    return isloggedininfojson;
-  }
-
-// Private method to check login from Firebase
-  Future<bool> _checkLoginFromFirebase(FBAuthService fbAuthService) async {
-    bool isloggedininfofb = fbAuthService.isUserLoggedIn();
-
-    if (isloggedininfofb) {
-      // Update JSON flag and save Firebase login credentials
-      LoginFlagJson().saveLoginInfo(LoginFlag(true));
-
-      Object userCredential = await fbAuthService.getLoginCredential();
-      User user = userCredential as User;
-      print(user.country);
-
-      LoginCredentials().login(user);
-      JSONCredential().saveCredential(user);
-
-      return true;  // Return true when the user is logged in
+    try {
+      var user = await jsonCredential.getCredential();
+      if (user is User) {
+       // SingletonCredential().login(user);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error checking login from JSON: $e");
+      return false;
     }
-
-    return false; // Explicitly return false if the user is not logged in
   }
 
 
 
+  Future<bool> _checkLoginFromFirebase() async {
+    bool isloggedininfofb = fbAuthService.isUserLoggedIn();
+    // if (isloggedininfofb) {
+    //   await login();
+    // }
+    print(isloggedininfofb);
 
-
-
+    return isloggedininfofb;
   }
+}

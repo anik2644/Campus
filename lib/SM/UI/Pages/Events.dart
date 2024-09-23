@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../ModelClass/Event.dart';
-import '../../ModelClass/LoginCredential.dart';
+import '../../Classes/Auth/SingletonCredential.dart';
 import '../../ModelClass/User.dart';
 import '../../Utilites/Helper/GetWant.dart';
 import '../../Utilites/Helper/Singleton/PostList.dart';
@@ -163,7 +163,7 @@ class _EventPageState extends State<EventPage> {
 
 class CreateEventButton extends StatelessWidget {
 
-  User user = LoginCredentials().loggedInUser!;
+  User user = SingletonCredential().loggedInUser!;
 
   @override
   Widget build(BuildContext context) {

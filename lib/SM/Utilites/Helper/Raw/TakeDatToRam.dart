@@ -1,7 +1,7 @@
 import 'package:dhabiansomachar/SM/ModelClass/LoginFlag.dart';
-import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/JSONCredential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../GetWant.dart';
 import '../Singleton/PostList.dart';
 import '../Singleton/UserList.dart';
@@ -23,9 +23,9 @@ class TakeDataToRam {
   }
 
   takeLoggertoRam() async {
-    bool isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
+    bool isloggedin = (await JSONLoginFlag().getLoginInfo()).isloggedin;
     if (isloggedin) {
-      LoginCredentials().login(await JSONCredential().getCredential());
+      SingletonCredential().login(await JSONCredential().getCredential());
     } else {
       print("No User to take in Ram .Because there is no logged in user");
     }

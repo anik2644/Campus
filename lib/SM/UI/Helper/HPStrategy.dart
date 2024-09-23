@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dhabiansomachar/SM/Classes/Auth/AuthOffice.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/model/LoginFlagJsonModel.dart';
 // import 'package:dhabiansomachar/SM/UI/Pages/Blood.dart';
 import 'package:dhabiansomachar/SM/Utilites/Helper/UpdateWant.dart';
@@ -8,10 +9,10 @@ import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/TabScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../../JSON_Management/Auth/Credential.dart';
+import '../../JSON_Management/Auth/JSONCredential.dart';
 import '../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../JSON_Management/model/FirstTimeFlagJsonModel.dart';
-import '../../ModelClass/LoginCredential.dart';
+import '../../Classes/Auth/SingletonCredential.dart';
 import '../../ModelClass/LoginFlag.dart';
 import '../Components/Blood/obsulteHome.dart';
 import '../Components/Blood/BloodHome.dart';
@@ -28,6 +29,7 @@ import '../Components/Event/CreateEvent.dart';
 import '../Components/Tolet/HouseDetails.dart';
 import '../Components/Tolet/SecondHome.dart';
 import '../Components/Tolet/ToletHome.dart';
+import '../Pages/Contents.dart';
 import '../Pages/Events.dart';
 import '../Pages/Landing.dart';
 
@@ -54,7 +56,7 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     return isloading? CircularProgressIndicator():
     isloggedin?
-    TabScreen()://EventPage():// //TabScreen()://HomePage()://ClubListHomePage()://BalsamicBasilChickenPage()://TabScreen():// Information()://ExecutiveCommitteePage()://ClubDetails():// ToletHomePage():
+    Contents(): //TabScreen()://EventPage():// //TabScreen()://HomePage()://ClubListHomePage()://BalsamicBasilChickenPage()://TabScreen():// Information()://ExecutiveCommitteePage()://ClubDetails():// ToletHomePage():
 
     //ToletHome(): // HouseDetail()://BloodHome()://BloodDonationHome()://FindDonorsPage()://RegistrationPage()://BloodRequest()://BloodProfile()://BloodHome():// TabScreen()://EventPage():/TabScreen(): //Landing() ://TabScreen(): // Landing() ://Landing() ://
     Landing() ;
@@ -65,11 +67,11 @@ class _HPStretegyState extends State<HPStretegy> with AutomaticKeepAliveClientMi
 
   Future<void> alreadyLoggedIn() async {
 
-    isloggedin = (await LoginFlagJson().getLoginInfo()).isloggedin;
+    isloggedin = (await AuthOffice().isLoggedIn())!;
 
 
     if(isloggedin) {
-      LoginCredentials().login(await JSONCredential().getCredential());
+      SingletonCredential().login(await JSONCredential().getCredential());
     }
 
     setState(() => isloading = false);

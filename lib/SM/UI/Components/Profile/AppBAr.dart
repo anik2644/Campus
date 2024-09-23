@@ -1,9 +1,10 @@
+import 'package:dhabiansomachar/SM/Classes/Auth/AuthOffice.dart';
 import 'package:dhabiansomachar/SM/HP/HomePage/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
 import '../../../Utilites/Constants/firebase.dart';
 import '../../Helper/HPStrategy.dart';
@@ -26,21 +27,16 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
         style: TextStyle(fontSize: 30,color: Colors.black, fontFamily: 'Alkatra',),
       ),
       actions: [
-        LoginCredentials().isLoggedIn()
+        SingletonCredential().isLoggedIn()
             ? Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 25.0),
             child: GestureDetector(
               onTap: () async {
 
-                await firebaseAuth.signOut();
 
-                LoginFlag lf = LoginFlag(false);
-                LoginFlagJson lfj = LoginFlagJson();
-                await lfj.saveLoginInfo(lf);
-                print(lf.isloggedin);
+                await AuthOffice().logout();
 
-                LoginCredentials().logout();
 
                 Navigator.pushAndRemoveUntil(
                   context,

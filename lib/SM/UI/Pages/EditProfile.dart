@@ -1,5 +1,5 @@
-import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
-import 'package:dhabiansomachar/SM/ModelClass/LoginCredential.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/JSONCredential.dart';
+import 'package:dhabiansomachar/SM/Classes/Auth/SingletonCredential.dart';
 import 'package:dhabiansomachar/SM/ModelClass/User.dart';
 import 'package:dhabiansomachar/SM/UI/Components/Common/ImagePickBox.dart';
 import 'package:dhabiansomachar/SM/UI/Components/EditProfile/AppBAr.dart';
@@ -230,7 +230,7 @@ class _EditProfileState extends State<EditProfile> {
                     UserList().setUsers( us);
 
                     JSONCredential().saveCredential(widget.user!);
-                    LoginCredentials().login(widget.user!);
+                    SingletonCredential().login(widget.user!);
 
                     Navigator.of(context).pop();
                   },

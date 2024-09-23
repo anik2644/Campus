@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dhabiansomachar/SM/Firebase/Auth/FetchCredential.dart';
-import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/JSONCredential.dart';
 import 'package:dhabiansomachar/SM/JSON_Management/Auth/LoginFlagJson.dart';
 import 'package:dhabiansomachar/SM/ModelClass/Flags.dart';
 import 'package:dhabiansomachar/SM/ModelClass/LoginFlag.dart';
@@ -20,7 +20,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../Firebase/FIREBASE.dart';
 import '../../JSON_Management/JSONFile.dart';
 import '../../JSON_Management/model/FirstTimeFlagJsonModel.dart';
-import '../../ModelClass/LoginCredential.dart';
+import '../../Classes/Auth/SingletonCredential.dart';
 import '../../ModelClass/Post.dart';
 import '../../ModelClass/User.dart';
 import '../../ModelClass/tempPost.dart';

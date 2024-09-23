@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Content{
-  static List<Content> Contents = [];
+   List<Content> Contents = [];
 
 
   List<String> AllImagesList=[];

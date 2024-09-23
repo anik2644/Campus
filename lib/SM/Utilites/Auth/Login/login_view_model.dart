@@ -1,3 +1,4 @@
+import 'package:dhabiansomachar/SM/Classes/Auth/AuthOffice.dart';
 import 'package:dhabiansomachar/SM/UI/Pages/Feeds.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -5,9 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../../../Firebase/Auth/FB_Auth_Service.dart';
 import '../../../Firebase/Auth/FetchCredential.dart';
-import '../../../JSON_Management/Auth/Credential.dart';
+import '../../../JSON_Management/Auth/JSONCredential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
-import '../../../ModelClass/LoginCredential.dart';
+import '../../../Classes/Auth/SingletonCredential.dart';
 import '../../../ModelClass/LoginFlag.dart';
 import '../../../ModelClass/User.dart';
 import '../../../UI/Pages/TabScreen.dart';
@@ -43,16 +44,25 @@ class LoginViewModel extends ChangeNotifier {
         );
         print(success);
 
-        LoginFlagJson().saveLoginInfo( LoginFlag(true));
+        await AuthOffice().login();
 
+/*
+        JSONLoginFlag().saveLoginFlag( LoginFlag(true));
 
+*/
+/*
           Object uk =  await FetchCredential().findCredential();
           User us = uk as User;
-          print(us.country);
+          print(us.country);*//*
+
+        User user = await FBAuthService().getLoginCredential();
+        print("User Details:");
+        print("User Name: ${user.userName}");
 
 
-        LoginCredentials().login(us);
-        JSONCredential().saveCredential(us);
+
+        SingletonCredential().login(user);
+        JSONCredential().saveCredential(user);
         // User us  = await sc.getCredential();
         // print(us.userName);
 
@@ -60,8 +70,7 @@ class LoginViewModel extends ChangeNotifier {
 
 
 
-
-
+*/
 
 
         if (success) {

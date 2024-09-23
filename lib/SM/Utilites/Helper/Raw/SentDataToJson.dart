@@ -1,5 +1,5 @@
 import 'package:dhabiansomachar/SM/Utilites/Helper/SentWant.dart';
-import 'package:dhabiansomachar/SM/JSON_Management/Auth/Credential.dart';
+import 'package:dhabiansomachar/SM/JSON_Management/Auth/JSONCredential.dart';
 import '../../../Firebase/Auth/FetchCredential.dart';
 import '../../../JSON_Management/Auth/LoginFlagJson.dart';
 import '../../../ModelClass/LoginFlag.dart';
@@ -37,9 +37,9 @@ class SendLoginFlagToJson{
 
   logout()
   async {
-    await LoginFlagJson().saveLoginInfo( LoginFlag(false));
+    await JSONLoginFlag().saveLoginFlag( LoginFlag(false));
   }
   login() async {
-    await LoginFlagJson().saveLoginInfo( LoginFlag(true));
+    await JSONLoginFlag().saveLoginFlag( LoginFlag(true));
   }
 }
